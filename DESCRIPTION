@@ -11,6 +11,9 @@ Depends:
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports:
+  assertthat,
+  readr
 Suggests:
-    testthat
+  testthat
 RoxygenNote: 5.0.1
