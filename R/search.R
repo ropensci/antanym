@@ -1,7 +1,7 @@
 #' Find placenames near a given location
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param cga SQLiteDriver: as returned by \code{\link{load_cga}}
+#' @param cga SQLiteConnection: as returned by \code{\link{load_cga}}
 #' @param loc numeric: longitude and latitude of target location
 #' @param max_distance numeric: maximum search distance in kilometres
 #'
@@ -30,7 +30,7 @@ names_near <- function(cga,loc,max_distance) {
 #' Search for place names
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param cga SQLiteDriver: as returned by \code{\link{load_cga}}
+#' @param cga SQLiteConnection: as returned by \code{\link{load_cga}}
 #' @param query string: SQL-syntax search string. Matches are case-insensitive
 #' @param feature_type string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{cga_feature_types}}
 #' @param origin_country string: if provided, search only for place names originating from this country. For valid values see \code{\link{cga_countries}}

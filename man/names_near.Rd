@@ -7,7 +7,7 @@
 names_near(cga, loc, max_distance)
 }
 \arguments{
-\item{cga}{SQLiteDriver: as returned by \code{\link{load_cga}}}
+\item{cga}{SQLiteConnection: as returned by \code{\link{load_cga}}}
 
 \item{loc}{numeric: longitude and latitude of target location}
 

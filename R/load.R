@@ -5,7 +5,7 @@
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used
 #' @param verbose logical: show progress messages?
 #'
-#' @return An object of class \code{SQLiteDriver}
+#' @return An object of class \code{SQLiteConnection}
 #'
 #' @examples
 #' \dontrun{

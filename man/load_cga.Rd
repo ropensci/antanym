@@ -14,7 +14,7 @@ load_cga(cache_directory, refresh_cache = FALSE, verbose = TRUE)
 \item{verbose}{logical: show progress messages?}
 }
 \value{
-An object of class \code{SQLiteDriver}
+An object of class \code{SQLiteConnection}
 }
 \description{
 Load the Composite Gazetteer of Antarctica

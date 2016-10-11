@@ -20,7 +20,7 @@ cga_gazetteers(cga)
 cga_display_scales(cga)
 }
 \arguments{
-\item{cga}{SQLiteDriver: as returned by \code{\link{load_cga}}}
+\item{cga}{SQLiteConnection: as returned by \code{\link{load_cga}}}
 
 \item{query}{string: SQL-syntax search string. Matches are case-insensitive}
 
