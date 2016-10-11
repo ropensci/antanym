@@ -48,12 +48,12 @@ names_near <- function(cga,loc,max_distance) {
 #'  search_names(g,"Ufs%",feature_type="Island")
 #'  search_names(g,"Ufs%",feature_type="Island",origin_country="Australia")
 #'
-#'  ## using dplyr or magrittr
-#'  g %>% search_names("Ross%",feature_type="Ice shelf")
-#'
 #'  nms <- search_names(gg,display_scale="2000000",origin_country="Australia")
 #'  with(nms,plot(longitude,latitude))
 #'  with(nms,text(longitude,latitude,place_name))
+#'
+#'  ## using dplyr or magrittr
+#'  g %>% search_names("Ross%",feature_type="Ice shelf")
 #' }
 #' @export
 search_names <- function(cga,query,feature_type,origin_country,origin_gazetteer,display_scale) {
