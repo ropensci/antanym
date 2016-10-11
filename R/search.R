@@ -62,16 +62,16 @@ subset_names <- function(cga,query,extent,feature_type,origin_country,origin_gaz
     idx <- rep(TRUE,nrow(cga))
     out <- cga
     if (!missing(query))
-        out <- filter(out,grepl(query,out$place_name,ignore.case=TRUE))
+        out <- filter_(out,~grepl(query,place_name,ignore.case=TRUE))
     if (!missing(extent)) {
-        out <- filter(out,longitude>=extent[1] & longitude<=extent[2] & latitude>=extent[3] & latitude<=extent[4])
+        out <- filter_(out,~longitude>=extent[1] & longitude<=extent[2] & latitude>=extent[3] & latitude<=extent[4])
     }
     if (!missing(feature_type))
-        out <- filter(out,feature_type_name==feature_type)
+        out <- filter_(out,~feature_type_name==feature_type)
     if (!missing(origin_country))
-        out <- filter(out,out$country_name==origin_country)
+        out <- filter_(out,~country_name==origin_country)
     if (!missing(origin_gazetteer))
-        out <- filter(out,out$gazetteer==origin_gazetteer)
+        out <- filter_(out,~gazetteer==origin_gazetteer)
     if (!missing(display_scale)) {
         dscol <- paste0("_display_scale_",display_scale)
         if (!dscol %in% names(cga)) stop("display_scale ",display_scale," not valid: see cga_display_scales()")
