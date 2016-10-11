@@ -4,7 +4,7 @@
 \alias{load_cga}
 \title{Load the Composite Gazetteer of Antarctica}
 \usage{
-load_cga(cache_directory, refresh_cache = FALSE, verbose = TRUE)
+load_cga(cache_directory, refresh_cache = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{cache_directory}{string: (optional) cache the CGA data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist}
@@ -17,7 +17,8 @@ load_cga(cache_directory, refresh_cache = FALSE, verbose = TRUE)
 A data.frame
 }
 \description{
-Load the Composite Gazetteer of Antarctica
+The SCAR Composite Gazetteer of Antarctica (CGA), as the name suggests, is a composite or collection of all those names of features that have been submitted by representatives of national gazetteers. It includes the names of features south of 60° S, both terrestrial and undersea or under-ice. The CGA is a compilation of recognized features, with a numerical Unique Identifier code (UID) assigned to each of them, jointly with a list of applicable place names.
+Since 2008, Italy and Australia jointly have managed the CGA, the former taking care of the editing, the latter maintaining database and website. The SCAR Standing Committee on Antarctic Geographic Information (SCAGI) coordinates the project.
 }
 \examples{
 \dontrun{
