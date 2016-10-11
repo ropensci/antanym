@@ -3,6 +3,7 @@
 \name{search_names}
 \alias{cga_countries}
 \alias{cga_display_scales}
+\alias{cga_feature_types}
 \alias{cga_gazetteers}
 \alias{search_names}
 \title{Search for place names}
@@ -11,6 +12,8 @@ search_names(cga, query, feature_type, origin_country, origin_gazetteer,
   display_scale)
 
 cga_countries(cga)
+
+cga_feature_types(cga)
 
 cga_gazetteers(cga)
 
@@ -21,7 +24,7 @@ cga_display_scales(cga)
 
 \item{query}{string: SQL-syntax search string. Matches are case-insensitive}
 
-\item{feature_type}{string: if provided, search only for place names corresponding to features of this type}
+\item{feature_type}{string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{cga_feature_types}}}
 
 \item{origin_country}{string: if provided, search only for place names originating from this country. For valid values see \code{\link{cga_countries}}}
 
@@ -41,6 +44,9 @@ Search for place names
  search_names(g,"Ufs\%")
  search_names(g,"Ufs\%",feature_type="Island")
  search_names(g,"Ufs\%",feature_type="Island",origin_country="Australia")
+
+ ## using dplyr or magrittr
+ g \%>\% search_names("Ross\%",feature_type="Ice shelf")
 
  nms <- search_names(gg,display_scale="2000000",origin_country="Australia")
  with(nms,plot(longitude,latitude))

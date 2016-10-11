@@ -23,6 +23,9 @@ Find placenames near a given location
 \dontrun{
  g <- load_cga(cache_directory="c:/temp/cga")
  names_near(g,c(110,-66),10)
+
+ ## using dplyr or magrittr
+ gg \%>\% names_near(c(100,-66),10)
 }
 
 }

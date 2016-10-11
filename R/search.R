@@ -13,6 +13,9 @@
 #' \dontrun{
 #'  g <- load_cga(cache_directory="c:/temp/cga")
 #'  names_near(g,c(110,-66),10)
+#'
+#'  ## using dplyr or magrittr
+#'  gg %>% names_near(c(100,-66),10)
 #' }
 #'
 #' @export
@@ -29,7 +32,7 @@ names_near <- function(cga,loc,max_distance) {
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param cga SQLiteDriver: as returned by \code{\link{load_cga}}
 #' @param query string: SQL-syntax search string. Matches are case-insensitive
-#' @param feature_type string: if provided, search only for place names corresponding to features of this type
+#' @param feature_type string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{cga_feature_types}}
 #' @param origin_country string: if provided, search only for place names originating from this country. For valid values see \code{\link{cga_countries}}
 #' @param origin_gazetteer string: if provided, search only for place names originating from this source gazetteer. For valid values see \code{\link{cga_gazetteers}}
 #' @param display_scale string: if provided, search only for place names that have been marked for display at this map scale. For valid values see \code{\link{cga_display_scales}}
@@ -44,6 +47,9 @@ names_near <- function(cga,loc,max_distance) {
 #'  search_names(g,"Ufs%")
 #'  search_names(g,"Ufs%",feature_type="Island")
 #'  search_names(g,"Ufs%",feature_type="Island",origin_country="Australia")
+#'
+#'  ## using dplyr or magrittr
+#'  g %>% search_names("Ross%",feature_type="Ice shelf")
 #'
 #'  nms <- search_names(gg,display_scale="2000000",origin_country="Australia")
 #'  with(nms,plot(longitude,latitude))
@@ -75,7 +81,12 @@ search_names <- function(cga,query,feature_type,origin_country,origin_gazetteer,
 
 #' @rdname search_names
 cga_countries <- function(cga) {
-    as.character(na.omit(dbGetQuery(cga,sprintf("select distinct country_name from cga order by country_name"))$country_name))
+    sort(as.character(na.omit(dbGetQuery(cga,sprintf("select distinct country_name from cga order by country_name"))$country_name)))
+}
+
+#' @rdname search_names
+cga_feature_types <- function(cga) {
+    sort(as.character(na.omit(dbGetQuery(cga,sprintf("select distinct feature_type_name from cga order by country_name"))$feature_type_name)))
 }
 
 #' @rdname search_names
