@@ -30,8 +30,9 @@ names_near <- function(cga,loc,max_distance) {
 #' @param cga SQLiteDriver: as returned by \code{\link{load_cga}}
 #' @param query string: SQL-syntax search string. Matches are case-insensitive
 #' @param feature_type string: if provided, search only for place names corresponding to features of this type
-#' @param origin_country string: if provided, search only for place names originating from this country. For valid entries see \code{\link{cga_countries}}
-#' @param origin_gazetteer string: if provided, search only for place names originating from this source gazetteer. For valid entries see \code{\link{cga_gazetteers}}
+#' @param origin_country string: if provided, search only for place names originating from this country. For valid values see \code{\link{cga_countries}}
+#' @param origin_gazetteer string: if provided, search only for place names originating from this source gazetteer. For valid values see \code{\link{cga_gazetteers}}
+#' @param display_scale string: if provided, search only for place names that have been marked for display at this map scale. For valid values see \code{\link{cga_display_scales}}
 #'
 #' @return data.frame of results
 #'
@@ -43,19 +44,32 @@ names_near <- function(cga,loc,max_distance) {
 #'  search_names(g,"Ufs%")
 #'  search_names(g,"Ufs%",feature_type="Island")
 #'  search_names(g,"Ufs%",feature_type="Island",origin_country="Australia")
+#'
+#'  nms <- search_names(gg,display_scale="2000000",origin_country="Australia")
+#'  with(nms,plot(longitude,latitude))
+#'  with(nms,text(longitude,latitude,place_name))
 #' }
 #' @export
-search_names <- function(cga,query,feature_type,origin_country,origin_gazetteer) {
-    name_match_op <- ifelse(grepl("%",query),"LIKE","=")
-    sstr <- sprintf("select * from cga where lower(place_name) %s '%s'",name_match_op,tolower(query))
+search_names <- function(cga,query,feature_type,origin_country,origin_gazetteer,display_scale) {
+    sstr <- "select * from cga"
     where <- c()
+    if (!missing(query)) {
+        name_match_op <- ifelse(grepl("%",query),"LIKE","=")
+        where <- c(where,sprintf("lower(place_name) %s '%s'",name_match_op,tolower(query)))
+    }
     if (!missing(feature_type))
         where <- c(where,sprintf("feature_type_name='%s'",feature_type))
     if (!missing(origin_country))
         where <- c(where,sprintf("country_name='%s'",origin_country))
     if (!missing(origin_gazetteer))
         where <- c(where,sprintf("gazetteer='%s'",origin_gazetteer))
-    if (length(where)) sstr <- paste0(sstr," and ",paste(where,collapse=" and "))
+    if (!missing(display_scale)) {
+        dscol <- paste0("_display_scale_",display_scale)
+        nms <- names(dbGetQuery(cga,"select * from cga limit 0"))
+        if (!dscol %in% nms) stop("display_scale ",display_scale," not valid: see cga_display_scales()")
+        where <- c(where,sprintf("%s=1",dscol))
+    }
+    if (length(where)) sstr <- paste0(sstr," where ",paste(where,collapse=" and "))
     dbGetQuery(cga,sstr)[,cga_names_to_show()]
 }
 
@@ -69,4 +83,9 @@ cga_gazetteers <- function(cga) {
     as.character(na.omit(dbGetQuery(cga,sprintf("select distinct gazetteer from cga order by gazetteer"))$gazetteer))
 }
 
+#' @rdname search_names
+cga_display_scales <- function(cga) {
+    nms <- names(dbGetQuery(cga,"select * from cga limit 0"))
+    sort(gsub("^_display_scale_","",nms[grep("^_display_scale",nms)]))
+}
 

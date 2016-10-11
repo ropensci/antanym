@@ -2,15 +2,19 @@
 % Please edit documentation in R/search.R
 \name{search_names}
 \alias{cga_countries}
+\alias{cga_display_scales}
 \alias{cga_gazetteers}
 \alias{search_names}
 \title{Search for place names}
 \usage{
-search_names(cga, query, feature_type, origin_country, origin_gazetteer)
+search_names(cga, query, feature_type, origin_country, origin_gazetteer,
+  display_scale)
 
 cga_countries(cga)
 
 cga_gazetteers(cga)
+
+cga_display_scales(cga)
 }
 \arguments{
 \item{cga}{SQLiteDriver: as returned by \code{\link{load_cga}}}
@@ -19,9 +23,11 @@ cga_gazetteers(cga)
 
 \item{feature_type}{string: if provided, search only for place names corresponding to features of this type}
 
-\item{origin_country}{string: if provided, search only for place names originating from this country. For valid entries see \code{\link{cga_countries}}}
+\item{origin_country}{string: if provided, search only for place names originating from this country. For valid values see \code{\link{cga_countries}}}
 
-\item{origin_gazetteer}{string: if provided, search only for place names originating from this source gazetteer. For valid entries see \code{\link{cga_gazetteers}}}
+\item{origin_gazetteer}{string: if provided, search only for place names originating from this source gazetteer. For valid values see \code{\link{cga_gazetteers}}}
+
+\item{display_scale}{string: if provided, search only for place names that have been marked for display at this map scale. For valid values see \code{\link{cga_display_scales}}}
 }
 \value{
 data.frame of results
@@ -35,6 +41,10 @@ Search for place names
  search_names(g,"Ufs\%")
  search_names(g,"Ufs\%",feature_type="Island")
  search_names(g,"Ufs\%",feature_type="Island",origin_country="Australia")
+
+ nms <- search_names(gg,display_scale="2000000",origin_country="Australia")
+ with(nms,plot(longitude,latitude))
+ with(nms,text(longitude,latitude,place_name))
 }
 }
 \references{
