@@ -5,7 +5,7 @@ Authors@R: c(person("Ben", "Raymond", email = "ben.raymond@aad.gov.au", role = c
 	     person("Michael", "Sumner", email = "michael.sumner@aad.gov.au", role = "aut")
 	     )
 Description: Access to the SCAR Composite Gazetteer of Antarctica and functions
-    for searching those place names
+    for searching those place names.
 Depends:
     R (>= 3.3.0)
 License: MIT + file LICENSE
@@ -13,7 +13,9 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   assertthat,
-  readr
+  geosphere,
+  readr,
+  RSQLite
 Suggests:
   testthat
 RoxygenNote: 5.0.1

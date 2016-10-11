@@ -5,7 +5,7 @@
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used
 #' @param verbose logical: show progress messages?
 #'
-#' @return data.table
+#' @return An object of class \code{SQLiteDriver}
 #'
 #' @examples
 #' \dontrun{
@@ -41,6 +41,14 @@ load_cga <- function(cache_directory,refresh_cache=FALSE,verbose=TRUE) {
     } else {
         if (verbose) cat("using cached copy of cga: ",local_file_name,"\n")
     }
-    readr::read_csv(local_file_name)
+    g <- readr::read_csv(local_file_name)
+
+    ## split display scales into separate columns
+    #temp <- lapply(g$display_scales,strsplit,split=",")
+    #all_scales <- na.omit(as.numeric(unique(sapply(temp,function(z)z[[1]][[1]]))))
+
+    con <- dbConnect(RSQLite::SQLite(),tempfile(fileext=".sqlite"))
+    dbWriteTable(con,"cga",g)
+    con
 }
 
