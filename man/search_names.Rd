@@ -8,7 +8,7 @@
 \alias{search_names}
 \title{Search for place names}
 \usage{
-search_names(cga, query, feature_type, origin_country, origin_gazetteer,
+search_names(cga, query, extent, feature_type, origin_country, origin_gazetteer,
   display_scale)
 
 cga_countries(cga)
@@ -23,6 +23,8 @@ cga_display_scales(cga)
 \item{cga}{SQLiteConnection: as returned by \code{\link{load_cga}}}
 
 \item{query}{string: SQL-syntax search string. Matches are case-insensitive}
+
+\item{extent}{raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box}
 
 \item{feature_type}{string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{cga_feature_types}}}
 
@@ -45,7 +47,7 @@ Search for place names
  search_names(g,"Ufs\%",feature_type="Island")
  search_names(g,"Ufs\%",feature_type="Island",origin_country="Australia")
 
- nms <- search_names(gg,display_scale="2000000",origin_country="Australia")
+ nms <- search_names(gg,extent=c(100,120,-70,-65),display_scale="2000000",origin_country="Australia")
  with(nms,plot(longitude,latitude))
  with(nms,text(longitude,latitude,place_name))
 
