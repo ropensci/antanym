@@ -20,14 +20,13 @@
 #'
 #' @export
 names_near <- function(cga,loc,max_distance) {
-    ## this of course should be done as a spatial query! but for now:
-    temp <- select_(cga,"longitude","latitude","gaz_id")
-    dist <- geosphere::distVincentySphere(loc,temp)/1e3
-    filter(cga,cga$gaz_id %in% na.omit(temp$gaz_id[dist<=max_distance]))[,cga_names_to_show()]
+    dist <- geosphere::distVincentySphere(loc,cga[,c("longitude","latitude")])/1e3
+    dist[is.na(dist)] <- Inf
+    cga[dist<=max_distance,cga_names_to_show()]
 }
 
 
-#' Search for place names
+#' Subset place names by various criteria
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param cga data.frame: as returned by \code{\link{load_cga}}
@@ -45,20 +44,21 @@ names_near <- function(cga,loc,max_distance) {
 #' @examples
 #' \dontrun{
 #'  g <- load_cga(cache_directory="c:/temp/cga")
-#'  search_names(g,"Ufs")
-#'  search_names(g,"Ufs",feature_type="Island")
-#'  search_names(g,"Ufs",feature_type="Island",origin_country="Australia")
+#'  subset_names(g,"Ufs")
+#'  subset_names(g,"Ufs",feature_type="Island")
+#'  subset_names(g,"Ufs",feature_type="Island",origin_country="Australia")
 #'
-#'  nms <- search_names(gg,extent=c(100,120,-70,-65),display_scale="2000000",
+#'  nms <- subset_names(gg,extent=c(100,120,-70,-65),display_scale="2000000",
 #'     origin_country="Australia")
 #'  with(nms,plot(longitude,latitude))
 #'  with(nms,text(longitude,latitude,place_name))
 #'
 #'  ## using dplyr or magrittr
-#'  g %>% search_names("Ross",feature_type="Ice shelf")
+#'  g %>% subset_names("Ross",feature_type="Ice shelf")
+#'  g %>% names_near(c(100,-66),20) %>% subset_names(feature_type="Island")
 #' }
 #' @export
-search_names <- function(cga,query,extent,feature_type,origin_country,origin_gazetteer,display_scale) {
+subset_names <- function(cga,query,extent,feature_type,origin_country,origin_gazetteer,display_scale) {
     idx <- rep(TRUE,nrow(cga))
     out <- cga
     if (!missing(query))
@@ -80,22 +80,22 @@ search_names <- function(cga,query,extent,feature_type,origin_country,origin_gaz
     out[,cga_names_to_show()]
 }
 
-#' @rdname search_names
+#' @rdname subset_names
 cga_countries <- function(cga) {
     sort(na.omit(distinct_(cga,"country_name"))$country_name)
 }
 
-#' @rdname search_names
+#' @rdname subset_names
 cga_feature_types <- function(cga) {
     sort(as.character(na.omit(distinct_(cga,"feature_type_name"))$feature_type_name))
 }
 
-#' @rdname search_names
+#' @rdname subset_names
 cga_gazetteers <- function(cga) {
     sort(as.character(na.omit(distinct_(cga,"gazetteer"))$gazetteer))
 }
 
-#' @rdname search_names
+#' @rdname subset_names
 cga_display_scales <- function(cga) {
     nms <- names(cga)
     sort(gsub("^_display_scale_","",nms[grep("^_display_scale",nms)]))

@@ -2,7 +2,7 @@
 
 export(load_cga)
 export(names_near)
-export(search_names)
+export(subset_names)
 importFrom(assertthat,assert_that)
 importFrom(assertthat,is.flag)
 importFrom(assertthat,is.string)
