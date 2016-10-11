@@ -2,6 +2,7 @@
 
 export(load_cga)
 export(names_near)
+export(search_names)
 importFrom(RSQLite,SQLite)
 importFrom(RSQLite,dbConnect)
 importFrom(RSQLite,dbGetQuery)

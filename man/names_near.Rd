@@ -14,7 +14,7 @@ names_near(cga, loc, max_distance)
 \item{max_distance}{numeric: maximum search distance in kilometres}
 }
 \value{
-data.frame
+data.frame of results
 }
 \description{
 Find placenames near a given location
