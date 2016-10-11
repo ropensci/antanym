@@ -49,7 +49,8 @@ names_near <- function(cga,loc,max_distance) {
 #'  search_names(g,"Ufs%",feature_type="Island")
 #'  search_names(g,"Ufs%",feature_type="Island",origin_country="Australia")
 #'
-#'  nms <- search_names(gg,extent=c(100,120,-70,-65),display_scale="2000000",origin_country="Australia")
+#'  nms <- search_names(gg,extent=c(100,120,-70,-65),display_scale="2000000",
+#'     origin_country="Australia")
 #'  with(nms,plot(longitude,latitude))
 #'  with(nms,text(longitude,latitude,place_name))
 #'
