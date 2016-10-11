@@ -1,0 +1,21 @@
+---
+title: "Composite Gazetteer of Antarctica"
+author: "Ben Raymond, Michael Sumner"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Background
+
+General blurb about the CGA.
+
+# Examples
+
+```{r eval=FALSE}
+library(cga)
+g <- load_cga()
+```
