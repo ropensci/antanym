@@ -18,8 +18,9 @@ load_cga <- function(cache_directory,refresh_cache=FALSE,verbose=TRUE) {
     assert_that(is.flag(verbose))
     do_download <- FALSE
     local_file_name <- "cga_data.csv"
-    download_url <- "http://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW_SIMPLIFIED&outputFormat=csv"
-    ## or for the complete set of columns "http://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW&outputFormat=csv"
+    ##download_url <- "http://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW_SIMPLIFIED&outputFormat=csv"
+    ## or for the complete set of columns
+    download_url <- "http://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW&outputFormat=csv"
     if (!missing(cache_directory)) {
         assert_that(is.string(cache_directory))
         if (!dir.exists(cache_directory)) {
@@ -47,11 +48,17 @@ load_cga <- function(cache_directory,refresh_cache=FALSE,verbose=TRUE) {
     g <- readr::read_csv(local_file_name)
 
     ## split display scales into separate columns
-    #temp <- lapply(g$display_scales,strsplit,split=",")
-    #all_scales <- na.omit(as.numeric(unique(sapply(temp,function(z)z[[1]][[1]]))))
+    temp <- lapply(g$display_scales,strsplit,split=",")
+    all_scales <- Filter(nchar,unique(sapply(temp,function(z)z[[1]][[1]])))
+    temp <- as.data.frame(lapply(all_scales,function(sc)sapply(temp,function(z)isTRUE(any(sc==z[[1]])))))
+    names(temp) <- paste0("_display_scale_",all_scales)
+    g <- cbind(g,temp)
 
     con <- dbConnect(RSQLite::SQLite(),tempfile(fileext=".sqlite"))
     dbWriteTable(con,"cga",g)
     con
 }
 
+
+## internal function, used to control the subset of columns returned to the user
+cga_names_to_show <- function() c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id","display_scales")

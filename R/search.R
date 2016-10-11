@@ -20,7 +20,7 @@ names_near <- function(cga,loc,max_distance) {
     ## this of course should be done as a spatial query! but for now:
     temp <- dbGetQuery(cga,"select longitude,latitude,gaz_id from cga")
     dist <- geosphere::distVincentySphere(loc,temp)/1e3
-    dbGetQuery(cga,sprintf("select * from cga where gaz_id in (%s)",paste(na.omit(temp$gaz_id[dist<=max_distance]),collapse=",")))
+    dbGetQuery(cga,sprintf("select * from cga where gaz_id in (%s)",paste(na.omit(temp$gaz_id[dist<=max_distance]),collapse=",")))[,cga_names_to_show()]
 }
 
 
@@ -56,7 +56,7 @@ search_names <- function(cga,query,feature_type,origin_country,origin_gazetteer)
     if (!missing(origin_gazetteer))
         where <- c(where,sprintf("gazetteer='%s'",origin_gazetteer))
     if (length(where)) sstr <- paste0(sstr," and ",paste(where,collapse=" and "))
-    dbGetQuery(cga,sstr)
+    dbGetQuery(cga,sstr)[,cga_names_to_show()]
 }
 
 #' @rdname search_names
