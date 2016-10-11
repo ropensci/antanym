@@ -13,9 +13,9 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   assertthat,
+  dplyr,
   geosphere,
-  readr,
-  RSQLite
+  readr
 Suggests:
   testthat,
     knitr,

@@ -7,7 +7,7 @@
 names_near(cga, loc, max_distance)
 }
 \arguments{
-\item{cga}{SQLiteConnection: as returned by \code{\link{load_cga}}}
+\item{cga}{data.frame: as returned by \code{\link{load_cga}}}
 
 \item{loc}{numeric: longitude and latitude of target location}
 
@@ -25,7 +25,7 @@ Find placenames near a given location
  names_near(g,c(110,-66),10)
 
  ## using dplyr or magrittr
- gg \%>\% names_near(c(100,-66),10)
+ g \%>\% names_near(c(100,-66),20)
 }
 
 }

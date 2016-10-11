@@ -5,7 +5,7 @@
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used
 #' @param verbose logical: show progress messages?
 #'
-#' @return An object of class \code{SQLiteConnection}
+#' @return A data.frame
 #'
 #' @examples
 #' \dontrun{
@@ -53,10 +53,7 @@ load_cga <- function(cache_directory,refresh_cache=FALSE,verbose=TRUE) {
     temp <- as.data.frame(lapply(all_scales,function(sc)sapply(temp,function(z)isTRUE(any(sc==z[[1]])))))
     names(temp) <- paste0("_display_scale_",all_scales)
     g <- cbind(g,temp)
-
-    con <- dbConnect(RSQLite::SQLite(),tempfile(fileext=".sqlite"))
-    dbWriteTable(con,"cga",g)
-    con
+    g
 }
 
 

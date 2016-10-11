@@ -20,9 +20,9 @@ cga_gazetteers(cga)
 cga_display_scales(cga)
 }
 \arguments{
-\item{cga}{SQLiteConnection: as returned by \code{\link{load_cga}}}
+\item{cga}{data.frame: as returned by \code{\link{load_cga}}}
 
-\item{query}{string: SQL-syntax search string. Matches are case-insensitive}
+\item{query}{string: regular expression to match on place name. Matches are case-insensitive}
 
 \item{extent}{raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box}
 
@@ -43,9 +43,9 @@ Search for place names
 \examples{
 \dontrun{
  g <- load_cga(cache_directory="c:/temp/cga")
- search_names(g,"Ufs\%")
- search_names(g,"Ufs\%",feature_type="Island")
- search_names(g,"Ufs\%",feature_type="Island",origin_country="Australia")
+ search_names(g,"Ufs")
+ search_names(g,"Ufs",feature_type="Island")
+ search_names(g,"Ufs",feature_type="Island",origin_country="Australia")
 
  nms <- search_names(gg,extent=c(100,120,-70,-65),display_scale="2000000",
     origin_country="Australia")
@@ -53,7 +53,7 @@ Search for place names
  with(nms,text(longitude,latitude,place_name))
 
  ## using dplyr or magrittr
- g \%>\% search_names("Ross\%",feature_type="Ice shelf")
+ g \%>\% search_names("Ross",feature_type="Ice shelf")
 }
 }
 \references{
