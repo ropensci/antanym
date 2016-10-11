@@ -45,7 +45,10 @@ load_cga <- function(cache_directory,refresh_cache=FALSE,verbose=TRUE) {
     } else {
         if (verbose) cat("using cached copy of cga: ",local_file_name,"\n")
     }
-    g <- readr::read_csv(local_file_name)
+    if (verbose)
+        g <- readr::read_csv(local_file_name)
+    else
+        suppressMessages(g <- readr::read_csv(local_file_name))
 
     ## split display scales into separate columns
     temp <- lapply(g$display_scales,strsplit,split=",")
