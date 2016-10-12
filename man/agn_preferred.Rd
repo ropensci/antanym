@@ -20,7 +20,14 @@ Find one name per feature according to specified preferences
 \examples{
 \dontrun{
  g <- agn_read(cache_directory="c:/temp/gaz")
- g \%>\% agn_filter("^Ufs") \%>\% agn_preferred(origin_country=c("United States of America","Australia"))
+
+ ## get a single name per feature, preferring the
+ ##  Polish name where there is one
+ pnames <- agn_preferred(g,"Poland")
+
+ ## names starting with "Sm", preferring US names then
+ ##  Australian ones (then whatever is available after that)
+ g \%>\% agn_filter("^Sm") \%>\% agn_preferred(origin_country=c("United States of America","Australia"))
 }
 
 }
