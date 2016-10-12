@@ -25,12 +25,12 @@ library(agn)
 library(dplyr)
 g <- agn_read()
 
-## islands near 100E, 66S
+## islands within 20km of 100E, 66S
 g %>% agn_near(c(100,-66),20) %>% agn_filter(feature_type="Island")
 
 ## one name per feature
 ## names starting with "Sm", preferring the Polish name where there is one
-g %>% agn_filter("^Sm") %>% agn_preferred(origin_country=c("Poland"))
+g %>% agn_filter("^Sm") %>% agn_preferred(origin_country="Poland")
 ```
 
 
