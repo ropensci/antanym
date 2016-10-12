@@ -15,7 +15,11 @@ General blurb about the names, including the CGA.
 
 # Examples
 
-```{r}
+```{r chunk_name,eval=TRUE,echo=TRUE,message=TRUE,warning=TRUE,tidy=FALSE,cache=TRUE,include=TRUE,dpi=72,fig.width=7,fig.height=7,fig.align="center",results="markup"}
+
+```
+
+```{r message=FALSE,warning=FALSE}
 library(agn)
 library(dplyr)
 g <- agn_read()
@@ -24,11 +28,45 @@ g <- agn_read()
 ## Simple leaflet demo
 ```{r}
 library(leaflet)
-g$narrative[is.na(g$narrative)] <- "" ## replace NAs with empty strings
+
+## find single name per feature, preferring United Kingdom
+##  names where available
+temp <- g %>% agn_preferred("United Kingdom")
+
+## only rows with valid locations
+temp <- temp[!is.na(temp$longitude) & !is.na(temp$latitude),]
+
+## replace NAs with empty strings in narrative
+temp$narrative[is.na(temp$narrative)] <- ""
+
 ## formatted popup HTML
-popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br />Longitude %g, latitude %g</p><p>%s</p>",g$place_name,g$country_name,g$longitude,g$latitude,g$narrative)
-idx <- !is.na(g$longitude) & !is.na(g$latitude)
+popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br />Longitude %g, latitude %g</p><p>%s</p>",temp$place_name,temp$country_name,temp$longitude,temp$latitude,temp$narrative)
+
 m <- leaflet() %>%
   addProviderTiles("Esri.WorldImagery",options=providerTileOptions(noWrap=TRUE)) %>%
-  addMarkers(lng=g$longitude[idx],lat=g$latitude[idx],group="placenames",clusterOptions = markerClusterOptions(),popup=popup[idx],label=g$place_name,labelOptions=labelOptions(textOnly=TRUE))
+  addMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
+    clusterOptions = markerClusterOptions(),popup=popup,
+    label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
+## not displayed here
+#print(m)
+```
+
+```{r eval=FALSE,include=FALSE}
+library(mapview)
+## only rows with valid locations
+idx <- !is.na(g$longitude) & !is.na(g$latitude)
+
+temp <- g[idx,]
+coordinates(temp) <- ~longitude+latitude
+proj4string(temp) <- CRS("+proj=longlat +ellps=WGS84")
+
+## replace NAs with empty strings
+temp$narrative[is.na(temp$narrative)] <- ""
+## formatted popup HTML
+popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br />Longitude %g, latitude %g</p><p>%s</p>",temp$place_name,temp$country_name,temp$longitude,temp$latitude,temp$narrative)
+
+mapview(as(temp,"SpatialPoints"),popup=popupTable(temp,zcol=c("place_name","country_name","narrative")))
+
+label=temp$place_name)
+
 ```
