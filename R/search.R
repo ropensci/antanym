@@ -105,6 +105,6 @@ agn_gazetteers <- function(gaz) {
 #' @export
 agn_display_scales <- function(gaz) {
     nms <- names(gaz)
-    sort(gsub("^display_scale_","",nms[grep("^display_scale",nms)]))
+    sort(gsub("^display_scale_","",nms[grep("^display_scale_",nms)]))
 }
 
