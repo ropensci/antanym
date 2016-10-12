@@ -4,10 +4,10 @@
 \alias{agn_near}
 \title{Find placenames near a given location}
 \usage{
-agn_near(cga, loc, max_distance)
+agn_near(gaz, loc, max_distance)
 }
 \arguments{
-\item{cga}{data.frame: as returned by \code{\link{agn_read}}}
+\item{gaz}{data.frame: as returned by \code{\link{agn_read}}}
 
 \item{loc}{numeric: longitude and latitude of target location}
 
@@ -21,7 +21,7 @@ Find placenames near a given location
 }
 \examples{
 \dontrun{
- g <- agn_read(cache_directory="c:/temp/cga")
+ g <- agn_read(cache_directory="c:/temp/gaz")
  agn_near(g,c(110,-66),10)
 
  ## using dplyr or magrittr

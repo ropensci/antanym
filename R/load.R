@@ -66,4 +66,4 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
 gazetteers <- function() c("cga")
 
 ## internal function, used to control the subset of columns returned to the user
-cga_names_to_show <- function(cga) intersect(names(cga),c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(cga)[grep("^display_scale_",names(cga))]))
+gaz_names_to_show <- function(gaz) intersect(names(gaz),c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(gaz)[grep("^display_scale_",names(gaz))]))

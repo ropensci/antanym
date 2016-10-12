@@ -1,7 +1,7 @@
 #' Find placenames near a given location
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param cga data.frame: as returned by \code{\link{agn_read}}
+#' @param gaz data.frame: as returned by \code{\link{agn_read}}
 #' @param loc numeric: longitude and latitude of target location
 #' @param max_distance numeric: maximum search distance in kilometres
 #'
@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \dontrun{
-#'  g <- agn_read(cache_directory="c:/temp/cga")
+#'  g <- agn_read(cache_directory="c:/temp/gaz")
 #'  agn_near(g,c(110,-66),10)
 #'
 #'  ## using dplyr or magrittr
@@ -19,23 +19,23 @@
 #' }
 #'
 #' @export
-agn_near <- function(cga,loc,max_distance) {
-    dist <- geosphere::distVincentySphere(loc,cga[,c("longitude","latitude")])/1e3
+agn_near <- function(gaz,loc,max_distance) {
+    dist <- geosphere::distVincentySphere(loc,gaz[,c("longitude","latitude")])/1e3
     dist[is.na(dist)] <- Inf
-    cga[dist<=max_distance,cga_names_to_show(cga)]
+    gaz[dist<=max_distance,gaz_names_to_show(gaz)]
 }
 
 
 #' Subset place names by various criteria
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param cga data.frame: as returned by \code{\link{agn_read}}
+#' @param gaz data.frame: as returned by \code{\link{agn_read}}
 #' @param query string: regular expression to match on place name. Matches are case-insensitive
 #' @param extent raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box
-#' @param feature_type string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{cga_feature_types}}
-#' @param origin_country string: if provided, search only for place names originating from this country. For valid values see \code{\link{cga_countries}}
-#' @param origin_gazetteer string: if provided, search only for place names originating from this source gazetteer. For valid values see \code{\link{cga_gazetteers}}
-#' @param display_scale string: if provided, search only for place names that have been marked for display at this map scale. For valid values see \code{\link{cga_display_scales}}
+#' @param feature_type string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{agn_feature_types}}
+#' @param origin_country string: if provided, search only for place names originating from this country. For valid values see \code{\link{agn_countries}}
+#' @param origin_gazetteer string: if provided, search only for place names originating from this source gazetteer. For valid values see \code{\link{agn_gazetteers}}
+#' @param display_scale string: if provided, search only for place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}
 #'
 #' @return data.frame of results
 #'
@@ -43,7 +43,7 @@ agn_near <- function(cga,loc,max_distance) {
 #'
 #' @examples
 #' \dontrun{
-#'  g <- agn_read(cache_directory="c:/temp/cga")
+#'  g <- agn_read(cache_directory="c:/temp/gaz")
 #'  agn_filter(g,"Ufs")
 #'  agn_filter(g,"Ufs",feature_type="Island")
 #'  agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia")
@@ -58,9 +58,9 @@ agn_near <- function(cga,loc,max_distance) {
 #'  g %>% agn_near(c(100,-66),20) %>% agn_filter(feature_type="Island")
 #' }
 #' @export
-agn_filter <- function(cga,query,extent,feature_type,origin_country,origin_gazetteer,display_scale) {
-    idx <- rep(TRUE,nrow(cga))
-    out <- cga
+agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazetteer,display_scale) {
+    idx <- rep(TRUE,nrow(gaz))
+    out <- gaz
     if (!missing(query))
         out <- filter_(out,~grepl(query,place_name,ignore.case=TRUE))
     if (!missing(extent)) {
@@ -75,30 +75,30 @@ agn_filter <- function(cga,query,extent,feature_type,origin_country,origin_gazet
     if (!missing(display_scale)) {
         dscol <- paste0("_display_scale_",display_scale)
         cat(dscol,"\n")
-        if (!dscol %in% names(cga)) stop("display_scale ",display_scale," not valid: see cga_display_scales()")
+        if (!dscol %in% names(gaz)) stop("display_scale ",display_scale," not valid: see agn_display_scales()")
         out <- out[out[,dscol]==TRUE,]
     }
-    out[,cga_names_to_show(out)]
+    out[,gaz_names_to_show(out)]
 }
 
 #' @rdname agn_filter
-cga_countries <- function(cga) {
-    sort(na.omit(distinct_(cga,"country_name"))$country_name)
+agn_countries <- function(gaz) {
+    sort(na.omit(distinct_(gaz,"country_name"))$country_name)
 }
 
 #' @rdname agn_filter
-cga_feature_types <- function(cga) {
-    sort(as.character(na.omit(distinct_(cga,"feature_type_name"))$feature_type_name))
+agn_feature_types <- function(gaz) {
+    sort(as.character(na.omit(distinct_(gaz,"feature_type_name"))$feature_type_name))
 }
 
 #' @rdname agn_filter
-cga_gazetteers <- function(cga) {
-    sort(as.character(na.omit(distinct_(cga,"gazetteer"))$gazetteer))
+agn_gazetteers <- function(gaz) {
+    sort(as.character(na.omit(distinct_(gaz,"gazetteer"))$gazetteer))
 }
 
 #' @rdname agn_filter
-cga_display_scales <- function(cga) {
-    nms <- names(cga)
+agn_display_scales <- function(gaz) {
+    nms <- names(gaz)
     sort(gsub("^_display_scale_","",nms[grep("^_display_scale",nms)]))
 }
 

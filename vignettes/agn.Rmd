@@ -15,7 +15,20 @@ General blurb about the names, including the CGA.
 
 # Examples
 
-```{r eval=FALSE}
+```{r}
 library(agn)
+library(dplyr)
 g <- agn_read()
+```
+
+## Simple leaflet demo
+```{r}
+library(leaflet)
+g$narrative[is.na(g$narrative)] <- "" ## replace NAs with empty strings
+## formatted popup HTML
+popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br />Longitude %g, latitude %g</p><p>%s</p>",g$place_name,g$country_name,g$longitude,g$latitude,g$narrative)
+idx <- !is.na(g$longitude) & !is.na(g$latitude)
+m <- leaflet() %>%
+  addProviderTiles("Esri.WorldImagery",options=providerTileOptions(noWrap=TRUE)) %>%
+  addMarkers(lng=g$longitude[idx],lat=g$latitude[idx],group="placenames",clusterOptions = markerClusterOptions(),popup=popup[idx],label=g$place_name,labelOptions=labelOptions(textOnly=TRUE))
 ```
