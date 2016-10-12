@@ -26,7 +26,7 @@ g <- agn_read()
 ```
 
 ## Simple leaflet demo
-```{r}
+```{r eval=FALSE}
 library(leaflet)
 
 ## find single name per feature, preferring United Kingdom
@@ -47,6 +47,7 @@ m <- leaflet() %>%
   addMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
     clusterOptions = markerClusterOptions(),popup=popup,
     label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
+
 ## not displayed here
 #print(m)
 ```
