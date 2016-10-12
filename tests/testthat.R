@@ -1,6 +1,6 @@
 library(testthat)
 library(dplyr)
-library(cga)
+library(agn)
 
-g <- load_cga()
-test_check("cga")
+g <- agn_read()
+test_check("agn")

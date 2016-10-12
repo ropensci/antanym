@@ -1,4 +1,4 @@
-[![Travis-CI Build Status](https://travis-ci.org/AustralianAntarcticDataCentre/cga.svg?branch=master)](https://travis-ci.org/AustralianAntarcticDataCentre/cga)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/AustralianAntarcticDataCentre/cga?branch=master&svg=true)](https://ci.appveyor.com/project/AustralianAntarcticDataCentre/cga)
-# cga
-R package for the Composite Gazetteer of Antarctica
+[![Travis-CI Build Status](https://travis-ci.org/AustralianAntarcticDataCentre/agn.svg?branch=master)](https://travis-ci.org/AustralianAntarcticDataCentre/agn)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/AustralianAntarcticDataCentre/agn?branch=master&svg=true)](https://ci.appveyor.com/project/AustralianAntarcticDataCentre/agn)
+# agn
+R package for Antarctic geographic place names, including the Composite Gazetteer of Antarctica

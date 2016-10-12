@@ -1,5 +1,5 @@
 ---
-title: "Composite Gazetteer of Antarctica"
+title: "Antarctic geographic placenames"
 author: "Ben Raymond, Michael Sumner"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -11,11 +11,11 @@ vignette: >
 
 # Background
 
-General blurb about the CGA.
+General blurb about the names, including the CGA.
 
 # Examples
 
 ```{r eval=FALSE}
-library(cga)
-g <- load_cga()
+library(agn)
+g <- agn_read()
 ```

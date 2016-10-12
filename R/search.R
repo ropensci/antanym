@@ -1,25 +1,25 @@
 #' Find placenames near a given location
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param cga data.frame: as returned by \code{\link{load_cga}}
+#' @param cga data.frame: as returned by \code{\link{agn_read}}
 #' @param loc numeric: longitude and latitude of target location
 #' @param max_distance numeric: maximum search distance in kilometres
 #'
 #' @return data.frame of results
 #'
-#' @seealso \code{\link{load_cga}}
+#' @seealso \code{\link{agn_read}}
 #'
 #' @examples
 #' \dontrun{
-#'  g <- load_cga(cache_directory="c:/temp/cga")
-#'  names_near(g,c(110,-66),10)
+#'  g <- agn_read(cache_directory="c:/temp/cga")
+#'  agn_near(g,c(110,-66),10)
 #'
 #'  ## using dplyr or magrittr
-#'  g %>% names_near(c(100,-66),20)
+#'  g %>% agn_near(c(100,-66),20)
 #' }
 #'
 #' @export
-names_near <- function(cga,loc,max_distance) {
+agn_near <- function(cga,loc,max_distance) {
     dist <- geosphere::distVincentySphere(loc,cga[,c("longitude","latitude")])/1e3
     dist[is.na(dist)] <- Inf
     cga[dist<=max_distance,cga_names_to_show()]
@@ -29,7 +29,7 @@ names_near <- function(cga,loc,max_distance) {
 #' Subset place names by various criteria
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param cga data.frame: as returned by \code{\link{load_cga}}
+#' @param cga data.frame: as returned by \code{\link{agn_read}}
 #' @param query string: regular expression to match on place name. Matches are case-insensitive
 #' @param extent raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box
 #' @param feature_type string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{cga_feature_types}}
@@ -39,26 +39,26 @@ names_near <- function(cga,loc,max_distance) {
 #'
 #' @return data.frame of results
 #'
-#' @seealso \code{\link{load_cga}}
+#' @seealso \code{\link{agn_read}}
 #'
 #' @examples
 #' \dontrun{
-#'  g <- load_cga(cache_directory="c:/temp/cga")
-#'  subset_names(g,"Ufs")
-#'  subset_names(g,"Ufs",feature_type="Island")
-#'  subset_names(g,"Ufs",feature_type="Island",origin_country="Australia")
+#'  g <- agn_read(cache_directory="c:/temp/cga")
+#'  agn_filter(g,"Ufs")
+#'  agn_filter(g,"Ufs",feature_type="Island")
+#'  agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia")
 #'
-#'  nms <- subset_names(gg,extent=c(100,120,-70,-65),display_scale="2000000",
+#'  nms <- agn_filter(gg,extent=c(100,120,-70,-65),display_scale="2000000",
 #'     origin_country="Australia")
 #'  with(nms,plot(longitude,latitude))
 #'  with(nms,text(longitude,latitude,place_name))
 #'
 #'  ## using dplyr or magrittr
-#'  g %>% subset_names("Ross",feature_type="Ice shelf")
-#'  g %>% names_near(c(100,-66),20) %>% subset_names(feature_type="Island")
+#'  g %>% agn_filter("Ross",feature_type="Ice shelf")
+#'  g %>% agn_near(c(100,-66),20) %>% agn_filter(feature_type="Island")
 #' }
 #' @export
-subset_names <- function(cga,query,extent,feature_type,origin_country,origin_gazetteer,display_scale) {
+agn_filter <- function(cga,query,extent,feature_type,origin_country,origin_gazetteer,display_scale) {
     idx <- rep(TRUE,nrow(cga))
     out <- cga
     if (!missing(query))
@@ -80,22 +80,22 @@ subset_names <- function(cga,query,extent,feature_type,origin_country,origin_gaz
     out[,cga_names_to_show()]
 }
 
-#' @rdname subset_names
+#' @rdname agn_filter
 cga_countries <- function(cga) {
     sort(na.omit(distinct_(cga,"country_name"))$country_name)
 }
 
-#' @rdname subset_names
+#' @rdname agn_filter
 cga_feature_types <- function(cga) {
     sort(as.character(na.omit(distinct_(cga,"feature_type_name"))$feature_type_name))
 }
 
-#' @rdname subset_names
+#' @rdname agn_filter
 cga_gazetteers <- function(cga) {
     sort(as.character(na.omit(distinct_(cga,"gazetteer"))$gazetteer))
 }
 
-#' @rdname subset_names
+#' @rdname agn_filter
 cga_display_scales <- function(cga) {
     nms <- names(cga)
     sort(gsub("^_display_scale_","",nms[grep("^_display_scale",nms)]))

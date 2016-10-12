@@ -1,17 +1,17 @@
-citHeader("To cite cga in publications use:")
+citHeader("To cite agn in publications use:")
 
 citEntry(entry = "Manual",
-  title        = "cga: An R package for the SCAR Composite Gazetteer of Antarctica",
+  title        = "agn: An R package for Antarctic geographic placenames",
   author       = personList(as.person("Ben Raymond"),
                    as.person("Michael Sumner")),
   year         = "2016",
-  url          = "https://github.com/AustralianAntarcticDataCentre/cga",
+  url          = "https://github.com/AustralianAntarcticDataCentre/agn",
 
   textVersion  =
   paste("Raymond B, Sumner MD (2016)",
-        "cga: An R package for the SCAR Composite Gazetteer of Antarctica.",
-        "https://github.com/AustralianAntarcticDataCentre/cga",
-        "Names data comes from: Secretariat SCAR (1992, updated 2016). Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)")
+        "agn: An R package for Antarctic geographic placenames.",
+        "https://github.com/AustralianAntarcticDataCentre/agn",
+        "CGA Names data comes from: Secretariat SCAR (1992, updated 2016). Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)")
 )
 
-citFooter("Names data comes from: Secretariat SCAR (1992, updated 2016). Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)")
+citFooter("CGA names data comes from: Secretariat SCAR (1992, updated 2016). Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)")

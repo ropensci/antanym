@@ -1,11 +1,11 @@
-Package: cga
-Title: An R package for the SCAR Composite Gazetteer of Antarctica
+Package: agn
+Title: An R package for the Antarctic geographic placenames, including the SCAR Composite Gazetteer of Antarctica
 Version: 0.0.1
 Authors@R: c(person("Ben", "Raymond", email = "ben.raymond@aad.gov.au", role = c("aut", "cre")),
 	     person("Michael", "Sumner", email = "michael.sumner@aad.gov.au", role = "aut")
 	     )
-Description: Access to the SCAR Composite Gazetteer of Antarctica and functions
-    for searching those place names.
+Description: Access to Antarctic geographic names, including the SCAR Composite Gazetteer of Antarctica,
+    and functions for searching those place names.
 Depends:
     R (>= 3.3.0)
 License: MIT + file LICENSE
