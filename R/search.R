@@ -22,7 +22,7 @@
 agn_near <- function(cga,loc,max_distance) {
     dist <- geosphere::distVincentySphere(loc,cga[,c("longitude","latitude")])/1e3
     dist[is.na(dist)] <- Inf
-    cga[dist<=max_distance,cga_names_to_show()]
+    cga[dist<=max_distance,cga_names_to_show(cga)]
 }
 
 
@@ -78,7 +78,7 @@ agn_filter <- function(cga,query,extent,feature_type,origin_country,origin_gazet
         if (!dscol %in% names(cga)) stop("display_scale ",display_scale," not valid: see cga_display_scales()")
         out <- out[out[,dscol]==TRUE,]
     }
-    out[,cga_names_to_show()]
+    out[,cga_names_to_show(out)]
 }
 
 #' @rdname agn_filter

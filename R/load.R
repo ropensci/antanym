@@ -58,7 +58,7 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
     temp <- lapply(g$display_scales,strsplit,split=",")
     all_scales <- Filter(nchar,unique(sapply(temp,function(z)z[[1]][[1]])))
     temp <- as.data.frame(lapply(all_scales,function(sc)sapply(temp,function(z)isTRUE(any(sc==z[[1]])))))
-    names(temp) <- paste0("_display_scale_",all_scales)
+    names(temp) <- paste0("display_scale_",gsub("000$","k",gsub("000000$","M",all_scales))) ## to e.g. display_scale_250k
     bind_cols(g,temp)
 }
 
@@ -66,4 +66,4 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
 gazetteers <- function() c("cga")
 
 ## internal function, used to control the subset of columns returned to the user
-cga_names_to_show <- function() c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id","display_scales")
+cga_names_to_show <- function(cga) intersect(names(cga),c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(cga)[grep("^display_scale_",names(cga))]))
