@@ -1,6 +1,6 @@
-#' \pkg{agn}
+#' \pkg{antanym}
 #'
-#' @name agn
+#' @name antanym
 #' @author Australian Antarctic Data Centre \email{aadc@@aad.gov.au}
 #' @docType package
 #' @references \url{http://data.aad.gov.au/aadc/gaz/scar}

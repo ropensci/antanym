@@ -20,9 +20,9 @@ General blurb about the names, including the CGA.
 ```
 
 ```{r message=FALSE,warning=FALSE}
-library(agn)
+library(antanym)
 library(dplyr)
-g <- agn_read()
+g <- an_read()
 ```
 
 ## Simple leaflet demo
@@ -31,7 +31,7 @@ library(leaflet)
 
 ## find single name per feature, preferring United Kingdom
 ##  names where available
-temp <- g %>% agn_preferred("United Kingdom")
+temp <- g %>% an_preferred("United Kingdom")
 
 ## only rows with valid locations
 temp <- temp[!is.na(temp$longitude) & !is.na(temp$latitude),]

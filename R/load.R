@@ -4,7 +4,7 @@
 #' Since 2008, Italy and Australia jointly have managed the CGA, the former taking care of the editing, the latter maintaining database and website. The SCAR Standing Committee on Antarctic Geographic Information (SCAGI) coordinates the project.
 #'
 #' @references \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
-#' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{agn_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers
+#' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers
 #' @param cache_directory string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used
 #' @param verbose logical: show progress messages?
@@ -13,11 +13,11 @@
 #'
 #' @examples
 #' \dontrun{
-#'  g <- agn_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache_directory="c:/temp/gaz")
 #' }
 #'
 #' @export
-agn_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose=FALSE) {
+an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose=FALSE) {
     assert_that(is.flag(refresh_cache))
     assert_that(is.flag(verbose))
     ## currently the gazetteers parameter does nothing, since we only have the CGA to load
@@ -74,9 +74,9 @@ agn_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbos
     bind_cols(g,temp)
 }
 
-#' @rdname agn_read
+#' @rdname an_read
 #' @export
-agn_gazetteers <- function() c("cga") ## for now, the CGA is the only gazetteer provided
+an_gazetteers <- function() c("cga") ## for now, the CGA is the only gazetteer provided
 
 ## internal function, used to control the subset of columns returned to the user
 gaz_names_to_show <- function(gaz) intersect(names(gaz),c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","cga_source_gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(gaz)[grep("^display_scale_",names(gaz))]))

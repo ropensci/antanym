@@ -1,6 +1,6 @@
 library(testthat)
 library(dplyr)
-library(agn)
+library(antanym)
 
-g <- agn_read()
-test_check("agn")
+g <- an_read()
+test_check("antanym")
