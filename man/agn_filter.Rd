@@ -47,7 +47,7 @@ Subset place names by various criteria
  agn_filter(g,"Ufs",feature_type="Island")
  agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia")
 
- nms <- agn_filter(gg,extent=c(100,120,-70,-65),display_scale="2000000",
+ nms <- agn_filter(g,extent=c(100,120,-70,-65),display_scale="2000000",
     origin_country="Australia")
  with(nms,plot(longitude,latitude))
  with(nms,text(longitude,latitude,place_name))

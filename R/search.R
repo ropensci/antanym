@@ -48,7 +48,7 @@ agn_near <- function(cga,loc,max_distance) {
 #'  agn_filter(g,"Ufs",feature_type="Island")
 #'  agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia")
 #'
-#'  nms <- agn_filter(gg,extent=c(100,120,-70,-65),display_scale="2000000",
+#'  nms <- agn_filter(g,extent=c(100,120,-70,-65),display_scale="2000000",
 #'     origin_country="Australia")
 #'  with(nms,plot(longitude,latitude))
 #'  with(nms,text(longitude,latitude,place_name))
@@ -74,8 +74,9 @@ agn_filter <- function(cga,query,extent,feature_type,origin_country,origin_gazet
         out <- filter_(out,~gazetteer==origin_gazetteer)
     if (!missing(display_scale)) {
         dscol <- paste0("_display_scale_",display_scale)
+        cat(dscol,"\n")
         if (!dscol %in% names(cga)) stop("display_scale ",display_scale," not valid: see cga_display_scales()")
-        out <- out[out[,dscol],]
+        out <- out[out[,dscol]==TRUE,]
     }
     out[,cga_names_to_show()]
 }
