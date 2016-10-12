@@ -11,13 +11,16 @@
 #' @examples
 #' \dontrun{
 #'  g <- agn_read(cache_directory="c:/temp/gaz")
-#'  g %>% agn_filter("^Ufs") %>% agn_preferred(origin_country="United States of America")
+#'  g %>% agn_filter("^Ufs") %>% agn_preferred(origin_country=c("United States of America","Australia"))
 #' }
 #'
 #' @export
 agn_preferred <- function(gaz,origin_country) {
-   pn1 <- gaz %>% group_by_("scar_common_id") %>% filter_(~country_name %in% origin_country) %>% slice(1L)
-   pn2 <- gaz %>% group_by_("scar_common_id") %>% filter_(~!country_name %in% origin_country) %>% slice(1L)
-   bind_rows(pn1,pn2 %>% filter_(~!scar_common_id %in% pn1$scar_common_id))
+    pn1 <- gaz %>% group_by_("scar_common_id") %>% filter_(~country_name %in% origin_country)
+    ## order by origin_country (with ordering as per appearance in the origin_country vector)
+    temp <- factor(pn1$country_name,levels=origin_country)
+    pn1 <- pn1 %>% arrange_(~scar_common_id,~temp) %>% slice(1L)
+    pn2 <- gaz %>% group_by_("scar_common_id") %>% filter_(~!country_name %in% origin_country) %>% slice(1L)
+    bind_rows(pn1,pn2 %>% filter_(~!scar_common_id %in% pn1$scar_common_id))
 }
 

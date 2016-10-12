@@ -20,7 +20,7 @@ Find one name per feature according to specified preferences
 \examples{
 \dontrun{
  g <- agn_read(cache_directory="c:/temp/gaz")
- g \%>\% agn_filter("^Ufs") \%>\% agn_preferred(origin_country="United States of America")
+ g \%>\% agn_filter("^Ufs") \%>\% agn_preferred(origin_country=c("United States of America","Australia"))
 }
 
 }
