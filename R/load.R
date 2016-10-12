@@ -61,7 +61,10 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
     } else {
         suppressMessages(g <- readr::read_csv(local_file_name))
     }
-
+    ## rename "gazetteer" to "cga_source_gazetteer"
+    names(g)[names(g)=="gazetteer"] <- "cga_source_gazetteer"
+    ## add "gazetteer" column (meaning the overall gazetteer name, cga in this case)
+    g$gazetteer <- "cga"
     ## split display scales into separate columns
     temp <- lapply(g$display_scales,strsplit,split=",")
     all_scales <- Filter(nchar,unique(sapply(temp,function(z)z[[1]][[1]])))
@@ -74,4 +77,4 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
 gazetteers <- function() c("cga")
 
 ## internal function, used to control the subset of columns returned to the user
-gaz_names_to_show <- function(gaz) intersect(names(gaz),c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(gaz)[grep("^display_scale_",names(gaz))]))
+gaz_names_to_show <- function(gaz) intersect(names(gaz),c("FID","gaz_id","place_name","english_place_name","altitude","feature_type_name","narrative","gazetteer","cga_source_gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(gaz)[grep("^display_scale_",names(gaz))]))

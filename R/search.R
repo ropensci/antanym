@@ -37,6 +37,7 @@ agn_near <- function(gaz,loc,max_distance) {
 #' @param feature_type string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{agn_feature_types}}
 #' @param origin_country string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{agn_countries}}
 #' @param origin_gazetteer string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{agn_gazetteers}}
+#' @param cga_source_gazetteer string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{agn_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)
 #' @param display_scale string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}
 #'
 #' @return data.frame of results
@@ -60,7 +61,7 @@ agn_near <- function(gaz,loc,max_distance) {
 #'  g %>% agn_near(c(100,-66),20) %>% agn_filter(feature_type="Island")
 #' }
 #' @export
-agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazetteer,display_scale) {
+agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazetteer,cga_source,display_scale) {
     idx <- rep(TRUE,nrow(gaz))
     out <- gaz
     if (!missing(query))
@@ -74,6 +75,8 @@ agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazet
         out <- filter_(out,~grepl(origin_country,country_name))
     if (!missing(origin_gazetteer))
         out <- filter_(out,~grepl(origin_gazetteer,gazetteer))
+    if (!missing(cga_source))
+        out <- filter_(out,~grepl(cga_source,cga_source_gazetteer))
     if (!missing(display_scale)) {
         dscol <- paste0("display_scale_",display_scale)
         if (!dscol %in% names(gaz)) stop("display_scale ",display_scale," not valid: see agn_display_scales()")
@@ -96,9 +99,14 @@ agn_feature_types <- function(gaz) {
 
 #' @rdname agn_filter
 #' @export
-agn_gazetteers <- function(gaz) {
-    sort(as.character(na.omit(distinct_(gaz,"gazetteer"))$gazetteer))
+agn_gazetteers <- function(gaz) c("cga") ## for now, the CGA is the only gazetteer provided
+
+#' @rdname agn_filter
+#' @export
+agn_cga_sources <- function(gaz) {
+    sort(as.character(na.omit(distinct_(filter_(gaz,~gazetteer=="cga"),"cga_source_gazetteer"))$cga_source_gazetteer))
 }
+
 
 #' @rdname agn_filter
 #' @export
