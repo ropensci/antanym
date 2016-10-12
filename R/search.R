@@ -28,14 +28,16 @@ agn_near <- function(gaz,loc,max_distance) {
 
 #' Subset place names by various criteria
 #'
+#' All matches are case-insensitive.
+#'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame: as returned by \code{\link{agn_read}}
-#' @param query string: regular expression to match on place name. Matches are case-insensitive
+#' @param query string, regular expression: Return only place names matching this pattern
 #' @param extent raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box
-#' @param feature_type string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{agn_feature_types}}
-#' @param origin_country string: if provided, search only for place names originating from this country. For valid values see \code{\link{agn_countries}}
-#' @param origin_gazetteer string: if provided, search only for place names originating from this source gazetteer. For valid values see \code{\link{agn_gazetteers}}
-#' @param display_scale string: if provided, search only for place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}
+#' @param feature_type string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{agn_feature_types}}
+#' @param origin_country string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{agn_countries}}
+#' @param origin_gazetteer string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{agn_gazetteers}}
+#' @param display_scale string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}
 #'
 #' @return data.frame of results
 #'
@@ -46,7 +48,7 @@ agn_near <- function(gaz,loc,max_distance) {
 #'  g <- agn_read(cache_directory="c:/temp/gaz")
 #'  agn_filter(g,"Ufs")
 #'  agn_filter(g,"Ufs",feature_type="Island")
-#'  agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia")
+#'  agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia|United States of America")
 #'
 #'  nms <- agn_filter(g,extent=c(100,120,-70,-65),display_scale="2000000",
 #'     origin_country="Australia")
@@ -54,7 +56,7 @@ agn_near <- function(gaz,loc,max_distance) {
 #'  with(nms,text(longitude,latitude,place_name))
 #'
 #'  ## using dplyr or magrittr
-#'  g %>% agn_filter("Ross",feature_type="Ice shelf")
+#'  g %>% agn_filter("Ross",feature_type="Ice shelf|Mountain")
 #'  g %>% agn_near(c(100,-66),20) %>% agn_filter(feature_type="Island")
 #' }
 #' @export
@@ -67,11 +69,11 @@ agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazet
         out <- filter_(out,~longitude>=extent[1] & longitude<=extent[2] & latitude>=extent[3] & latitude<=extent[4])
     }
     if (!missing(feature_type))
-        out <- filter_(out,~feature_type_name==feature_type)
+        out <- filter_(out,~grepl(feature_type,feature_type_name))
     if (!missing(origin_country))
-        out <- filter_(out,~country_name==origin_country)
+        out <- filter_(out,~grepl(origin_country,country_name))
     if (!missing(origin_gazetteer))
-        out <- filter_(out,~gazetteer==origin_gazetteer)
+        out <- filter_(out,~grepl(origin_gazetteer,gazetteer))
     if (!missing(display_scale)) {
         dscol <- paste0("_display_scale_",display_scale)
         cat(dscol,"\n")

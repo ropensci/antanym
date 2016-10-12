@@ -22,30 +22,30 @@ agn_display_scales(gaz)
 \arguments{
 \item{gaz}{data.frame: as returned by \code{\link{agn_read}}}
 
-\item{query}{string: regular expression to match on place name. Matches are case-insensitive}
+\item{query}{string, regular expression: Return only place names matching this pattern}
 
 \item{extent}{raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box}
 
-\item{feature_type}{string: if provided, search only for place names corresponding to features of this type. For valid values see \code{\link{agn_feature_types}}}
+\item{feature_type}{string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{agn_feature_types}}}
 
-\item{origin_country}{string: if provided, search only for place names originating from this country. For valid values see \code{\link{agn_countries}}}
+\item{origin_country}{string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{agn_countries}}}
 
-\item{origin_gazetteer}{string: if provided, search only for place names originating from this source gazetteer. For valid values see \code{\link{agn_gazetteers}}}
+\item{origin_gazetteer}{string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{agn_gazetteers}}}
 
-\item{display_scale}{string: if provided, search only for place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}}
+\item{display_scale}{string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}}
 }
 \value{
 data.frame of results
 }
 \description{
-Subset place names by various criteria
+All matches are case-insensitive.
 }
 \examples{
 \dontrun{
  g <- agn_read(cache_directory="c:/temp/gaz")
  agn_filter(g,"Ufs")
  agn_filter(g,"Ufs",feature_type="Island")
- agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia")
+ agn_filter(g,"Ufs",feature_type="Island",origin_country="Australia|United States of America")
 
  nms <- agn_filter(g,extent=c(100,120,-70,-65),display_scale="2000000",
     origin_country="Australia")
@@ -53,7 +53,7 @@ Subset place names by various criteria
  with(nms,text(longitude,latitude,place_name))
 
  ## using dplyr or magrittr
- g \%>\% agn_filter("Ross",feature_type="Ice shelf")
+ g \%>\% agn_filter("Ross",feature_type="Ice shelf|Mountain")
  g \%>\% agn_near(c(100,-66),20) \%>\% agn_filter(feature_type="Island")
 }
 }
