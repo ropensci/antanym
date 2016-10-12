@@ -76,7 +76,6 @@ agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazet
         out <- filter_(out,~grepl(origin_gazetteer,gazetteer))
     if (!missing(display_scale)) {
         dscol <- paste0("display_scale_",display_scale)
-        cat(dscol,"\n")
         if (!dscol %in% names(gaz)) stop("display_scale ",display_scale," not valid: see agn_display_scales()")
         out <- out[out[,dscol]==TRUE,]
     }
