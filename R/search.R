@@ -75,7 +75,7 @@ agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazet
     if (!missing(origin_gazetteer))
         out <- filter_(out,~grepl(origin_gazetteer,gazetteer))
     if (!missing(display_scale)) {
-        dscol <- paste0("_display_scale_",display_scale)
+        dscol <- paste0("display_scale_",display_scale)
         cat(dscol,"\n")
         if (!dscol %in% names(gaz)) stop("display_scale ",display_scale," not valid: see agn_display_scales()")
         out <- out[out[,dscol]==TRUE,]
@@ -105,6 +105,6 @@ agn_gazetteers <- function(gaz) {
 #' @export
 agn_display_scales <- function(gaz) {
     nms <- names(gaz)
-    sort(gsub("^_display_scale_","",nms[grep("^_display_scale",nms)]))
+    sort(gsub("^display_scale_","",nms[grep("^display_scale",nms)]))
 }
 
