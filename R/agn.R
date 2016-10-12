@@ -5,7 +5,7 @@
 #' @docType package
 #' @references \url{http://data.aad.gov.au/aadc/gaz/scar}
 #' @importFrom readr read_csv
-#' @importFrom dplyr bind_cols distinct_ filter_ select_
+#' @importFrom dplyr %>% arrange_ bind_cols bind_rows distinct_ filter_ group_by_ select_ slice
 #' @importFrom assertthat assert_that is.string is.flag
 #' @importFrom geosphere distVincentySphere
 #' @importFrom stats na.omit
