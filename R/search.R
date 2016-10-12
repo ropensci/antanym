@@ -82,21 +82,25 @@ agn_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazet
 }
 
 #' @rdname agn_filter
+#' @export
 agn_countries <- function(gaz) {
     sort(na.omit(distinct_(gaz,"country_name"))$country_name)
 }
 
 #' @rdname agn_filter
+#' @export
 agn_feature_types <- function(gaz) {
     sort(as.character(na.omit(distinct_(gaz,"feature_type_name"))$feature_type_name))
 }
 
 #' @rdname agn_filter
+#' @export
 agn_gazetteers <- function(gaz) {
     sort(as.character(na.omit(distinct_(gaz,"gazetteer"))$gazetteer))
 }
 
 #' @rdname agn_filter
+#' @export
 agn_display_scales <- function(gaz) {
     nms <- names(gaz)
     sort(gsub("^_display_scale_","",nms[grep("^_display_scale",nms)]))
