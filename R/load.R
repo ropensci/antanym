@@ -22,9 +22,9 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
     assert_that(is.flag(verbose))
     do_cache_locally <- FALSE
     local_file_name <- "gaz_data.csv"
-    ##download_url <- "http://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW_SIMPLIFIED&outputFormat=csv"
+    ##download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW_SIMPLIFIED&outputFormat=csv"
     ## or for the complete set of columns
-    download_url <- "http://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW&outputFormat=csv"
+    download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW&outputFormat=csv"
     if (!missing(cache_directory)) {
         assert_that(is.string(cache_directory))
         if (!dir.exists(cache_directory)) {
@@ -54,10 +54,13 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
                 cat("using cached copy of gazetteer data: ",local_file_name,"\n")
         }
     }
-    if (verbose)
-        g <- readr::read_csv(local_file_name)
-    else
+    if (local_file_name==download_url) {
+        ## fetch using httr::GET, because read_csv chokes on SSL errors
+        ## download.file (above) doesn't seem to care about SSL errors!
+        suppressMessages(g <- httr::content(httr::GET(download_url,httr::config(ssl_verifypeer = 0L)),as="parsed"))
+    } else {
         suppressMessages(g <- readr::read_csv(local_file_name))
+    }
 
     ## split display scales into separate columns
     temp <- lapply(g$display_scales,strsplit,split=",")
