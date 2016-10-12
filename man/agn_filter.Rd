@@ -6,7 +6,6 @@
 \alias{agn_display_scales}
 \alias{agn_feature_types}
 \alias{agn_filter}
-\alias{agn_gazetteers}
 \title{Subset place names by various criteria}
 \usage{
 agn_filter(gaz, query, extent, feature_type, origin_country, origin_gazetteer,
@@ -15,8 +14,6 @@ agn_filter(gaz, query, extent, feature_type, origin_country, origin_gazetteer,
 agn_countries(gaz)
 
 agn_feature_types(gaz)
-
-agn_gazetteers(gaz)
 
 agn_cga_sources(gaz)
 
