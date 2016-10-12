@@ -32,9 +32,9 @@ agn_display_scales(gaz)
 
 \item{origin_gazetteer}{string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{agn_gazetteers}}}
 
-\item{display_scale}{string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}}
+\item{cga_source}{string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{agn_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)}
 
-\item{cga_source_gazetteer}{string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{agn_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)}
+\item{display_scale}{string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}}
 }
 \value{
 data.frame of results

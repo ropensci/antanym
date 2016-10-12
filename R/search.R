@@ -37,7 +37,7 @@ agn_near <- function(gaz,loc,max_distance) {
 #' @param feature_type string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{agn_feature_types}}
 #' @param origin_country string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{agn_countries}}
 #' @param origin_gazetteer string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{agn_gazetteers}}
-#' @param cga_source_gazetteer string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{agn_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)
+#' @param cga_source string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{agn_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)
 #' @param display_scale string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{agn_display_scales}}
 #'
 #' @return data.frame of results
