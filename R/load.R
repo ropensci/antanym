@@ -20,7 +20,7 @@
 agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbose=FALSE) {
     assert_that(is.flag(refresh_cache))
     assert_that(is.flag(verbose))
-    do_download <- FALSE
+    do_cache_locally <- FALSE
     local_file_name <- "gaz_data.csv"
     ##download_url <- "http://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW_SIMPLIFIED&outputFormat=csv"
     ## or for the complete set of columns
@@ -31,23 +31,28 @@ agn_read <- function(gazetteers="cga",cache_directory,refresh_cache=FALSE,verbos
             if (verbose) cat("creating data cache directory: ",cache_directory,"\n")
             ok <- dir.create(cache_directory)
             if (!ok) stop("could not create cache directory: ",cache_directory)
-            do_download <- TRUE
+            do_cache_locally <- TRUE
         } else {
             ## cache dir exists
             ## does data file exist
             local_file_name <- file.path(cache_directory,local_file_name)
-            if (refresh_cache || !file.exists(local_file_name)) do_download <- TRUE
+            if (refresh_cache || !file.exists(local_file_name)) do_cache_locally <- TRUE
         }
     } else {
-        local_file_name <- file.path(tempdir(),local_file_name)
-        do_download <- TRUE
+        ## just provide the URL, and read_csv will fetch it
+        local_file_name <- download_url
     }
-    if (do_download) {
+    if (do_cache_locally) {
         if (verbose) cat("downloading gazetter data file to ",local_file_name," ...")
         download.file(download_url,destfile=local_file_name,quiet=!verbose)
         if (verbose) cat("done.\n")
     } else {
-        if (verbose) cat("using cached copy of gazetteer data: ",local_file_name,"\n")
+        if (verbose) {
+            if (local_file_name==download_url)
+                cat("fetching gazetteer data from: ",local_file_name,"\n")
+            else
+                cat("using cached copy of gazetteer data: ",local_file_name,"\n")
+        }
     }
     if (verbose)
         g <- readr::read_csv(local_file_name)
