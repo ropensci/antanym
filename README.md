@@ -63,7 +63,11 @@ temp <- temp[!is.na(temp$longitude) & !is.na(temp$latitude),]
 temp$narrative[is.na(temp$narrative)] <- ""
 
 ## formatted popup HTML
-popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br /><strong>Longitude:</strong> %g<br /><strong>Latitude:</strong> %g<br /><a href=\"https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d\">Link to SCAR gazetteer</a></p>",temp$place_name,temp$country_name,temp$longitude,temp$latitude,temp$gaz_id)
+popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br />
+  <strong>Longitude:</strong> %g<br /><strong>Latitude:</strong> %g<br />
+  <a href=\"https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d\">
+    Link to SCAR gazetteer</a></p>",temp$place_name,temp$country_name,
+  temp$longitude,temp$latitude,temp$gaz_id)
 
 m <- leaflet() %>%
   addProviderTiles("Esri.WorldImagery") %>%
