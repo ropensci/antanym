@@ -31,3 +31,25 @@ an_preferred <- function(gaz,origin_country) {
     bind_rows(pn1,pn2 %>% filter_(~!scar_common_id %in% pn1$scar_common_id))
 }
 
+
+#' Get links to gazetteer entries
+#'
+#' @references \url{http://www.scar.org/data-products/cga}
+#' @param gaz data.frame: as returned by \code{\link{an_read}} (most commonly a subset thereof)
+#'
+#' @return character vector, where each component is a URL to a web page giving more information about the associated gazetteer entry
+#'
+#' @examples
+#' \dontrun{
+#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  my_url <- an_url(an_filter(g,"Ufs Island")[1,])
+#'  browseURL(my_url)
+#' }
+#' @export
+an_url <- function(gaz) {
+    ## only CGA entries dealt with: needs modification once other gazetteers are added
+    out <- rep(as.character(NA),nrow(gaz))
+    cga_idx <- gaz$gazetteer=="cga"
+    out[cga_idx] <- sprintf("https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d",gaz$gaz_id[cga_idx])
+    out
+}
