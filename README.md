@@ -43,6 +43,31 @@ g %>% an_filter("^Sm") %>% an_preferred(origin_country="Poland")
 Demos
 -----
 
-- [Simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html)
+### [Simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html)
 
+Source code:
 
+``` r
+library(antanym)
+library(dplyr)
+library(leaflet)
+g <- an_read()
+
+## find single name per feature, preferring United Kingdom names where available
+temp <- g %>% an_preferred("United Kingdom")
+
+## only rows with valid locations
+temp <- temp[!is.na(temp$longitude) & !is.na(temp$latitude),]
+
+## replace NAs with empty strings in narrative
+temp$narrative[is.na(temp$narrative)] <- ""
+
+## formatted popup HTML
+popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br /><strong>Longitude:</strong> %g<br /><strong>Latitude:</strong> %g<br /><a href=\"https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d\">Link to SCAR gazetteer</a></p>",temp$place_name,temp$country_name,temp$longitude,temp$latitude,temp$gaz_id)
+
+m <- leaflet() %>%
+  addProviderTiles("Esri.WorldImagery") %>%
+  addMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
+    clusterOptions = markerClusterOptions(),popup=popup,
+    label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
+```
