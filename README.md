@@ -28,14 +28,18 @@ Usage
 
 ``` r
 library(antanym)
-library(dplyr)
 g <- an_read()
 
 ## islands within 20km of 100E, 66S
-g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
+an_filter(an_near(g,c(100,-66),20),feature_type="Island")
 
 ## one name per feature
 ## names starting with "Sm", preferring the Polish name where there is one
+an_preferred(an_filter(g,"^Sm"),origin_country="Poland")
+
+## equivalent calls, using dplyr
+library(dplyr)
+g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
 g %>% an_filter("^Sm") %>% an_preferred(origin_country="Poland")
 ```
 
