@@ -57,11 +57,10 @@ library(dplyr)
 library(leaflet)
 g <- an_read()
 
-## find single name per feature, preferring United Kingdom names where available
-temp <- g %>% an_preferred("United Kingdom")
-
-## only rows with valid locations
-temp <- temp[!is.na(temp$longitude) & !is.na(temp$latitude),]
+## find single name per feature, preferring United Kingdom
+##  names where available, and only rows with valid locations
+temp <- g %>% an_preferred("United Kingdom") %>%
+  filter(!is.na(longitude) & !is.na(latitude))
 
 ## replace NAs with empty strings in narrative
 temp$narrative[is.na(temp$narrative)] <- ""
