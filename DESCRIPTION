@@ -1,6 +1,6 @@
 Package: antanym
 Title: An R package for the Antarctic geographic placenames, including the SCAR Composite Gazetteer of Antarctica
-Version: 0.0.4
+Version: 0.0.5
 Authors@R: c(person("Ben", "Raymond", email = "ben.raymond@aad.gov.au", role = c("aut", "cre")),
 	     person("Michael", "Sumner", email = "michael.sumner@aad.gov.au", role = "aut")
 	     )

@@ -71,7 +71,11 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
     all_scales <- Filter(nchar,unique(sapply(temp,function(z)z[[1]][[1]])))
     temp <- as.data.frame(lapply(all_scales,function(sc)sapply(temp,function(z)isTRUE(any(sc==z[[1]])))))
     names(temp) <- paste0("display_scale_",gsub("000$","k",gsub("000000$","M",all_scales))) ## to e.g. display_scale_250k
-    bind_cols(g,temp)
+    g <- bind_cols(g,temp)
+
+    ## some ad-hoc fixes
+    g <- g[is.na(cga_source_gazetteer) | cga_source_gazetteer!="INFORMAL",] ## informal names shouldn't be part of the CGA
+    g
 }
 
 #' @rdname an_read
