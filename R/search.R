@@ -33,7 +33,7 @@ an_near <- function(gaz,loc,max_distance) {
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame: as returned by \code{\link{an_read}}
 #' @param query string, regular expression: Return only place names matching this pattern
-#' @param extent raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box
+#' @param extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): if provided, search only for names within this bounding box
 #' @param feature_type string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}
 #' @param origin_country string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{an_countries}}
 #' @param origin_gazetteer string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}

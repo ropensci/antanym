@@ -24,7 +24,7 @@ an_display_scales(gaz)
 
 \item{query}{string, regular expression: Return only place names matching this pattern}
 
-\item{extent}{raster::extent object or vector of c(xmin,xmax,ymin,ymax): if provided, search only for names within this bounding box}
+\item{extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): if provided, search only for names within this bounding box}
 
 \item{feature_type}{string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}}
 
