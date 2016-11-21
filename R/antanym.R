@@ -11,4 +11,5 @@
 #' @importFrom readr read_csv
 #' @importFrom stats na.omit
 #' @importFrom utils download.file
+#' @importFrom raster area cellStats extent
 NULL
