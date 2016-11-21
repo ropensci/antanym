@@ -30,6 +30,7 @@ Suggest names for a map (experimental)
  ## get a single name per feature, preferring the
  ##  Australian name where there is one
  g <- an_preferred(g,"Australia")
+
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
  suggested <- an_suggest(g,c(60,90,-70,-60),c(100,100))
