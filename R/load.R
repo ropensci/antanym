@@ -80,7 +80,7 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
 
     ## some ad-hoc fixes
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL",] ## informal names shouldn't be part of the CGA
-    g[,gaz_names_to_show()]
+    g[,gaz_names_to_show(g)]
 }
 
 #' @rdname an_read
