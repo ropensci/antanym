@@ -80,12 +80,14 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
 
     ## some ad-hoc fixes
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL",] ## informal names shouldn't be part of the CGA
-    g
+    g[,gaz_names_to_show()]
 }
 
 #' @rdname an_read
 #' @export
 an_gazetteers <- function() c("cga") ## for now, the CGA is the only gazetteer provided
 
+
 ## internal function, used to control the subset of columns returned to the user
-gaz_names_to_show <- function(gaz) intersect(names(gaz),c("FID","gaz_id","place_name","place_name_transliterated","altitude","feature_type_name","narrative","gazetteer","cga_source_gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(gaz)[grep("^display_scale_",names(gaz))]))
+##gaz_names_to_show <- function(gaz) intersect(names(gaz),c("FID","gaz_id","place_name","place_name_transliterated","altitude","feature_type_name","narrative","gazetteer","cga_source_gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(gaz)[grep("^display_scale_",names(gaz))]))
+gaz_names_to_show <- function(gaz) names(gaz) ## just return everything for now
