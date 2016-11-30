@@ -63,9 +63,12 @@ an_near <- function(gaz,loc,max_distance) {
 #' @export
 an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazetteer,cga_source,display_scale) {
     idx <- rep(TRUE,nrow(gaz))
-    out <- gaz
-    if (!missing(query))
-        out <- filter_(out,~grepl(query,place_name,ignore.case=TRUE) | grepl(query,place_name_transliterated,ignore.case=TRUE))
+    if (!missing(query)) {
+        ## split query into words, and match against each
+        sterms <- strsplit(query,"[ ,]+")[[1]]
+        for (st in sterms) idx <- idx & (grepl(st,gaz$place_name,ignore.case=TRUE) | grepl(st,gaz$place_name_transliterated,ignore.case=TRUE))
+    }
+    out <- gaz[idx,]
     if (!missing(extent)) {
         out <- filter_(out,~longitude>=extent[1] & longitude<=extent[2] & latitude>=extent[3] & latitude<=extent[4])
     }
