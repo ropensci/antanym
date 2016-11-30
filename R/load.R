@@ -45,7 +45,7 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
     }
     if (do_cache_locally) {
         if (verbose) cat("downloading gazetter data file to ",local_file_name," ...")
-        download.file(download_url,destfile=local_file_name,quiet=!verbose)
+        download.file(download_url,destfile=local_file_name,quiet=!verbose,mode="wb")
         if (verbose) cat("done.\n")
     } else {
         if (verbose) {
