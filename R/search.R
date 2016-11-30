@@ -65,7 +65,7 @@ an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazett
     idx <- rep(TRUE,nrow(gaz))
     out <- gaz
     if (!missing(query))
-        out <- filter_(out,~grepl(query,place_name,ignore.case=TRUE))
+        out <- filter_(out,~grepl(query,place_name,ignore.case=TRUE) | grepl(query,place_name_transliterated,ignore.case=TRUE))
     if (!missing(extent)) {
         out <- filter_(out,~longitude>=extent[1] & longitude<=extent[2] & latitude>=extent[3] & latitude<=extent[4])
     }
