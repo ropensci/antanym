@@ -66,12 +66,17 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
     names(g)[names(g)=="gazetteer"] <- "cga_source_gazetteer"
     ## add "gazetteer" column (meaning the overall gazetteer name, cga in this case)
     g$gazetteer <- "cga"
-    ## split display scales into separate columns
-    temp <- lapply(g$display_scales,strsplit,split=",")
-    all_scales <- Filter(nchar,unique(sapply(temp,function(z)z[[1]][[1]])))
-    temp <- as.data.frame(lapply(all_scales,function(sc)sapply(temp,function(z)isTRUE(any(sc==z[[1]])))))
-    names(temp) <- paste0("display_scale_",gsub("000$","k",gsub("000000$","M",all_scales))) ## to e.g. display_scale_250k
-    g <- bind_cols(g,temp)
+    if (FALSE) {
+        ## no longer needed, is done on db backend
+        ## split display scales into separate columns
+        temp <- lapply(g$display_scales,strsplit,split=",")
+        all_scales <- Filter(nchar,unique(sapply(temp,function(z)z[[1]][[1]])))
+        temp <- as.data.frame(lapply(all_scales,function(sc)sapply(temp,function(z)isTRUE(any(sc==z[[1]])))))
+        names(temp) <- paste0("display_scale_",gsub("000$","k",gsub("000000$","M",all_scales))) ## to e.g. display_scale_250k
+        g <- bind_cols(g,temp)
+    }
+    ## add version of place_name with no diacriticals
+    g$place_name_transliterated <- stringi::stri_trans_general(g$place_name,"latin-ascii")
 
     ## some ad-hoc fixes
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL",] ## informal names shouldn't be part of the CGA
