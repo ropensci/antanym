@@ -2,20 +2,20 @@
 % Please edit documentation in R/utils.R
 \name{an_mapscale}
 \alias{an_mapscale}
-\title{Calculate map scale}
+\title{Calculate approximate map scale}
 \usage{
 an_mapscale(map_dimensions, map_extent)
 }
 \arguments{
 \item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm}
 
-\item{map_extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought}
+\item{map_extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the geographic extent of the map}
 }
 \value{
 numeric
 }
 \description{
-Calculate map scale
+Calculate approximate map scale
 }
 \examples{
 ## an A3-sized map of the Southern Ocean (1:20M)

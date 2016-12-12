@@ -4,18 +4,21 @@
 \alias{an_suggest}
 \title{Suggest names for a map (experimental)}
 \usage{
-an_suggest(gaz, scale, map_extent, map_dimensions, preferred_types)
+an_suggest(gaz, map_scale, map_extent, map_dimensions, n = 20,
+  preferred_types)
 }
 \arguments{
 \item{gaz}{data.frame: as returned by \code{\link{an_read}}}
 
-\item{scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}}
+\item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \coce{extent} and \code{map_dimensions}}
 
-\item{map_extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{scale} is provided}
+\item{map_extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided}
 
-\item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{scale} is provided}
+\item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided}
 
-\item{preferred_types}{character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others}
+\item{n}{numeric: number of names to return}
+
+\item{preferred_types}{character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]}
 }
 \value{
 data.frame
@@ -33,7 +36,7 @@ Suggest names for a map (experimental)
 
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
- suggested <- an_suggest(g,c(60,90,-70,-60),c(100,100))
+ suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
 }
 }
 \references{

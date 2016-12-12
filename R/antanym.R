@@ -11,6 +11,7 @@
 #' @importFrom readr read_csv
 #' @importFrom stats na.omit
 #' @importFrom utils download.file
-#' @importFrom raster area cellStats extent raster
+#' @importFrom raster area cellStats extent extent<- raster
 #' @importFrom stringi stri_trans_general
+#' @importFrom C50 predict.C5.0
 NULL

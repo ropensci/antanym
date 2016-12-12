@@ -31,16 +31,48 @@ an_preferred <- function(gaz,origin_country) {
     bind_rows(pn1,pn2 %>% filter_(~!scar_common_id %in% pn1$scar_common_id))
 }
 
+## not exported
+an_thin <- function(dat,npoints,position_cols=c("longitude","latitude"),score_col="score"){
+    ## thin points to give approximately uniform spatial coverage
+    ## optionally including scores
+    if (npoints>=nrow(dat)) return(dat)
+    idx <- rep(FALSE,nrow(dat))
+    ##tempij <- expand.grid(1:nrow(dat),1:nrow(dat))
+    ##this.dist <- distVincentySphere(dat[tempij[,1],position_cols],dat[tempij[,2],position_cols])
+    this.dist <- as.matrix(dist(dat[,position_cols]))
+    if (!is.null(score_col)) {
+        sc <- (dat[,score_col])
+        if (inherits(sc,"data.frame")) sc <- unlist(sc)
+    } else {
+        sc <- rep(1,nrow(dat))
+    }
+    tmp <- which.max(sc)
+    idx[tmp] <- TRUE ## start with the first best-scored points
+    sc[tmp] <- NA
+    while(sum(idx) < npoints) {
+        ## rank the distances
+        ## for each point, find its distance to the closest point that's already been selected
+        dist_rank <- rank(apply(this.dist[,idx,drop=FALSE],1,min),na.last="keep")
+        ## rank the scores
+        score_rank <- rank(sc,na.last="keep")
+        ## select the point with highest avg rank (i.e. highest composite distance and score)
+        tmp <- which.max(score_rank+dist_rank)
+        idx[tmp] <- TRUE
+        sc[tmp] <- NA
+    }
+    dat[idx,]
+}
+
+
 #' Suggest names for a map (experimental)
-#'
-#'
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame: as returned by \code{\link{an_read}}
-#' @param scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
-#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{scale} is provided
-#' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{scale} is provided
-#' @param preferred_types character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others
+#' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \coce{extent} and \code{map_dimensions}
+#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
+#' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
+#' @param n numeric: number of names to return
+#' @param preferred_types character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]
 #'
 #' @return data.frame
 #'
@@ -56,26 +88,47 @@ an_preferred <- function(gaz,origin_country) {
 #'
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
-#'  suggested <- an_suggest(g,c(60,90,-70,-60),c(100,100))
+#'  suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
 #' }
 #' @export
-an_suggest <- function(gaz,scale,map_extent,map_dimensions,preferred_types) {
-    if (missing(scale)) {
-        if (missing(map_extent) || missing(map_dimensions)) stop("need either scale, or map_dimensions and map_extent")
-        scale <- an_mapscale(map_dimensions,map_extent)
+an_suggest <- function(gaz,map_scale,map_extent,map_dimensions,n=20,preferred_types) {
+    if (missing(map_scale)) {
+        if (missing(map_extent) || missing(map_dimensions)) stop("need either map_scale, or map_dimensions and map_extent")
+        map_scale <- an_mapscale(map_dimensions,map_extent)
     }
+    ## scale >= 10e6: we have full coverage (nearly so for 12mill) of all scar_common_ids, so use per-feature predictions
+    ## for scale < 10e6: use predictions by feature properties (except maybe if area of interest lies within a catalogued map)
+    ## stations as special case?
+    temp <- gaz %>% an_filter(extent=map_extent)
+    if (map_scale>=10e6) {
+        ## per-feature predictions
+        ##load("uidfits.RData")
+        temp$score <- 0
+        temp$scale <- map_scale
+        idx <- which(temp$scar_common_id %in% uid)
+        for (i in idx) {
+            fidx <- which(temp$scar_common_id[i]==uid)
+            if (inherits(uid_fits[[fidx]],"C5.0")) {
+                temp$score[i] <- predict(uid_fits[[fidx]],newdata=temp[i,],type="prob")[,2]
+            } else {
+                temp$score[i] <- uid_fits[[fidx]]
+            }
+        }
+    } else {
+        stop("an_suggest not yet implemented for map_scale value below 10 million")
+    }
+    an_thin(temp,n)
     ## first cut by spatial map_extent
-    gaz <- filter_(gaz,~longitude>=map_extent[1] & longitude<=map_extent[2] & latitude>=map_extent[3] & latitude<=map_extent[4])
+    ##gaz <- filter_(gaz,~longitude>=map_extent[1] & longitude<=map_extent[2] & latitude>=map_extent[3] & latitude<=map_extent[4])
     ## spatial density of features
     ##ll_grid <- expand.grid(seq(map_extent[1],map_extent[2],length.out=20),seq(map_extent[3],map_extent[4],length.out=20))
     #dens <- kde2d(gaz$longitude,gaz$latitude,n=20,lims=map_extent)
 }
 
-
-#' Calculate map scale
+#' Calculate approximate map scale
 #'
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm
-#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought
+#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the geographic extent of the map
 #'
 #' @return numeric
 #'
