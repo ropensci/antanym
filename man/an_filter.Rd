@@ -3,21 +3,18 @@
 \name{an_filter}
 \alias{an_cga_sources}
 \alias{an_countries}
-\alias{an_display_scales}
 \alias{an_feature_types}
 \alias{an_filter}
 \title{Subset place names by various criteria}
 \usage{
 an_filter(gaz, query, extent, feature_type, origin_country, origin_gazetteer,
-  cga_source, display_scale)
+  cga_source)
 
 an_countries(gaz)
 
 an_feature_types(gaz)
 
 an_cga_sources(gaz)
-
-an_display_scales(gaz)
 }
 \arguments{
 \item{gaz}{data.frame: as returned by \code{\link{an_read}}}
@@ -33,8 +30,6 @@ an_display_scales(gaz)
 \item{origin_gazetteer}{string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}}
 
 \item{cga_source}{string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)}
-
-\item{display_scale}{string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{an_display_scales}}}
 }
 \value{
 data.frame of results
@@ -49,7 +44,7 @@ All matches are case-insensitive.
  an_filter(g,"Ufs",feature_type="Island")
  an_filter(g,"Ufs",feature_type="Island",origin_country="Australia|United States of America")
 
- nms <- an_filter(g,extent=c(100,120,-70,-65),display_scale="2000000",
+ nms <- an_filter(g,extent=c(100,120,-70,-65),
     origin_country="Australia")
  with(nms,plot(longitude,latitude))
  with(nms,text(longitude,latitude,place_name))

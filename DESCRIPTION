@@ -16,6 +16,7 @@ Imports:
   dplyr,
   geosphere,
   httr,
+  raster,
   readr,
   stringi
 Suggests:
