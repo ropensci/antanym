@@ -86,5 +86,6 @@ an_gazetteers <- function() c("cga") ## for now, the CGA is the only gazetteer p
 
 
 ## internal function, used to control the subset of columns returned to the user
-##gaz_names_to_show <- function(gaz) intersect(names(gaz),c("FID","gaz_id","place_name","place_name_transliterated","altitude","feature_type_name","narrative","gazetteer","cga_source_gazetteer","latitude","longitude","geometry","scar_common_id","country_name","country_id",names(gaz)[grep("^display_scale_",names(gaz))]))
-gaz_names_to_show <- function(gaz) names(gaz) ## just return everything for now
+##gaz_names_to_show <- function(gaz) names(gaz) ## just return everything for now
+gaz_names_to_show <- function(gaz) intersect(names(gaz),c("gaz_id","place_name","latitude","longitude","altitude","feature_type_name","narrative","named_for","meeting_date","meeting_paper","date_revised","cga_source_gazetteer","scar_common_id","is_complete_flag","remote_sensor_info","coordinate_accuracy","altitude_accuracy","source_institution","source_person","source_country_code","source_name","comments","source_publisher","source_identifier","date_named","country_name","gazetteer","place_name_transliterated")) ##names(gaz)[grep("^display_scale_",names(gaz))]))
+
