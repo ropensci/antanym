@@ -22,7 +22,7 @@
 an_near <- function(gaz,loc,max_distance) {
     dist <- geosphere::distVincentySphere(loc,gaz[,c("longitude","latitude")])/1e3
     dist[is.na(dist)] <- Inf
-    gaz[dist<=max_distance,gaz_names_to_show(gaz)]
+    gaz[dist<=max_distance,]
 }
 
 
@@ -38,7 +38,6 @@ an_near <- function(gaz,loc,max_distance) {
 #' @param origin_country string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{an_countries}}
 #' @param origin_gazetteer string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}
 #' @param cga_source string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)
-#' @param display_scale string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{an_display_scales}}
 #'
 #' @return data.frame of results
 #'
@@ -51,7 +50,7 @@ an_near <- function(gaz,loc,max_distance) {
 #'  an_filter(g,"Ufs",feature_type="Island")
 #'  an_filter(g,"Ufs",feature_type="Island",origin_country="Australia|United States of America")
 #'
-#'  nms <- an_filter(g,extent=c(100,120,-70,-65),display_scale="2000000",
+#'  nms <- an_filter(g,extent=c(100,120,-70,-65),
 #'     origin_country="Australia")
 #'  with(nms,plot(longitude,latitude))
 #'  with(nms,text(longitude,latitude,place_name))
@@ -61,7 +60,7 @@ an_near <- function(gaz,loc,max_distance) {
 #'  g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
 #' }
 #' @export
-an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazetteer,cga_source,display_scale) {
+an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazetteer,cga_source) {
     idx <- rep(TRUE,nrow(gaz))
     if (!missing(query)) {
         ## split query into words, and match against each
@@ -80,13 +79,15 @@ an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazett
         out <- filter_(out,~grepl(origin_gazetteer,gazetteer))
     if (!missing(cga_source))
         out <- filter_(out,~gazetteer=="cga" & grepl(cga_source,cga_source_gazetteer))
-    if (!missing(display_scale)) {
-        dscol <- paste0("display_scale_",display_scale)
-        if (!dscol %in% names(gaz)) stop("display_scale ",display_scale," not valid: see an_display_scales()")
-        out <- out[out[,dscol]==TRUE,]
-    }
-    out[,gaz_names_to_show(out)]
+    #if (!missing(display_scale)) {
+    #    dscol <- paste0("display_scale_",display_scale)
+    #    if (!dscol %in% names(gaz)) stop("display_scale ",display_scale," not valid: see an_display_scales()")
+    #    out <- out[out[,dscol]==TRUE,]
+    #}
+    out
 }
+# @param display_scale string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{an_display_scales}}
+
 
 #' @rdname an_filter
 #' @export
@@ -106,10 +107,10 @@ an_cga_sources <- function(gaz) {
     sort(as.character(na.omit(distinct_(filter_(gaz,~gazetteer=="cga"),"cga_source_gazetteer"))$cga_source_gazetteer))
 }
 
-#' @rdname an_filter
-#' @export
-an_display_scales <- function(gaz) {
-    nms <- names(gaz)
-    sort(gsub("^display_scale_","",nms[grep("^display_scale_",nms)]))
-}
+# ' @rdname an_filter
+# ' @export
+#an_display_scales <- function(gaz) {
+#    nms <- names(gaz)
+#    sort(gsub("^display_scale_","",nms[grep("^display_scale_",nms)]))
+#}
 
