@@ -13,6 +13,7 @@ Encoding: UTF-8
 LazyData: true
 Imports:
   assertthat,
+  C50,
   dplyr,
   geosphere,
   httr,

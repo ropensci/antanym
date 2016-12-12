@@ -68,7 +68,7 @@ an_thin <- function(dat,npoints,position_cols=c("longitude","latitude"),score_co
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame: as returned by \code{\link{an_read}}
-#' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \coce{extent} and \code{map_dimensions}
+#' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
 #' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
 #' @param n numeric: number of names to return
@@ -102,7 +102,7 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions,n=20,preferred_ty
     temp <- gaz %>% an_filter(extent=map_extent)
     if (map_scale>=10e6) {
         ## per-feature predictions
-        ##load("uidfits.RData")
+        ##load("uidfits.RData") ## in sysdata.rda
         temp$score <- 0
         temp$scale <- map_scale
         idx <- which(temp$scar_common_id %in% uid)

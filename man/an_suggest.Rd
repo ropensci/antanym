@@ -10,7 +10,7 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions, n = 20,
 \arguments{
 \item{gaz}{data.frame: as returned by \code{\link{an_read}}}
 
-\item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \coce{extent} and \code{map_dimensions}}
+\item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}}
 
 \item{map_extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided}
 

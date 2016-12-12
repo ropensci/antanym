@@ -9,7 +9,7 @@
 #' @importFrom geosphere distVincentySphere
 #' @importFrom httr GET config content
 #' @importFrom readr read_csv
-#' @importFrom stats na.omit
+#' @importFrom stats dist na.omit predict
 #' @importFrom utils download.file
 #' @importFrom raster area cellStats extent extent<- raster
 #' @importFrom stringi stri_trans_general
