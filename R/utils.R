@@ -32,51 +32,21 @@ an_preferred <- function(gaz,origin_country) {
 }
 
 ## not exported
-an_thin <- function(dat,npoints,position_cols=c("longitude","latitude"),score_col="score"){
-    ## thin points to give approximately uniform spatial coverage
-    ## optionally including scores
-    if (npoints>=nrow(dat)) return(dat)
-    idx <- rep(FALSE,nrow(dat))
-    ##tempij <- expand.grid(1:nrow(dat),1:nrow(dat))
-    ##this.dist <- distVincentySphere(dat[tempij[,1],position_cols],dat[tempij[,2],position_cols])
-    this.dist <- as.matrix(dist(dat[,position_cols]))
-    if (!is.null(score_col)) {
-        sc <- (dat[,score_col])
-        if (inherits(sc,"data.frame")) sc <- unlist(sc)
-    } else {
-        sc <- rep(1,nrow(dat))
-    }
-    tmp <- which.max(sc)
-    idx[tmp] <- TRUE ## start with the first best-scored points
-    sc[tmp] <- NA
-    while(sum(idx) < npoints) {
-        ## rank the distances
-        ## for each point, find its distance to the closest point that's already been selected
-        dist_rank <- rank(apply(this.dist[,idx,drop=FALSE],1,min),na.last="keep")
-        ## rank the scores
-        score_rank <- rank(sc,na.last="keep")
-        ## select the point with highest avg rank (i.e. highest composite distance and score)
-        tmp <- which.max(score_rank+dist_rank)
-        idx[tmp] <- TRUE
-        sc[tmp] <- NA
-    }
-    dat[idx,]
-}
 
 
-#' Suggest names for a map (experimental)
+#' Thin names to give approximately uniform spatial coverage
 #'
-#' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame: as returned by \code{\link{an_read}}
-#' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
-#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
-#' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
 #' @param n numeric: number of names to return
-#' @param preferred_types character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]
+#' @param position_cols character: the names of the columns that give the spatial position of the features
+#' @param score_col string: the name of the column that gives the relative score (e.g. as returned by \code{an_suggest})
+#' @param score_weighting numeric: weighting of scores relative to spatial distribution. A lower \code{score_weighting} value will tend to choose lower-scored names
+#' in order to achieve better spatial uniformity. A higher \code{score_weighting} value will trade spatial uniformity in favour of selecting
+#' higher-scored names
 #'
 #' @return data.frame
 #'
-#' @seealso \code{\link{an_read}}
+#' @seealso \code{\link{an_read}} \code{\link{an_suggest}}
 #'
 #' @examples
 #' \dontrun{
@@ -89,9 +59,71 @@ an_thin <- function(dat,npoints,position_cols=c("longitude","latitude"),score_co
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
 #'  suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
+#'  head(suggested,20) ## top 20 names by score
+#'  an_thin(suggested,20) ## 20 names chosen for spatial coverage and score
+#' }
+#'
+#' @export
+an_thin <- function(gaz,n,position_cols=c("longitude","latitude"),score_col="score",score_weighting=5){
+    ## thin points to give approximately uniform spatial coverage
+    ## optionally including scores
+    if (n>=nrow(gaz)) return(gaz)
+    idx <- rep(FALSE,nrow(gaz))
+    ##tempij <- expand.grid(1:nrow(gaz),1:nrow(gaz))
+    ##this.dist <- distVincentySphere(gaz[tempij[,1],position_cols],gaz[tempij[,2],position_cols])
+    this.dist <- as.matrix(dist(gaz[,position_cols]))
+    if (!is.null(score_col)) {
+        sc <- (gaz[,score_col])
+        if (inherits(sc,"data.frame")) sc <- unlist(sc)
+    } else {
+        sc <- rep(1,nrow(gaz))
+    }
+    tmp <- which.max(sc)
+    idx[tmp] <- TRUE ## start with the first best-scored points
+    sc[tmp] <- NA
+    while(sum(idx) < n) {
+        ## rank the distances
+        ## for each point, find its distance to the closest point that's already been selected
+        dist_rank <- rank(apply(this.dist[,idx,drop=FALSE],1,min),na.last="keep")
+        ## rank the scores
+        score_rank <- rank(sc,na.last="keep")
+        ## select the point with highest avg rank (i.e. highest composite distance and score)
+        tmp <- which.max(score_weighting*score_rank+dist_rank)
+        idx[tmp] <- TRUE
+        sc[tmp] <- NA
+    }
+    gaz[idx,]
+}
+
+
+#' Suggest names for a map (experimental)
+#'
+#' @references \url{http://www.scar.org/data-products/cga}
+#' @param gaz data.frame: as returned by \code{\link{an_read}}
+#' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
+#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
+#' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
+#' @param preferred_types character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]
+#'
+#' @return data.frame of names with a "score" column added. The data.frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
+#'
+#' @seealso \code{\link{an_read}} \code{\link{an_thin}}
+#'
+#' @examples
+#' \dontrun{
+#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'
+#'  ## get a single name per feature, preferring the
+#'  ##  Australian name where there is one
+#'  g <- an_preferred(g,"Australia")
+#'
+#'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
+#'  ##  (this is about a 1:12M scale map)
+#'  suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
+#'  head(suggested,20) ## top 20 names
 #' }
 #' @export
-an_suggest <- function(gaz,map_scale,map_extent,map_dimensions,n=20,preferred_types) {
+an_suggest <- function(gaz,map_scale,map_extent,map_dimensions,preferred_types) {
     if (missing(map_scale)) {
         if (missing(map_extent) || missing(map_dimensions)) stop("need either map_scale, or map_dimensions and map_extent")
         map_scale <- an_mapscale(map_dimensions,map_extent)
@@ -117,12 +149,8 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions,n=20,preferred_ty
     } else {
         stop("an_suggest not yet implemented for map_scale value below 10 million")
     }
-    an_thin(temp,n)
-    ## first cut by spatial map_extent
-    ##gaz <- filter_(gaz,~longitude>=map_extent[1] & longitude<=map_extent[2] & latitude>=map_extent[3] & latitude<=map_extent[4])
-    ## spatial density of features
-    ##ll_grid <- expand.grid(seq(map_extent[1],map_extent[2],length.out=20),seq(map_extent[3],map_extent[4],length.out=20))
-    #dens <- kde2d(gaz$longitude,gaz$latitude,n=20,lims=map_extent)
+    temp %>% arrange_(~desc(score))
+    #an_thin(temp,n)
 }
 
 #' Calculate approximate map scale

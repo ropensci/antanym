@@ -4,8 +4,7 @@
 \alias{an_suggest}
 \title{Suggest names for a map (experimental)}
 \usage{
-an_suggest(gaz, map_scale, map_extent, map_dimensions, n = 20,
-  preferred_types)
+an_suggest(gaz, map_scale, map_extent, map_dimensions, preferred_types)
 }
 \arguments{
 \item{gaz}{data.frame: as returned by \code{\link{an_read}}}
@@ -16,12 +15,10 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions, n = 20,
 
 \item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided}
 
-\item{n}{numeric: number of names to return}
-
 \item{preferred_types}{character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]}
 }
 \value{
-data.frame
+data.frame of names with a "score" column added. The data.frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
 }
 \description{
 Suggest names for a map (experimental)
@@ -37,12 +34,13 @@ Suggest names for a map (experimental)
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
  suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
+ head(suggested,20) ## top 20 names
 }
 }
 \references{
 \url{http://www.scar.org/data-products/cga}
 }
 \seealso{
-\code{\link{an_read}}
+\code{\link{an_read}} \code{\link{an_thin}}
 }
 
