@@ -14,7 +14,7 @@ The SCAR Composite Gazetteer of Antarctica (CGA) was begun in 1992 and consists 
 
 This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
 
-There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 Â°S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
+There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 °S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
 
 For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/).
 
