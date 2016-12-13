@@ -47,7 +47,7 @@ Usage
 
 Get set up:
 
-```{r}
+```{r, message=FALSE}
 library(antanym)
 g <- an_read()
 ```
@@ -107,7 +107,7 @@ plot(map,xlim=my_longitude,ylim=my_latitude)
 points(this_names2$longitude,this_names2$latitude,col="blue")
 pos <- rep(c(1,2,3,4),ceiling(nrow(this_names2)/4)) ## alternate positions of labels to reduce overlap
 pos[order(this_names2$longitude)] <- pos[1:nrow(this_names2)]
-text(this_names2$longitude,this_names2$latitude,labels=this_names$place_name,pos=pos)
+text(this_names2$longitude,this_names2$latitude,labels=this_names2$place_name,pos=pos)
 ```
 
 We can also do similar operations using dplyr, for example:
