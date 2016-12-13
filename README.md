@@ -37,7 +37,14 @@ an_filter(an_near(g,c(100,-66),20),feature_type="Island")
 ## names starting with "Sm", preferring the Polish name where there is one
 an_preferred(an_filter(g,"^Sm"),origin_country="Poland")
 
-## equivalent calls, using dplyr
+## ask for suggested names to show on a given map
+suggested <- an_suggest(g,map_extent=c(60,90,-70,-65),map_dimensions=c(80,80))
+
+head(suggested,10) ## the 10 best names purely by score
+an_thin(suggested,10) ## the 10 best names considering both score and spatial coverage
+
+
+## similar calls, using dplyr
 library(dplyr)
 g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
 g %>% an_filter("^Sm") %>% an_preferred(origin_country="Poland")
