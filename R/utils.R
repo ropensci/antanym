@@ -98,12 +98,13 @@ an_thin <- function(gaz,n,position_cols=c("longitude","latitude"),score_col="sco
 
 #' Suggest names for a map (experimental)
 #'
-#' @references \url{http://www.scar.org/data-products/cga}
+#' Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
+#' This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger.
+#'
 #' @param gaz data.frame: as returned by \code{\link{an_read}}
 #' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
 #' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
-#' @param preferred_types character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]
 #'
 #' @return data.frame of names with a "score" column added. The data.frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
 #'
@@ -123,7 +124,7 @@ an_thin <- function(gaz,n,position_cols=c("longitude","latitude"),score_col="sco
 #'  head(suggested,20) ## top 20 names
 #' }
 #' @export
-an_suggest <- function(gaz,map_scale,map_extent,map_dimensions,preferred_types) {
+an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
     if (missing(map_scale)) {
         if (missing(map_extent) || missing(map_dimensions)) stop("need either map_scale, or map_dimensions and map_extent")
         map_scale <- an_mapscale(map_dimensions,map_extent)
@@ -152,6 +153,8 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions,preferred_types) 
     temp %>% arrange_(~desc(score))
     #an_thin(temp,n)
 }
+# @param preferred_types character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]
+
 
 #' Calculate approximate map scale
 #'

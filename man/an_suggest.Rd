@@ -4,7 +4,7 @@
 \alias{an_suggest}
 \title{Suggest names for a map (experimental)}
 \usage{
-an_suggest(gaz, map_scale, map_extent, map_dimensions, preferred_types)
+an_suggest(gaz, map_scale, map_extent, map_dimensions)
 }
 \arguments{
 \item{gaz}{data.frame: as returned by \code{\link{an_read}}}
@@ -14,14 +14,13 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions, preferred_types)
 \item{map_extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided}
 
 \item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided}
-
-\item{preferred_types}{character: a vector of preferred feature type names (in order of preference). The suggestion algorithm will try to favour these feature types over others [not yet implemented]}
 }
 \value{
 data.frame of names with a "score" column added. The data.frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
 }
 \description{
-Suggest names for a map (experimental)
+Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
+This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger.
 }
 \examples{
 \dontrun{
@@ -36,9 +35,6 @@ Suggest names for a map (experimental)
  suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
  head(suggested,20) ## top 20 names
 }
-}
-\references{
-\url{http://www.scar.org/data-products/cga}
 }
 \seealso{
 \code{\link{an_read}} \code{\link{an_thin}}
