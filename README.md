@@ -1,37 +1,30 @@
----
-output:
-  md_document:
-    variant: markdown_github
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+antanym
+=======
 
+[![Travis-CI Build Status](https://travis-ci.org/AustralianAntarcticDataCentre/antanym.svg?branch=master)](https://travis-ci.org/AustralianAntarcticDataCentre/antanym) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/AustralianAntarcticDataCentre/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/AustralianAntarcticDataCentre/antanym)
 
+Overview
+--------
 
-[![Travis-CI Build Status](https://travis-ci.org/AustralianAntarcticDataCentre/antanym.svg?branch=master)](https://travis-ci.org/AustralianAntarcticDataCentre/antanym)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/AustralianAntarcticDataCentre/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/AustralianAntarcticDataCentre/antanym)
-
-# antanym
 This R package provides easy access to Antarctic geographic place name information. Currently it uses the Composite Gazetteer of Antarctica (but may be expanded to other sources, such as subantarctic gazetteers, at a later date).
 
 The SCAR Composite Gazetteer of Antarctica (CGA) was begun in 1992 and consists of approximately 37,000 names corresponding to 19,000 distinct features. These place names have been submitted by the national names committees from 22 countries. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR Standing Committee on Antarctic Geographic Information (SCAGI) coordinates the project.
 
-There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 °S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
+There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 Â°S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
 
 For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/).
 
 References
 ----------
 
-Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)
-
-
+Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (<http://gcmd.nasa.gov/records/SCAR_Gazetteer.html>)
 
 Installing
 ----------
 
-
-```r
+``` r
 install.packages("devtools")
 library(devtools)
 install_github("AustralianAntarcticDataCentre/antanym")
@@ -42,29 +35,28 @@ Usage
 
 Get set up:
 
-
-```r
+``` r
 library(antanym)
 g <- an_read()
 ```
 
 How many names do we have in total?
 
-```r
+``` r
 nrow(g)
 #> [1] 37228
 ```
 
 Corresponding to how many distinct features?
 
-```r
+``` r
 length(unique(g$scar_common_id))
 #> [1] 19251
 ```
 
 Choose one name per feature, preferring the Polish name where there is one:
 
-```r
+``` r
 g <- an_preferred(g,origin_country="Poland")
 nrow(g)
 #> [1] 19251
@@ -72,10 +64,10 @@ nrow(g)
 
 Find islands within 20km of 100E, 66S:
 
-```r
+``` r
 nms <- an_filter(an_near(g,c(100,-66),20),feature_type="Island")
 nms[,c("place_name","longitude","latitude")]
-#> # A tibble: 1 � 3
+#> # A tibble: 1 × 3
 #>      place_name longitude latitude
 #>           <chr>     <dbl>    <dbl>
 #> 1 Foster Island  100.2704 -66.0585
@@ -83,9 +75,9 @@ nms[,c("place_name","longitude","latitude")]
 
 Find names starting with "Slom":
 
-```r
+``` r
 an_filter(g,"^Slom")[,c("place_name","longitude","latitude")]
-#> # A tibble: 2 � 3
+#> # A tibble: 2 × 3
 #>       place_name longitude latitude
 #>            <chr>     <dbl>    <dbl>
 #> 1 Sloman Glacier  -68.5833 -67.6667
@@ -94,7 +86,7 @@ an_filter(g,"^Slom")[,c("place_name","longitude","latitude")]
 
 Ask for suggested names to show on a given map:
 
-```r
+``` r
 my_longitude <- c(60,90)
 my_latitude <- c(-70,-65)
 suggested <- an_suggest(g,map_extent=c(my_longitude,my_latitude),map_dimensions=c(80,80))
@@ -102,10 +94,14 @@ suggested <- an_suggest(g,map_extent=c(my_longitude,my_latitude),map_dimensions=
 
 Plot the 10 best names purely by score:
 
-```r
+``` r
 this_names <- head(suggested,10)
 
 library(rworldmap)
+#> Warning: package 'rworldmap' was built under R version 3.3.1
+#> Loading required package: sp
+#> ### Welcome to rworldmap ###
+#> For a short introduction type :   vignette('rworldmap')
 map <- getMap(resolution="low")
 plot(map,xlim=my_longitude,ylim=my_latitude)
 points(this_names$longitude,this_names$latitude,col="blue")
@@ -114,11 +110,11 @@ pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
 text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=pos)
 ```
 
-![plot of chunk unnamed-chunk-10](README-unnamed-chunk-10-1.png)
+![](README-unnamed-chunk-10-1.png)
 
 Or the 10 best names considering both score and spatial coverage:
 
-```r
+``` r
 this_names2 <- an_thin(suggested,10)
 
 plot(map,xlim=my_longitude,ylim=my_latitude)
@@ -128,16 +124,15 @@ pos[order(this_names2$longitude)] <- pos[1:nrow(this_names2)]
 text(this_names2$longitude,this_names2$latitude,labels=this_names2$place_name,pos=pos)
 ```
 
-![plot of chunk unnamed-chunk-11](README-unnamed-chunk-11-1.png)
+![](README-unnamed-chunk-11-1.png)
 
 We can also do similar operations using dplyr, for example:
 
-```r
+``` r
 library(dplyr)
 g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
 g %>% an_preferred(origin_country="Poland") %>% an_filter("^Sm")
 ```
-
 
 Demos
 -----
@@ -146,8 +141,7 @@ Demos
 
 Source code:
 
-
-```r
+``` r
 library(antanym)
 library(dplyr)
 library(leaflet)
@@ -174,5 +168,3 @@ m <- leaflet() %>%
     clusterOptions = markerClusterOptions(),popup=popup,
     label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
 ```
-
-
