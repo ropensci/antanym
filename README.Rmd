@@ -18,11 +18,11 @@ knitr::opts_chunk$set(
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/AustralianAntarcticDataCentre/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/AustralianAntarcticDataCentre/antanym)
 
 # antanym
-This R package provides easy access to Antarctic geographic place name information. Currently it uses the Composite Gazetteer of Antarctica (but may be expanded to other sources, such an subantarctic gazetteers, at a later date).
+This R package provides easy access to Antarctic geographic place name information. Currently it uses the Composite Gazetteer of Antarctica (but may be expanded to other sources, such as subantarctic gazetteers, at a later date).
 
-The SCAR Composite Gazetteer of Antarctica (CGA) was begun in 1992 and consists of approximately 37,000 names corresponding to 19,000 distinct features. These place names have been submitted by the national names committees from 22 countries. Since 2008, Italy and Australia jointly have managed the CGA, the former taking care of the editing, the latter maintaining database and website. The SCAR Standing Committee on Antarctic Geographic Information (SCAGI) coordinates the project.
+The SCAR Composite Gazetteer of Antarctica (CGA) was begun in 1992 and consists of approximately 37,000 names corresponding to 19,000 distinct features. These place names have been submitted by the national names committees from 22 countries. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR Standing Committee on Antarctic Geographic Information (SCAGI) coordinates the project.
 
-Because Antarctica does not fall under the sovereignty of any one nation, there is no single naming authority responsible for place names. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 °S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
+There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 °S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
 
 For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/).
 
@@ -101,13 +101,13 @@ text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=p
 
 Or the 10 best names considering both score and spatial coverage:
 ```{r}
-this_names <- an_thin(suggested,10)
+this_names2 <- an_thin(suggested,10)
 
 plot(map,xlim=my_longitude,ylim=my_latitude)
-points(this_names$longitude,this_names$latitude,col="blue")
-pos <- rep(c(1,2,3,4),ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
-pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
-text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=pos)
+points(this_names2$longitude,this_names2$latitude,col="blue")
+pos <- rep(c(1,2,3,4),ceiling(nrow(this_names2)/4)) ## alternate positions of labels to reduce overlap
+pos[order(this_names2$longitude)] <- pos[1:nrow(this_names2)]
+text(this_names2$longitude,this_names2$latitude,labels=this_names$place_name,pos=pos)
 ```
 
 We can also do similar operations using dplyr, for example:
