@@ -11,13 +11,17 @@ vignette: >
 
 # Background
 
-General blurb about the names, including the CGA.
+The SCAR Composite Gazetteer of Antarctica (CGA) was begun in 1992 and consists of approximately 37,000 names that correspond to 19,000 distinct features. The place names information has been submitted by the national names committees from 22 countries and compiled by Roberto Cervellati and Chiara Ramorino from the Italian Antarctic names committee - Comitato per i nomi geografici antartici.
+
+Because Antarctica does not fall under the sovereignty of any one nation, there is no single naming authority responsible for place names. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of all Antarctic names, and so there may be multiple names associated with a given feature.
+
+For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/).
+
+Secretariat SCAR (1992, updated 2014). Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)
 
 # Examples
 
-```{r chunk_name,eval=TRUE,echo=TRUE,message=TRUE,warning=TRUE,tidy=FALSE,cache=TRUE,include=TRUE,dpi=72,fig.width=7,fig.height=7,fig.align="center",results="markup"}
-
-```
+## Load the gazetter
 
 ```{r message=FALSE,warning=FALSE}
 library(antanym)
@@ -25,13 +29,54 @@ library(dplyr)
 g <- an_read()
 ```
 
+Find a single name per feature, preferring United Kingdom names where available, and only rows with valid locations:
+```{r message=FALSE,warning=FALSE}
+g <- g %>% an_preferred("United Kingdom") %>% filter(!is.na(longitude) & !is.na(latitude))
+```
+
+## Maps
+
+Specify a region of interest and use `an_suggest` to find the most relevant names to show. We use the greater Prydz Bay region as an example:
+
+```{r message=FALSE,warning=FALSE}
+my_longitude <- c(60,90)
+my_latitude <- c(-70,-65)
+
+library(rworldmap)
+map <- getMap(resolution="low")
+suggested <- an_suggest(g,map_extent=c(my_longitude,my_latitude),map_dimensions=c(80,80))
+```
+
+Choose the top ten names by score:
+
+```{r message=FALSE,warning=FALSE,dpi=72,fig.width=7,fig.height=7,fig.align="center"}
+this_names <- head(suggested,10)
+plot(map,xlim=my_longitude,ylim=my_latitude)
+points(this_names$longitude,this_names$latitude,col="blue")
+pos <- rep(c(1,2,3,4),ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
+text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=pos)
+```
+
+Or, choose the top ten names considering both score and spatial coverage:
+
+```{r message=FALSE,warning=FALSE,dpi=72,fig.width=7,fig.height=7,fig.align="center"}
+this_names <- an_thin(suggested,10)
+plot(map,xlim=my_longitude,ylim=my_latitude)
+points(this_names$longitude,this_names$latitude,col="blue")
+pos <- rep(c(1,2,3,4),ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
+text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=pos)
+```
+
 ## Simple leaflet demo
+
+See live version at https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html.
+
 ```{r eval=FALSE}
 library(leaflet)
 
-## find single name per feature, preferring United Kingdom
-##  names where available, and only rows with valid locations
-temp <- g %>% an_preferred("United Kingdom") %>% filter(!is.na(longitude) & !is.na(latitude))
+temp <- g
 
 ## replace NAs with empty strings in narrative
 temp$narrative[is.na(temp$narrative)] <- ""
@@ -47,24 +92,4 @@ m <- leaflet() %>%
 
 ## not displayed here
 #print(m)
-```
-
-```{r eval=FALSE,include=FALSE}
-library(mapview)
-## only rows with valid locations
-idx <- !is.na(g$longitude) & !is.na(g$latitude)
-
-temp <- g[idx,]
-coordinates(temp) <- ~longitude+latitude
-proj4string(temp) <- CRS("+proj=longlat +ellps=WGS84")
-
-## replace NAs with empty strings
-temp$narrative[is.na(temp$narrative)] <- ""
-## formatted popup HTML
-popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br />Longitude %g, latitude %g</p><p>%s</p>",temp$place_name,temp$country_name,temp$longitude,temp$latitude,temp$narrative)
-
-mapview(as(temp,"SpatialPoints"),popup=popupTable(temp,zcol=c("place_name","country_name","narrative")))
-
-label=temp$place_name)
-
 ```
