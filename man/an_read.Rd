@@ -13,18 +13,17 @@ an_gazetteers()
 \arguments{
 \item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers}
 
-\item{cache_directory}{string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist}
+\item{cache_directory}{string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist. A warning will be given if a cached copy exists and is more than 30 days old}
 
 \item{refresh_cache}{logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used}
 
 \item{verbose}{logical: show progress messages?}
 }
 \value{
-A data.frame
+a data.frame
 }
 \description{
-The SCAR Composite Gazetteer of Antarctica (CGA), as the name suggests, is a composite or collection of all those names of features that have been submitted by representatives of national gazetteers. It includes the names of features south of 60° S, both terrestrial and undersea or under-ice. The CGA is a compilation of recognized features, with a numerical Unique Identifier code (UID) assigned to each of them, jointly with a list of applicable place names.
-Since 2008, Italy and Australia jointly have managed the CGA, the former taking care of the editing, the latter maintaining database and website. The SCAR Standing Committee on Antarctic Geographic Information (SCAGI) coordinates the project.
+Load Antarctic and subantarctic place name gazetteers
 }
 \examples{
 \dontrun{

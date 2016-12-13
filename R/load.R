@@ -1,15 +1,12 @@
 #' Load Antarctic and subantarctic place name gazetteers
 #'
-#' The SCAR Composite Gazetteer of Antarctica (CGA), as the name suggests, is a composite or collection of all those names of features that have been submitted by representatives of national gazetteers. It includes the names of features south of 60° S, both terrestrial and undersea or under-ice. The CGA is a compilation of recognized features, with a numerical Unique Identifier code (UID) assigned to each of them, jointly with a list of applicable place names.
-#' Since 2008, Italy and Australia jointly have managed the CGA, the former taking care of the editing, the latter maintaining database and website. The SCAR Standing Committee on Antarctic Geographic Information (SCAGI) coordinates the project.
-#'
 #' @references \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
 #' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers
-#' @param cache_directory string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist
+#' @param cache_directory string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist. A warning will be given if a cached copy exists and is more than 30 days old
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used
 #' @param verbose logical: show progress messages?
 #'
-#' @return A data.frame
+#' @return a data.frame
 #'
 #' @examples
 #' \dontrun{
@@ -38,6 +35,11 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
             ## does data file exist
             local_file_name <- file.path(cache_directory,local_file_name)
             if (refresh_cache || !file.exists(local_file_name)) do_cache_locally <- TRUE
+            ## is cached copy old?
+            if (file.exists(local_file_name)) {
+                if (difftime(Sys.time(),file.info("/temp/gaz/gaz_data.csv")$mtime,units="days")>30)
+                    warning("cached copy of gazetteer data is more than 30 days old, consider refreshing your copy")
+            }
         }
     } else {
         ## just provide the URL, and read_csv will fetch it
