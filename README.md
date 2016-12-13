@@ -1,5 +1,7 @@
 ---
-output: github_document
+output:
+  md_document:
+    variant: markdown_github
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -101,6 +103,8 @@ suggested <- an_suggest(g,map_extent=c(my_longitude,my_latitude),map_dimensions=
 Plot the 10 best names purely by score:
 
 ```r
+this_names <- head(suggested,10)
+
 library(rworldmap)
 map <- getMap(resolution="low")
 plot(map,xlim=my_longitude,ylim=my_latitude)
@@ -115,6 +119,8 @@ text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=p
 Or the 10 best names considering both score and spatial coverage:
 
 ```r
+this_names <- an_thin(suggested,10)
+
 plot(map,xlim=my_longitude,ylim=my_latitude)
 points(this_names$longitude,this_names$latitude,col="blue")
 pos <- rep(c(1,2,3,4),ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
