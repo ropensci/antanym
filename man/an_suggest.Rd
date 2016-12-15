@@ -20,7 +20,8 @@ data.frame of names with a "score" column added. The data.frame will be sorted i
 }
 \description{
 Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger.
+This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger, and only for features in the
+SCAR composite gazetteer (features south of 60S).
 }
 \examples{
 \dontrun{

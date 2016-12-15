@@ -99,7 +99,8 @@ an_thin <- function(gaz,n,position_cols=c("longitude","latitude"),score_col="sco
 #' Suggest names for a map (experimental)
 #'
 #' Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-#' This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger.
+#' This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger, and only for features in the
+#' SCAR composite gazetteer (features south of 60S).
 #'
 #' @param gaz data.frame: as returned by \code{\link{an_read}}
 #' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
