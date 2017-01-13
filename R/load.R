@@ -37,7 +37,7 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
             if (refresh_cache || !file.exists(local_file_name)) do_cache_locally <- TRUE
             ## is cached copy old?
             if (file.exists(local_file_name)) {
-                if (difftime(Sys.time(),file.info("/temp/gaz/gaz_data.csv")$mtime,units="days")>30)
+                if (difftime(Sys.time(),file.info(local_file_name)$mtime,units="days")>30)
                     warning("cached copy of gazetteer data is more than 30 days old, consider refreshing your copy")
             }
         }
