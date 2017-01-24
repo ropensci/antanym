@@ -9,7 +9,7 @@
 #' @importFrom geosphere distVincentySphere
 #' @importFrom httr GET config content
 #' @importFrom readr read_csv
-#' @importFrom sp coordinates<-
+#' @importFrom sp coordinates coordinates<- is.projected spTransform
 #' @import spdplyr
 #' @importFrom stats dist na.omit predict
 #' @importFrom utils download.file

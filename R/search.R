@@ -20,7 +20,16 @@
 #'
 #' @export
 an_near <- function(gaz,loc,max_distance) {
-    dist <- geosphere::distVincentySphere(loc,gaz[,c("longitude","latitude")])/1e3
+    if (inherits(gaz,"SpatialPointsDataFrame")) {
+        tmp <- as.data.frame(gaz)
+        if (!is.projected(gaz)) {
+            dist <- geosphere::distVincentySphere(loc,tmp[,c("longitude","latitude")])/1e3
+        } else {
+            dist <- sqrt((coordinates(loc)[1]-tmp$longitude)^2 + (coordinates(loc)[2]-tmp$latitude)^2)/1e3
+        }
+    } else {
+        dist <- geosphere::distVincentySphere(loc,gaz[,c("longitude","latitude")])/1e3
+    }
     dist[is.na(dist)] <- Inf
     gaz[dist<=max_distance,]
 }
@@ -69,7 +78,11 @@ an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazett
     }
     out <- gaz[idx,]
     if (!missing(extent)) {
-        out <- filter_(out,~longitude>=extent[1] & longitude<=extent[2] & latitude>=extent[3] & latitude<=extent[4])
+        if (inherits(out,"SpatialPointsDataFrame")) {
+            out <- crop(out,extent)
+        } else {
+            out <- filter_(out,~longitude>=extent[1] & longitude<=extent[2] & latitude>=extent[3] & latitude<=extent[4])
+        }
     }
     if (!missing(feature_type))
         out <- filter_(out,~grepl(feature_type,feature_type_name))
@@ -92,19 +105,19 @@ an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazett
 #' @rdname an_filter
 #' @export
 an_countries <- function(gaz) {
-    sort(na.omit(distinct_(gaz,"country_name"))$country_name)
+    sort(na.omit(unique(gaz$country_name)))
 }
 
 #' @rdname an_filter
 #' @export
 an_feature_types <- function(gaz) {
-    sort(as.character(na.omit(distinct_(gaz,"feature_type_name"))$feature_type_name))
+    sort(as.character(na.omit(unique(gaz$feature_type_name))))
 }
 
 #' @rdname an_filter
 #' @export
 an_cga_sources <- function(gaz) {
-    sort(as.character(na.omit(distinct_(filter_(gaz,~gazetteer=="cga"),"cga_source_gazetteer"))$cga_source_gazetteer))
+    sort(as.character(na.omit(unique(filter_(gaz,~gazetteer=="cga")$cga_source_gazetteer))))
 }
 
 # ' @rdname an_filter
