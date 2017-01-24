@@ -5,13 +5,15 @@
 \alias{an_read}
 \title{Load Antarctic and subantarctic place name gazetteers}
 \usage{
-an_read(gazetteers = "all", cache_directory, refresh_cache = FALSE,
-  verbose = FALSE)
+an_read(gazetteers = "all", sp = FALSE, cache_directory,
+  refresh_cache = FALSE, verbose = FALSE)
 
 an_gazetteers()
 }
 \arguments{
 \item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers}
+
+\item{sp}{logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame}
 
 \item{cache_directory}{string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist. A warning will be given if a cached copy exists and is more than 30 days old}
 
@@ -20,7 +22,7 @@ an_gazetteers()
 \item{verbose}{logical: show progress messages?}
 }
 \value{
-a data.frame
+a data.frame or SpatialPointsDataFrame
 }
 \description{
 Load Antarctic and subantarctic place name gazetteers

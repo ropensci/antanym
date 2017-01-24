@@ -2,11 +2,12 @@
 #'
 #' @references \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
 #' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers
+#' @param sp logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame
 #' @param cache_directory string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist. A warning will be given if a cached copy exists and is more than 30 days old
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used
 #' @param verbose logical: show progress messages?
 #'
-#' @return a data.frame
+#' @return a data.frame or SpatialPointsDataFrame
 #'
 #' @examples
 #' \dontrun{
@@ -14,9 +15,10 @@
 #' }
 #'
 #' @export
-an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose=FALSE) {
+an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALSE,verbose=FALSE) {
     assert_that(is.flag(refresh_cache))
     assert_that(is.flag(verbose))
+    assert_that(is.flag(sp))
     ## currently the gazetteers parameter does nothing, since we only have the CGA to load
     do_cache_locally <- FALSE
     local_file_name <- "gaz_data.csv"
@@ -79,7 +81,14 @@ an_read <- function(gazetteers="all",cache_directory,refresh_cache=FALSE,verbose
 
     ## some ad-hoc fixes
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL",] ## informal names shouldn't be part of the CGA
-    g[,gaz_names_to_show(g)]
+    g <- g[,gaz_names_to_show(g)]
+    if (sp) {
+        idx <- !is.na(g$longitude) & !is.na(g$latitude)
+        g <- g[idx,]
+        coordinates(g) <- ~longitude+latitude
+        projection(g) <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
+    }
+    g
 }
 
 #' @rdname an_read

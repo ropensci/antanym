@@ -9,9 +9,11 @@
 #' @importFrom geosphere distVincentySphere
 #' @importFrom httr GET config content
 #' @importFrom readr read_csv
+#' @importFrom sp coordinates<-
+#' @import spdplyr
 #' @importFrom stats dist na.omit predict
 #' @importFrom utils download.file
-#' @importFrom raster area cellStats extent extent<- raster
+#' @importFrom raster area cellStats crop extent extent<- projection<- raster
 #' @importFrom stringi stri_trans_general
 #' @importFrom C50 predict.C5.0
 NULL

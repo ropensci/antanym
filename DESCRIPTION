@@ -19,6 +19,8 @@ Imports:
   httr,
   raster,
   readr,
+  sp,
+  spdplyr,
   stringi
 Suggests:
   testthat,
