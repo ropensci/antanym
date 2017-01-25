@@ -148,6 +148,9 @@ an_thin <- function(gaz,n,score_col="score",score_weighting=5){
 #' }
 #' @export
 an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
+    if (!missing(map_extent))
+        assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent,"Extent"))
+
     if (missing(map_scale)) {
         if (missing(map_extent) || missing(map_dimensions)) stop("need either map_scale, or map_dimensions and map_extent")
         map_scale <- an_mapscale(map_dimensions,map_extent)
@@ -192,7 +195,8 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
 #'
 #' @export
 an_mapscale <- function(map_dimensions,map_extent) {
-    if (!(inherits(map_extent,"Extent") || inherits(map_extent,"Raster"))) map_extent <- extent(as.numeric(map_extent))
+    assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent,"Extent"))
+    if (!inherits(map_extent,"Extent")) map_extent <- extent(as.numeric(map_extent))
     mapext <- raster()
     extent(mapext) <- map_extent
 

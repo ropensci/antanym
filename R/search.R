@@ -78,6 +78,7 @@ an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazett
     }
     out <- gaz[idx,]
     if (!missing(extent)) {
+        assert_that((is.numeric(extent) && length(extent)==4) || inherits(extent,"Extent"))
         if (inherits(out,"SpatialPointsDataFrame")) {
             out <- crop(out,extent)
         } else {
