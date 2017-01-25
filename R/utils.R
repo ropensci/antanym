@@ -1,7 +1,7 @@
 #' Find one name per feature according to specified preferences
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param origin_country character: vector of country names. If a given feature has been named by one of these countries, this name will be returned. For valid values see \code{\link{an_countries}}
 #'
 #' @return data.frame of results
@@ -50,7 +50,7 @@ an_preferred <- function(gaz,origin_country) {
 
 #' Thin names to give approximately uniform spatial coverage
 #'
-#' @param gaz data.frame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param n numeric: number of names to return
 #' @param score_col string: the name of the column that gives the relative score (e.g. as returned by \code{an_suggest})
 #' @param score_weighting numeric: weighting of scores relative to spatial distribution. A lower \code{score_weighting} value will tend to choose lower-scored names
@@ -124,7 +124,7 @@ an_thin <- function(gaz,n,score_col="score",score_weighting=5){
 #' This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger, and only for features in the
 #' SCAR composite gazetteer (features south of 60S).
 #'
-#' @param gaz data.frame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
 #' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
@@ -208,7 +208,7 @@ an_mapscale <- function(map_dimensions,map_extent) {
 #' Get links to gazetteer entries
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame: as returned by \code{\link{an_read}} (most commonly a subset thereof)
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} (most commonly a subset thereof)
 #'
 #' @return character vector, where each component is a URL to a web page giving more information about the associated gazetteer entry
 #'

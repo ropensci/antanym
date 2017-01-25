@@ -7,7 +7,7 @@
 an_preferred(gaz, origin_country)
 }
 \arguments{
-\item{gaz}{data.frame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
 \item{origin_country}{character: vector of country names. If a given feature has been named by one of these countries, this name will be returned. For valid values see \code{\link{an_countries}}}
 }

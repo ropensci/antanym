@@ -7,7 +7,7 @@
 an_suggest(gaz, map_scale, map_extent, map_dimensions)
 }
 \arguments{
-\item{gaz}{data.frame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
 \item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}}
 

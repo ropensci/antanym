@@ -7,7 +7,7 @@
 an_near(gaz, loc, max_distance)
 }
 \arguments{
-\item{gaz}{data.frame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
 \item{loc}{numeric: longitude and latitude of target location}
 

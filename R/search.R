@@ -1,7 +1,7 @@
 #' Find placenames near a given location
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param loc numeric: longitude and latitude of target location
 #' @param max_distance numeric: maximum search distance in kilometres
 #'
@@ -40,7 +40,7 @@ an_near <- function(gaz,loc,max_distance) {
 #' All matches are case-insensitive.
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param query string, regular expression: Return only place names matching this pattern
 #' @param extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): if provided, search only for names within this bounding box
 #' @param feature_type string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}

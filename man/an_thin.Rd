@@ -7,7 +7,7 @@
 an_thin(gaz, n, score_col = "score", score_weighting = 5)
 }
 \arguments{
-\item{gaz}{data.frame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
 \item{n}{numeric: number of names to return}
 

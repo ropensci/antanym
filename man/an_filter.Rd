@@ -17,7 +17,7 @@ an_feature_types(gaz)
 an_cga_sources(gaz)
 }
 \arguments{
-\item{gaz}{data.frame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
 \item{query}{string, regular expression: Return only place names matching this pattern}
 

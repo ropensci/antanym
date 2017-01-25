@@ -7,7 +7,7 @@
 an_url(gaz)
 }
 \arguments{
-\item{gaz}{data.frame: as returned by \code{\link{an_read}} (most commonly a subset thereof)}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} (most commonly a subset thereof)}
 }
 \value{
 character vector, where each component is a URL to a web page giving more information about the associated gazetteer entry
