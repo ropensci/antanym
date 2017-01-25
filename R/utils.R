@@ -23,12 +23,26 @@
 #'
 #' @export
 an_preferred <- function(gaz,origin_country) {
+    assert_that(is.character(origin_country))
+    ## this gets ugly with an sp gaz object because the dplyr operations don't work the same
+    is_sp <- inherits(gaz,"SpatialPointsDataFrame")
+    if (is_sp) {
+        ## if sp, work on the @data object
+        gaz_sp <- gaz
+        gaz <- gaz@data
+    }
     pn1 <- gaz %>% group_by_("scar_common_id") %>% filter_(~country_name %in% origin_country)
     ## order by origin_country (with ordering as per appearance in the origin_country vector)
     temp <- factor(pn1$country_name,levels=origin_country)
     pn1 <- pn1 %>% arrange_(~scar_common_id,~temp) %>% slice(1L)
     pn2 <- gaz %>% group_by_("scar_common_id") %>% filter_(~!country_name %in% origin_country) %>% slice(1L)
-    bind_rows(pn1,pn2 %>% filter_(~!scar_common_id %in% pn1$scar_common_id))
+    out <- bind_rows(pn1,pn2 %>% filter_(~!scar_common_id %in% pn1$scar_common_id))
+    if (is_sp) {
+        ## return the subset of gaz_sp corresponding to the rows we just selected
+        gaz_sp[gaz_sp$gaz_id %in% out$gaz_id,]
+    } else {
+        out
+    }
 }
 
 ## not exported

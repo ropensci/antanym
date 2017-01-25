@@ -21,6 +21,11 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
     pt <- SpatialPoints(cbind(testpt[1],testpt[2]))
     projection(pt) <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     expect_identical(namelist(an_near(g,pt,50)),namelist(an_near(gsp,pt,50)))
+
+    expect_identical(namelist(an_preferred(g,"Australia")),
+                     namelist(an_preferred(gsp,"Australia")))
+    expect_identical(namelist(an_preferred(g,c("Australia","Poland"))),
+                     namelist(an_preferred(gsp,c("Australia","Poland"))))
 })
 
 test_that("sp versions of functions match non-sp for projected data", {
@@ -39,4 +44,10 @@ test_that("sp versions of functions match non-sp for projected data", {
     ## calculated from lon-lat data won't be the same as distances calculated from
     ## projected polar-stereo data
     expect_false(identical(namelist(an_near(g,pt,50)),namelist(an_near(gsp2,pt2,50))))
+
+    expect_identical(namelist(an_preferred(g,"Australia")),
+                     namelist(an_preferred(gsp2,"Australia")))
+    expect_identical(namelist(an_preferred(g,c("Australia","Poland"))),
+                     namelist(an_preferred(gsp2,c("Australia","Poland"))))
+
 })
