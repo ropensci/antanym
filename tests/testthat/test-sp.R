@@ -26,6 +26,10 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
                      namelist(an_preferred(gsp,"Australia")))
     expect_identical(namelist(an_preferred(g,c("Australia","Poland"))),
                      namelist(an_preferred(gsp,c("Australia","Poland"))))
+
+    expect_identical(an_url(g[1:10,]),an_url(gsp[1:10,]))
+    expect_identical(namelist(an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))),
+                     namelist(an_suggest(gsp,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))))
 })
 
 test_that("sp versions of functions match non-sp for projected data", {
@@ -50,4 +54,5 @@ test_that("sp versions of functions match non-sp for projected data", {
     expect_identical(namelist(an_preferred(g,c("Australia","Poland"))),
                      namelist(an_preferred(gsp2,c("Australia","Poland"))))
 
+    expect_identical(an_url(g[1:10,]),an_url(gsp2[1:10,]))
 })
