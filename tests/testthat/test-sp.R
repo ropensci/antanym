@@ -39,6 +39,9 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
 })
 
 test_that("sp versions of functions match non-sp for projected data", {
+    ## spTransform requires rgdal, but the rest of antanym doesn't, so it's only a suggested packagex
+    skip_if_not_installed("rgdal")
+
     projll <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     stersouth <-  "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
     gsp2 <- spTransform(gsp,CRS(stersouth))

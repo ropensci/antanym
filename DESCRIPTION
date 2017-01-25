@@ -26,6 +26,7 @@ Suggests:
   testthat,
   knitr,
   leaflet,
+  rgdal,
   rmarkdown,
   rworldmap
 RoxygenNote: 5.0.1
