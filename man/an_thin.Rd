@@ -4,15 +4,12 @@
 \alias{an_thin}
 \title{Thin names to give approximately uniform spatial coverage}
 \usage{
-an_thin(gaz, n, position_cols = c("longitude", "latitude"),
-  score_col = "score", score_weighting = 5)
+an_thin(gaz, n, score_col = "score", score_weighting = 5)
 }
 \arguments{
 \item{gaz}{data.frame: as returned by \code{\link{an_read}}}
 
 \item{n}{numeric: number of names to return}
-
-\item{position_cols}{character: the names of the columns that give the spatial position of the features}
 
 \item{score_col}{string: the name of the column that gives the relative score (e.g. as returned by \code{an_suggest})}
 

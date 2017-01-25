@@ -52,7 +52,6 @@ an_preferred <- function(gaz,origin_country) {
 #'
 #' @param gaz data.frame: as returned by \code{\link{an_read}}
 #' @param n numeric: number of names to return
-#' @param position_cols character: the names of the columns that give the spatial position of the features
 #' @param score_col string: the name of the column that gives the relative score (e.g. as returned by \code{an_suggest})
 #' @param score_weighting numeric: weighting of scores relative to spatial distribution. A lower \code{score_weighting} value will tend to choose lower-scored names
 #' in order to achieve better spatial uniformity. A higher \code{score_weighting} value will trade spatial uniformity in favour of selecting
@@ -78,16 +77,25 @@ an_preferred <- function(gaz,origin_country) {
 #' }
 #'
 #' @export
-an_thin <- function(gaz,n,position_cols=c("longitude","latitude"),score_col="score",score_weighting=5){
+an_thin <- function(gaz,n,score_col="score",score_weighting=5){
     ## thin points to give approximately uniform spatial coverage
     ## optionally including scores
     if (n>=nrow(gaz)) return(gaz)
     idx <- rep(FALSE,nrow(gaz))
     ##tempij <- expand.grid(1:nrow(gaz),1:nrow(gaz))
     ##this.dist <- distVincentySphere(gaz[tempij[,1],position_cols],gaz[tempij[,2],position_cols])
-    this.dist <- as.matrix(dist(gaz[,position_cols]))
+    ## construct matrix of distances between all pairs of points
+    if (inherits(gaz,"SpatialPointsDataFrame")) {
+        this.dist <- as.matrix(dist(as.data.frame(gaz)[,c("longitude","latitude")]))
+    } else {
+        this.dist <- as.matrix(dist(gaz[,c("longitude","latitude")]))
+    }
     if (!is.null(score_col)) {
-        sc <- (gaz[,score_col])
+        if (inherits(gaz,"SpatialPointsDataFrame")) {
+            sc <- as.data.frame(gaz)[,score_col]
+        } else {
+            sc <- gaz[,score_col]
+        }
         if (inherits(sc,"data.frame")) sc <- unlist(sc)
     } else {
         sc <- rep(1,nrow(gaz))
@@ -184,7 +192,7 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
 #'
 #' @export
 an_mapscale <- function(map_dimensions,map_extent) {
-    if (!inherits(map_extent,"Extent")) map_extent <- extent(as.numeric(map_extent))
+    if (!(inherits(map_extent,"Extent") || inherits(map_extent,"Raster"))) map_extent <- extent(as.numeric(map_extent))
     mapext <- raster()
     extent(mapext) <- map_extent
 

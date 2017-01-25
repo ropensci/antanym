@@ -13,7 +13,7 @@
 #' @import spdplyr
 #' @importFrom stats dist na.omit predict
 #' @importFrom utils download.file
-#' @importFrom raster area cellStats crop extent extent<- projection<- raster
+#' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster
 #' @importFrom stringi stri_trans_general
 #' @importFrom C50 predict.C5.0
 NULL
