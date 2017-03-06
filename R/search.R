@@ -2,7 +2,7 @@
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
-#' @param loc numeric: longitude and latitude of target location
+#' @param loc numeric: target location (numeric longitude and latitude, or SpatialPoints object)
 #' @param max_distance numeric: maximum search distance in kilometres
 #'
 #' @return data.frame of results
@@ -16,20 +16,31 @@
 #'
 #'  ## using dplyr or magrittr
 #'  g %>% an_near(c(100,-66),20)
+#'
+#'  ## with sp objects
+#'  gsp <- an_read(cache_directory="c:/temp/gaz",sp=TRUE)
+#'  loc <- SpatialPoints(matrix(c(110,-66),nrow=1),proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+#'  an_near(gsp,loc,10)
 #' }
 #'
 #' @export
 an_near <- function(gaz,loc,max_distance) {
+    ## make sure gaz locations are in longitude and latitude
     if (inherits(gaz,"SpatialPointsDataFrame")) {
         tmp <- as.data.frame(gaz)
         if (!is.projected(gaz)) {
-            dist <- geosphere::distVincentySphere(loc,tmp[,c("longitude","latitude")])/1e3
+            crds <- tmp[,c("longitude","latitude")]
         } else {
-            dist <- sqrt((coordinates(loc)[1]-tmp$longitude)^2 + (coordinates(loc)[2]-tmp$latitude)^2)/1e3
+            crds <- coordinates(spTransform(gaz,CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
         }
     } else {
-        dist <- geosphere::distVincentySphere(loc,gaz[,c("longitude","latitude")])/1e3
+        crds <- gaz[,c("longitude","latitude")]
     }
+    ## make sure loc is in longitude and latitude
+    if (inherits(loc,"SpatialPoints")) {
+        if (is.projected(loc)) loc <- coordinates(spTransform(loc,CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
+    }
+    dist <- geosphere::distVincentySphere(loc,crds)/1e3
     dist[is.na(dist)] <- Inf
     gaz[dist<=max_distance,]
 }
