@@ -134,6 +134,8 @@ Map demos
 
 A [simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
 
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="leaflet.png" width="40%" /></a>
+
 Source code:
 
 ```{r eval=FALSE}
@@ -164,7 +166,15 @@ m <- leaflet() %>%
     label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
 ```
 
+```{r echo=FALSE,eval=FALSE}
+library(mapview)
+mapshot(m %>% setView(70,-67,zoom=6),file="leaflet.png")
+```
+
+
 We can also use a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html). Note that the leaflet package here must be the rstudio version (use `devtools::install_github("rstudio/leaflet")`).
+
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="leafletps.png" width="40%" /></a>
 
 ```{r eval=FALSE}
 startZoom <- 1
@@ -178,7 +188,7 @@ crsAntartica <-  leafletCRS(
   bounds =  list( c(-4194304, -4194304), c(4194304, 4194304) )
 )
 
-m <- leaflet(options= leafletOptions(crs=crsAntartica,minZoom=0,worldCopyJump=FALSE)) %>%
+mps <- leaflet(options= leafletOptions(crs=crsAntartica,minZoom=0,worldCopyJump=FALSE)) %>%
 setView(0,-90,startZoom) %>%
 addCircleMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
                      popup=popup,label=temp$place_name,
@@ -188,6 +198,11 @@ addCircleMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
                 options=WMSTileOptions(format="image/png",transparent=TRUE),
                 attribution="Background imagery courtesy <a href='http://www.environments.aq/'>environments.aq</a>") %>%
     addGraticule()
+```
+
+```{r echo=FALSE,eval=FALSE}
+library(mapview)
+mapshot(mps,file="leafletps.png")
 ```
 
 
