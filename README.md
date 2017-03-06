@@ -42,6 +42,12 @@ library(antanym)
 g <- an_read()
 ```
 
+If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
+
+``` r
+gsp <- an_read(sp=TRUE)
+```
+
 How many names do we have in total?
 
 ``` r
@@ -102,6 +108,7 @@ this_names <- head(suggested,10)
 library(rworldmap)
 #> Warning: package 'rworldmap' was built under R version 3.3.1
 #> Loading required package: sp
+#> Warning: package 'sp' was built under R version 3.3.2
 #> ### Welcome to rworldmap ###
 #> For a short introduction type :   vignette('rworldmap')
 map <- getMap(resolution="low")

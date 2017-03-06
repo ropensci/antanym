@@ -37,6 +37,11 @@ library(dplyr)
 g <- an_read()
 ```
 
+If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
+```{r eval=FALSE}
+gsp <- an_read(sp=TRUE)
+```
+
 Find a single name per feature, preferring United Kingdom names where available, and only rows with valid locations:
 ```{r message=FALSE,warning=FALSE}
 g <- g %>% an_preferred("United Kingdom") %>% filter(!is.na(longitude) & !is.na(latitude))

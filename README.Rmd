@@ -56,6 +56,11 @@ library(antanym)
 g <- an_read()
 ```
 
+If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
+```{r as_sp,eval=FALSE}
+gsp <- an_read(sp=TRUE)
+```
+
 How many names do we have in total?
 ```{r}
 nrow(g)
