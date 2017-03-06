@@ -127,14 +127,16 @@ g %>% an_preferred(origin_country="Poland") %>% an_filter("^Sm")
 ```
 
 
-Demos
+Map demos
 -----
 
-### [Simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html)
+### Leaflet
+
+A [simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
 
 Source code:
 
-```{r, eval=FALSE}
+```{r eval=FALSE}
 library(antanym)
 library(dplyr)
 library(leaflet)
@@ -160,6 +162,32 @@ m <- leaflet() %>%
   addMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
     clusterOptions = markerClusterOptions(),popup=popup,
     label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
+```
+
+We can also use a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html). Note that the leaflet package here must be the rstudio version (use `devtools::install_github("rstudio/leaflet")`).
+
+```{r eval=FALSE}
+startZoom <- 1
+
+crsAntartica <-  leafletCRS(
+  crsClass = 'L.Proj.CRS',
+  code = 'EPSG:3031',
+  proj4def = '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs',
+  resolutions = c(8192, 4096, 2048, 1024, 512, 256),
+  origin = c(-4194304, 4194304),
+  bounds =  list( c(-4194304, -4194304), c(4194304, 4194304) )
+)
+
+m <- leaflet(options= leafletOptions(crs=crsAntartica,minZoom=0,worldCopyJump=FALSE)) %>%
+setView(0,-90,startZoom) %>%
+addCircleMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
+                     popup=popup,label=temp$place_name,
+                     labelOptions=labelOptions(textOnly=TRUE)) %>%
+    addWMSTiles(baseUrl="https://maps.environments.aq/mapcache/antarc/?",
+                layers="antarc_ramp_bath_shade_mask",
+                options=WMSTileOptions(format="image/png",transparent=TRUE),
+                attribution="Background imagery courtesy <a href='http://www.environments.aq/'>environments.aq</a>") %>%
+    addGraticule()
 ```
 
 
