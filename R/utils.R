@@ -45,8 +45,6 @@ an_preferred <- function(gaz,origin_country) {
     }
 }
 
-## not exported
-
 
 #' Thin names to give approximately uniform spatial coverage
 #'
@@ -82,9 +80,8 @@ an_thin <- function(gaz,n,score_col="score",score_weighting=5){
     ## optionally including scores
     if (n>=nrow(gaz)) return(gaz)
     idx <- rep(FALSE,nrow(gaz))
-    ##tempij <- expand.grid(1:nrow(gaz),1:nrow(gaz))
-    ##this.dist <- distVincentySphere(gaz[tempij[,1],position_cols],gaz[tempij[,2],position_cols])
     ## construct matrix of distances between all pairs of points
+    ## note that we use Euclidean distance on coordinates, for computational reasons
     if (inherits(gaz,"SpatialPointsDataFrame")) {
         this.dist <- as.matrix(dist(as.data.frame(gaz)[,c("longitude","latitude")]))
     } else {
