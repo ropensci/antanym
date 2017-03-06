@@ -54,10 +54,10 @@ test_that("sp versions of functions match non-sp for projected data", {
     projection(pt2) <- projll
     pt2 <- spTransform(pt2,stersouth)
     expect_identical(namelist(an_near(g,pt,20)),namelist(an_near(gsp2,pt2,20)))
-    ## namelists won't be the same for larger distances, because great-circle distances
-    ## calculated from lon-lat data won't be the same as distances calculated from
-    ## projected polar-stereo data
-    expect_false(identical(namelist(an_near(g,pt,50)),namelist(an_near(gsp2,pt2,50))))
+    ## previously, namelists would not be the same for larger distances, because we were using great-circle distances
+    ## for lon-lat data and x-y coords for projected data
+    ## but now all are great-circles, so these should now match
+    expect_identical(namelist(an_near(g,pt,50)),namelist(an_near(gsp2,pt2,50)))
 
     expect_identical(namelist(an_preferred(g,"Australia")),
                      namelist(an_preferred(gsp2,"Australia")))
