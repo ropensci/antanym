@@ -150,7 +150,7 @@ Map demos
 
 A [simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
 
-<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="leaflet.png" width="40%" /></a>
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="README-leaflet.png" width="40%" /></a>
 
 Source code:
 
@@ -184,7 +184,7 @@ m <- leaflet() %>%
 
 We can also use a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html). Note that the leaflet package here must be the rstudio version (use `devtools::install_github("rstudio/leaflet")`).
 
-<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="leafletps.png" width="40%" /></a>
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="README-leafletps.png" width="40%" /></a>
 
 ``` r
 startZoom <- 1
