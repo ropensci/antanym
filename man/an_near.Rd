@@ -29,7 +29,8 @@ Find placenames near a given location
 
  ## with sp objects
  gsp <- an_read(cache_directory="c:/temp/gaz",sp=TRUE)
- loc <- SpatialPoints(matrix(c(110,-66),nrow=1),proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+ loc <- SpatialPoints(matrix(c(110,-66),nrow=1),
+   proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
  an_near(gsp,loc,10)
 }
 
