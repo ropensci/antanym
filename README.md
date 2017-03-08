@@ -179,7 +179,7 @@ m <- leaflet() %>%
   addProviderTiles("Esri.WorldImagery") %>%
   addMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
     clusterOptions = markerClusterOptions(),popup=popup,
-    label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
+    label=temp$place_name)
 ```
 
 We can also use a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html). Note that the leaflet package here must be the rstudio version (use `devtools::install_github("rstudio/leaflet")`).
@@ -199,10 +199,11 @@ crsAntartica <-  leafletCRS(
 )
 
 mps <- leaflet(options= leafletOptions(crs=crsAntartica,minZoom=0,worldCopyJump=FALSE)) %>%
-setView(0,-90,startZoom) %>%
-addCircleMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
+    setView(0,-90,startZoom) %>%
+    addCircleMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
                      popup=popup,label=temp$place_name,
-                     labelOptions=labelOptions(textOnly=TRUE)) %>%
+                     fillOpacity=0.5,radius=8,stroke=FALSE,color="#000",
+                     labelOptions=labelOptions(textOnly=FALSE)) %>%
     addWMSTiles(baseUrl="https://maps.environments.aq/mapcache/antarc/?",
                 layers="antarc_ramp_bath_shade_mask",
                 options=WMSTileOptions(format="image/png",transparent=TRUE),
