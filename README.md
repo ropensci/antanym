@@ -3,7 +3,7 @@
 antanym
 =======
 
-[![Travis-CI Build Status](https://travis-ci.org/AustralianAntarcticDataCentre/antanym.svg?branch=master)](https://travis-ci.org/AustralianAntarcticDataCentre/antanym) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/AustralianAntarcticDataCentre/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/AustralianAntarcticDataCentre/antanym)
+[![Travis-CI Build Status](https://travis-ci.org/SCAR/antanym.svg?branch=master)](https://travis-ci.org/SCAR/antanym) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SCAR/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/SCAR/antanym)
 
 Overview
 --------
@@ -29,7 +29,7 @@ Installing
 ``` r
 install.packages("devtools")
 library(devtools)
-install_github("AustralianAntarcticDataCentre/antanym")
+install_github("SCAR/antanym")
 ```
 
 Usage
@@ -106,9 +106,7 @@ Plot the 10 best names purely by score:
 this_names <- head(suggested,10)
 
 library(rworldmap)
-#> Warning: package 'rworldmap' was built under R version 3.3.1
 #> Loading required package: sp
-#> Warning: package 'sp' was built under R version 3.3.2
 #> ### Welcome to rworldmap ###
 #> For a short introduction type :   vignette('rworldmap')
 map <- getMap(resolution="low")

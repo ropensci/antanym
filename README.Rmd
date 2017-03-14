@@ -14,8 +14,8 @@ knitr::opts_chunk$set(
 
 # antanym
 
-[![Travis-CI Build Status](https://travis-ci.org/AustralianAntarcticDataCentre/antanym.svg?branch=master)](https://travis-ci.org/AustralianAntarcticDataCentre/antanym)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/AustralianAntarcticDataCentre/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/AustralianAntarcticDataCentre/antanym)
+[![Travis-CI Build Status](https://travis-ci.org/SCAR/antanym.svg?branch=master)](https://travis-ci.org/SCAR/antanym)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SCAR/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/SCAR/antanym)
 
 Overview
 --------
@@ -43,7 +43,7 @@ Installing
 ```{r, eval=FALSE}
 install.packages("devtools")
 library(devtools)
-install_github("AustralianAntarcticDataCentre/antanym")
+install_github("SCAR/antanym")
 ```
 
 Usage
