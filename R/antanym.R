@@ -1,7 +1,9 @@
 #' \pkg{antanym}
 #'
+#' Antarctic geographic place names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.
+#'
 #' @name antanym
-#' @author Australian Antarctic Data Centre \email{aadc@@aad.gov.au}
+#' @aliases antanym-package
 #' @docType package
 #' @references \url{http://data.aad.gov.au/aadc/gaz/scar}
 #' @importFrom assertthat assert_that is.string is.flag
