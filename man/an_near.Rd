@@ -41,4 +41,3 @@ Find placenames near a given location
 \seealso{
 \code{\link{an_read}}
 }
-

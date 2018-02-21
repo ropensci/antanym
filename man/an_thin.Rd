@@ -42,4 +42,3 @@ Thin names to give approximately uniform spatial coverage
 \seealso{
 \code{\link{an_read}} \code{\link{an_suggest}}
 }
-

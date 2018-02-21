@@ -25,4 +25,3 @@ Get links to gazetteer entries
 \references{
 \url{http://www.scar.org/data-products/cga}
 }
-

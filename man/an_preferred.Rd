@@ -37,4 +37,3 @@ Find one name per feature according to specified preferences
 \seealso{
 \code{\link{an_read}}
 }
-

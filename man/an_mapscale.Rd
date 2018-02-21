@@ -22,4 +22,3 @@ Calculate approximate map scale
 an_mapscale(c(400,570),c(-180,180,-90,-40))
 
 }
-

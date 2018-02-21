@@ -40,4 +40,3 @@ SCAR composite gazetteer (features south of 60S).
 \seealso{
 \code{\link{an_read}} \code{\link{an_thin}}
 }
-
