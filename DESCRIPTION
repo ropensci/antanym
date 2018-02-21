@@ -1,14 +1,17 @@
 Package: antanym
-Title: An R package for the Antarctic geographic placenames, including the SCAR Composite Gazetteer of Antarctica
-Version: 0.2.4
+Type: Package
+Title: Antarctic geographic place names
+Version: 0.2.5
 Authors@R: c(person("Ben","Raymond",email="ben.raymond@aad.gov.au",role=c("aut","cre")),
 	     person("Michael","Sumner",email="michael.sumner@aad.gov.au",role="aut"),
 	     person("Ursula","Harris",role="ctb"),
 	     person("Andrew","Cowie",role="ctb"),
 	     person("Fraser","Morgan",role="ctb")
 	    )
-Description: Access to Antarctic geographic names, including the SCAR Composite Gazetteer of Antarctica,
-    and functions for searching those place names.
+Description: Antarctic geographic names from the SCAR Composite Gazetteer of Antarctica,
+    and functions for working with those place names.
+URL: https://github.com/SCAR/antanym
+BugReports: https://github.com/SCAR/antanym/issues
 Depends:
     R (>= 3.3.0)
 License: MIT + file LICENSE
@@ -32,5 +35,8 @@ Suggests:
   rgdal,
   rmarkdown,
   rworldmap
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 VignetteBuilder: knitr
+X-schema.org-applicationCategory: Antarctic/Southern Ocean
+X-schema.org-keywords: Antarctic, Southern Ocean, place names, gazetteer
+X-schema.org-isPartOf: https://scar.org
