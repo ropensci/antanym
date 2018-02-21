@@ -22,9 +22,9 @@ an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALS
     ## currently the gazetteers parameter does nothing, since we only have the CGA to load
     do_cache_locally <- FALSE
     local_file_name <- "gaz_data.csv"
-    ##download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW_SIMPLIFIED&outputFormat=csv"
+    ##download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_SIMPLIFIED&outputFormat=csv"
     ## or for the complete set of columns
-    download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES_NEW&outputFormat=csv"
+    download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES&outputFormat=csv"
     if (!missing(cache_directory)) {
         assert_that(is.string(cache_directory))
         if (!dir.exists(cache_directory)) {
@@ -40,7 +40,7 @@ an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALS
             ## is cached copy old?
             if (file.exists(local_file_name)) {
                 if (difftime(Sys.time(),file.info(local_file_name)$mtime,units="days")>30 && !refresh_cache)
-                    warning("cached copy of gazetteer data is more than 30 days old, consider refreshing your copy")
+                    warning("cached copy of gazetteer data is more than 30 days old, consider refreshing your copy with an_read(...,refresh_cache=TRUE)")
             }
         }
     } else {
@@ -70,12 +70,8 @@ an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALS
     names(g)[names(g)=="gazetteer"] <- "cga_source_gazetteer"
     ## add "gazetteer" column (meaning the overall gazetteer name, cga in this case)
     g$gazetteer <- "cga"
-    ## split display scales into separate columns
-    temp <- lapply(g$display_scales,strsplit,split=",")
-    all_scales <- Filter(nchar,unique(sapply(temp,function(z)z[[1]][[1]])))
-    temp <- as.data.frame(lapply(all_scales,function(sc)sapply(temp,function(z)isTRUE(any(sc==z[[1]])))))
-    names(temp) <- paste0("display_scale_",gsub("000$","k",gsub("000000$","M",all_scales))) ## to e.g. display_scale_250k
-    g <- bind_cols(g,temp)
+    ## previously we had just "place_name" column, now "place_name_mapping" (e.g. Lake Thing) and "place_name_gazetteer" (Thing, Lake)
+    g$place_name <- g$place_name_mapping
     ## add version of place_name with no diacriticals
     g$place_name_transliterated <- stringi::stri_trans_general(g$place_name,"latin-ascii")
 
@@ -97,6 +93,5 @@ an_gazetteers <- function() c("cga") ## for now, the CGA is the only gazetteer p
 
 
 ## internal function, used to control the subset of columns returned to the user
-##gaz_names_to_show <- function(gaz) names(gaz) ## just return everything for now
-gaz_names_to_show <- function(gaz) intersect(names(gaz),c("gaz_id","place_name","latitude","longitude","altitude","feature_type_name","narrative","named_for","meeting_date","meeting_paper","date_revised","cga_source_gazetteer","scar_common_id","is_complete_flag","remote_sensor_info","coordinate_accuracy","altitude_accuracy","source_institution","source_person","source_country_code","source_name","comments","source_publisher","source_identifier","date_named","country_name","gazetteer","place_name_transliterated")) ##names(gaz)[grep("^display_scale_",names(gaz))]))
+gaz_names_to_show <- function(gaz) intersect(names(gaz),c("gaz_id","place_name","latitude","longitude","altitude","feature_type_name","narrative","named_for","meeting_date","meeting_paper","date_revised","cga_source_gazetteer","scar_common_id","is_complete_flag","remote_sensor_info","coordinate_accuracy","altitude_accuracy","source_institution","source_person","source_country_code","source_name","comments","source_publisher","source_identifier","date_named","country_name","gazetteer","place_name_transliterated"))
 
