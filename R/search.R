@@ -105,15 +105,8 @@ an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazett
         out <- filter_(out,~grepl(origin_gazetteer,gazetteer))
     if (!missing(cga_source))
         out <- filter_(out,~gazetteer=="cga" & grepl(cga_source,cga_source_gazetteer))
-    #if (!missing(display_scale)) {
-    #    dscol <- paste0("display_scale_",display_scale)
-    #    if (!dscol %in% names(gaz)) stop("display_scale ",display_scale," not valid: see an_display_scales()")
-    #    out <- out[out[,dscol]==TRUE,]
-    #}
     out
 }
-# @param display_scale string: Return only place names that have been marked for display at this map scale. For valid values see \code{\link{an_display_scales}}
-
 
 #' @rdname an_filter
 #' @export
@@ -133,10 +126,4 @@ an_cga_sources <- function(gaz) {
     sort(as.character(na.omit(unique(filter_(gaz,~gazetteer=="cga")$cga_source_gazetteer))))
 }
 
-# ' @rdname an_filter
-# ' @export
-#an_display_scales <- function(gaz) {
-#    nms <- names(gaz)
-#    sort(gsub("^display_scale_","",nms[grep("^display_scale_",nms)]))
-#}
 
