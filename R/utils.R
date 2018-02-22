@@ -36,7 +36,10 @@ an_preferred <- function(gaz,origin_country) {
     temp <- factor(pn1$country_name,levels=origin_country)
     pn1 <- dplyr::arrange(pn1,.data$scar_common_id,temp) %>% slice(1L)
     pn2 <- gaz %>% group_by(.data$scar_common_id) %>% dplyr::filter(!.data$country_name %in% origin_country) %>% slice(1L)
-    out <- ungroup(bind_rows(pn1,pn2 %>% dplyr::filter(!.data$scar_common_id %in% pn1$scar_common_id)))
+
+    pn2 <- pn2[!pn2$scar_common_id %in% pn1$scar_common_id,]
+    out <- ungroup(rbind(pn1,pn2))
+    ##out <- ungroup(bind_rows(pn1,pn2 %>% dplyr::filter(!.data$scar_common_id %in% pn1$scar_common_id)))
     if (is_sp) {
         ## return the subset of gaz_sp corresponding to the rows we just selected
         gaz_sp[gaz_sp$gaz_id %in% out$gaz_id,]
@@ -173,7 +176,8 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
     } else {
         stop("an_suggest not yet implemented for map_scale value below 10 million")
     }
-    temp %>% dplyr::arrange(desc(.data$score))
+    oidx <- order(temp$score,decreasing=TRUE)
+    temp[oidx,]
 }
 
 

@@ -94,17 +94,21 @@ an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazett
         if (inherits(out,"SpatialPointsDataFrame")) {
             out <- crop(out,extent)
         } else {
-            out <- dplyr::filter(out,.data$longitude>=extent[1] & .data$longitude<=extent[2] & .data$latitude>=extent[3] & .data$latitude<=extent[4])
+            out <- out[out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4],]
         }
     }
     if (!missing(feature_type))
-        out <- dplyr::filter(out,grepl(feature_type,.data$feature_type_name))
+        ##out <- dplyr::filter(out,grepl(feature_type,.data$feature_type_name))
+        out <- out[grepl(feature_type,out$feature_type_name),]
     if (!missing(origin_country))
-        out <- dplyr::filter(out,grepl(origin_country,.data$country_name))
+        ##out <- dplyr::filter(out,grepl(origin_country,.data$country_name))
+        out <- out[grepl(origin_country,out$country_name),]
     if (!missing(origin_gazetteer))
-        out <- dplyr::filter(out,grepl(origin_gazetteer,.data$gazetteer))
+        ##out <- dplyr::filter(out,grepl(origin_gazetteer,.data$gazetteer))
+        out <- out[grepl(origin_gazetteer,out$gazetteer),]
     if (!missing(cga_source))
-        out <- dplyr::filter(out,.data$gazetteer=="cga" & grepl(cga_source,.data$cga_source_gazetteer))
+        ##out <- dplyr::filter(out,.data$gazetteer=="cga" & grepl(cga_source,.data$cga_source_gazetteer))
+        out <- out[!is.na(out$gazetteer) & out$gazetteer=="cga" & grepl(cga_source,out$cga_source_gazetteer),]
     out
 }
 

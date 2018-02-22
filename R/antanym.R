@@ -7,7 +7,7 @@
 #' @docType package
 #' @references \url{http://data.aad.gov.au/aadc/gaz/scar}
 #' @importFrom assertthat assert_that is.string is.flag
-#' @importFrom dplyr %>% arrange bind_cols bind_rows desc filter group_by slice ungroup
+#' @importFrom dplyr %>% arrange filter group_by slice ungroup
 #' @importFrom geosphere distVincentySphere
 #' @importFrom httr GET config content
 #' @importFrom readr read_csv
