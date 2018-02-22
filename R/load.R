@@ -49,7 +49,9 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cac
     }
     if (do_cache_locally) {
         if (verbose) message("downloading gazetter data file to ", local_file_name, " ...")
-        download.file(download_url, destfile=local_file_name, quiet=!verbose, mode="wb")
+        g <- do_fetch_data(download_url)
+        ## cache it
+        write.csv(g, file = local_file_name, fileEncoding = "UTF-8", row.names = FALSE, na = "")
     } else {
         if (verbose) {
             if (local_file_name==download_url)
@@ -60,8 +62,7 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cac
     }
     if (local_file_name==download_url) {
         ## fetch using httr::GET, because read_csv chokes on SSL errors
-        ## download.file (above) doesn't seem to care about SSL errors!
-        suppressMessages(g <- httr::content(httr::GET(download_url, httr::config(ssl_verifypeer = 0L)), as="parsed"))
+        g <- do_fetch_data(download_url)
     } else {
         suppressMessages(g <- readr::read_csv(local_file_name))
     }
@@ -84,6 +85,12 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cac
         projection(g) <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     }
     g
+}
+
+do_fetch_data <- function(download_url) {
+    temp <- GET(download_url, httr::config(ssl_verifypeer = 0L))
+    if (http_error(temp)) stop("error downloading gazetteer data: ",http_status(temp)$message)
+    suppressMessages(httr::content(temp, as = "parsed", encoding = "UTF-8"))
 }
 
 #' @rdname an_read
