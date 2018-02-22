@@ -7,16 +7,15 @@
 #' @docType package
 #' @references \url{http://data.aad.gov.au/aadc/gaz/scar}
 #' @importFrom assertthat assert_that is.string is.flag
-#' @importFrom dplyr %>% arrange filter group_by slice ungroup
+#' @importFrom C50 predict.C5.0
 #' @importFrom geosphere distVincentySphere
-#' @importFrom httr GET config content
+#' @importFrom httr GET config content http_error http_status
+#' @importFrom magrittr %>%
+#' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster
 #' @importFrom readr read_csv
 #' @importFrom rlang .data
 #' @importFrom sp coordinates coordinates<- CRS is.projected spTransform SpatialPoints
-#' @import spdplyr
 #' @importFrom stats dist na.omit predict
-#' @importFrom utils download.file
-#' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster
 #' @importFrom stringi stri_trans_general
-#' @importFrom C50 predict.C5.0
+#' @importFrom utils download.file write.csv
 NULL

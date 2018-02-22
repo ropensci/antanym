@@ -18,7 +18,7 @@ Get links to gazetteer entries
 \examples{
 \dontrun{
  g <- an_read(cache_directory="c:/temp/gaz")
- my_url <- an_url(an_filter(g,"Ufs Island")[1,])
+ my_url <- an_url(an_filter(g, "Ufs Island")[1,])
  browseURL(my_url)
 }
 }

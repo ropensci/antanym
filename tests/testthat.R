@@ -1,5 +1,5 @@
 library(testthat)
-library(dplyr)
+library(magrittr)
 library(antanym)
 
 g <- an_read()

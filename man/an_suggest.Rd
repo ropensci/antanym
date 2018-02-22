@@ -11,7 +11,7 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions)
 
 \item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}}
 
-\item{map_extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided}
+\item{map_extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided}
 
 \item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided}
 }
@@ -29,12 +29,12 @@ SCAR composite gazetteer (features south of 60S).
 
  ## get a single name per feature, preferring the
  ##  Australian name where there is one
- g <- an_preferred(g,"Australia")
+ g <- an_preferred(g, "Australia")
 
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
- suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
- head(suggested,20) ## top 20 names
+ suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+ head(suggested, 20) ## top 20 names
 }
 }
 \seealso{

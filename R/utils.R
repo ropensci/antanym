@@ -24,22 +24,37 @@
 #' @export
 an_preferred <- function(gaz, origin_country) {
     assert_that(is.character(origin_country))
-    ## this gets ugly with an sp gaz object because the dplyr operations don't work the same
     is_sp <- inherits(gaz, "SpatialPointsDataFrame")
     if (is_sp) {
         ## if sp, work on the @data object
         gaz_sp <- gaz
         gaz <- gaz@data
     }
-    pn1 <- gaz %>% group_by(.data$scar_common_id) %>% dplyr::filter(.data$country_name %in% origin_country)
-    ## order by origin_country (with ordering as per appearance in the origin_country vector)
-    temp <- factor(pn1$country_name, levels=origin_country)
-    pn1 <- dplyr::arrange(pn1, .data$scar_common_id, temp) %>% slice(1L)
-    pn2 <- gaz %>% group_by(.data$scar_common_id) %>% dplyr::filter(!.data$country_name %in% origin_country) %>% slice(1L)
+    
+    ## features that have a name from one of our countries of interest
+    in_ids <- unique(gaz$scar_common_id[gaz$country_name %in% origin_country])
+    in_coi <- gaz[gaz$scar_common_id %in% in_ids,]
+    ## order within scar_common_id by origin_country (with ordering as per appearance in the origin_country vector)
+    ord <- order(in_coi$scar_common_id, factor(in_coi$country_name, levels=origin_country))
+    in_coi <- in_coi[ord,]
+    in_coi <- in_coi[!duplicated(in_coi$scar_common_id),] ## take first entry for each scar_common_id
+    
+    out_coi <- gaz[!gaz$scar_common_id %in% in_ids,]
+    out_coi <- out_coi[!duplicated(out_coi$scar_common_id),] ## take first entry for each scar_common_id
+    
+    out <- rbind(in_coi, out_coi)
 
-    pn2 <- pn2[!pn2$scar_common_id %in% pn1$scar_common_id,]
-    out <- ungroup(rbind(pn1, pn2))
-    ##out <- ungroup(bind_rows(pn1, pn2 %>% dplyr::filter(!.data$scar_common_id %in% pn1$scar_common_id)))
+    ## old dplyr code
+    ##pn1 <- gaz %>% group_by(.data$scar_common_id) %>% dplyr::filter(.data$country_name %in% origin_country)
+    #### order by origin_country (with ordering as per appearance in the origin_country vector)
+    ##temp <- factor(pn1$country_name, levels=origin_country)
+    ##pn1 <- dplyr::arrange(pn1, .data$scar_common_id, temp) %>% slice(1L)
+    ##pn2 <- gaz %>% group_by(.data$scar_common_id) %>% dplyr::filter(!.data$country_name %in% origin_country) %>% slice(1L)
+    ##
+    ##pn2 <- pn2[!pn2$scar_common_id %in% pn1$scar_common_id,]
+    ##out <- ungroup(rbind(pn1, pn2))
+    ####out <- ungroup(bind_rows(pn1, pn2 %>% dplyr::filter(!.data$scar_common_id %in% pn1$scar_common_id)))
+
     if (is_sp) {
         ## return the subset of gaz_sp corresponding to the rows we just selected
         gaz_sp[gaz_sp$gaz_id %in% out$gaz_id,]

@@ -14,7 +14,7 @@
 #'  g <- an_read(cache_directory="c:/temp/gaz")
 #'  an_near(g, c(110, -66), 10)
 #'
-#'  ## using dplyr or magrittr
+#'  ## using pipe operator
 #'  g %>% an_near(c(100, -66), 20)
 #'
 #'  ## with sp objects
@@ -76,7 +76,7 @@ an_near <- function(gaz, loc, max_distance) {
 #'  with(nms, plot(longitude, latitude))
 #'  with(nms, text(longitude, latitude, place_name))
 #'
-#'  ## using dplyr or magrittr
+#'  ## using pipe operator
 #'  g %>% an_filter("Ross", feature_type = "Ice shelf|Mountain")
 #'  g %>% an_near(c(100, -66), 20) %>% an_filter(feature_type = "Island")
 #' }

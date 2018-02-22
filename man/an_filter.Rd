@@ -21,7 +21,7 @@ an_cga_sources(gaz)
 
 \item{query}{string, regular expression: Return only place names matching this pattern}
 
-\item{extent}{raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): if provided, search only for names within this bounding box}
+\item{extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box}
 
 \item{feature_type}{string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}}
 
@@ -40,18 +40,18 @@ All matches are case-insensitive.
 \examples{
 \dontrun{
  g <- an_read(cache_directory="c:/temp/gaz")
- an_filter(g,"Ufs")
- an_filter(g,"Ufs",feature_type="Island")
- an_filter(g,"Ufs",feature_type="Island",origin_country="Australia|United States of America")
+ an_filter(g, "Ufs")
+ an_filter(g, "Ufs",feature_type = "Island")
+ an_filter(g, "Ufs", feature_type = "Island", origin_country = "Australia|United States of America")
 
- nms <- an_filter(g,extent=c(100,120,-70,-65),
-    origin_country="Australia")
- with(nms,plot(longitude,latitude))
- with(nms,text(longitude,latitude,place_name))
+ nms <- an_filter(g, extent = c(100, 120, -70, -65),
+    origin_country = "Australia")
+ with(nms, plot(longitude, latitude))
+ with(nms, text(longitude, latitude, place_name))
 
- ## using dplyr or magrittr
- g \%>\% an_filter("Ross",feature_type="Ice shelf|Mountain")
- g \%>\% an_near(c(100,-66),20) \%>\% an_filter(feature_type="Island")
+ ## using pipe operator
+ g \%>\% an_filter("Ross", feature_type = "Ice shelf|Mountain")
+ g \%>\% an_near(c(100, -66), 20) \%>\% an_filter(feature_type = "Island")
 }
 }
 \references{

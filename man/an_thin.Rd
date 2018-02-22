@@ -29,13 +29,13 @@ Thin names to give approximately uniform spatial coverage
 
  ## get a single name per feature, preferring the
  ##  Australian name where there is one
- g <- an_preferred(g,"Australia")
+ g <- an_preferred(g, "Australia")
 
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
- suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
- head(suggested,20) ## top 20 names by score
- an_thin(suggested,20) ## 20 names chosen for spatial coverage and score
+ suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+ head(suggested, 20) ## top 20 names by score
+ an_thin(suggested, 20) ## 20 names chosen for spatial coverage and score
 }
 
 }
