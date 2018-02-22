@@ -30,6 +30,7 @@ Imports:
   spdplyr,
   stringi
 Suggests:
+  covr,
   testthat,
   knitr,
   leaflet,
