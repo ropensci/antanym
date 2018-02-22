@@ -148,7 +148,7 @@ g <- an_read()
 ## find single name per feature, preferring United Kingdom
 ##  names where available, and only rows with valid locations
 temp <- g %>% an_preferred("United Kingdom") %>%
-  filter(!is.na(longitude) & !is.na(latitude))
+  dplyr::filter(!is.na(longitude) & !is.na(latitude))
 
 ## replace NAs with empty strings in narrative
 temp$narrative[is.na(temp$narrative)] <- ""
