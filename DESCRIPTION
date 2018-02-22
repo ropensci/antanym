@@ -25,6 +25,7 @@ Imports:
   httr,
   raster,
   readr,
+  rlang,
   sp,
   spdplyr,
   stringi
