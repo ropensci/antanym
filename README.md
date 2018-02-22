@@ -134,10 +134,9 @@ text(this_names2$longitude,this_names2$latitude,labels=this_names2$place_name,po
 
 ![](README-unnamed-chunk-11-1.png)
 
-We can also do similar operations using dplyr, for example:
+We can also do similar operations using the pipe operator, for example:
 
 ``` r
-library(dplyr)
 g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
 g %>% an_preferred(origin_country="Poland") %>% an_filter("^Sm")
 ```
@@ -155,14 +154,13 @@ Source code:
 
 ``` r
 library(antanym)
-library(dplyr)
 library(leaflet)
 g <- an_read()
 
 ## find single name per feature, preferring United Kingdom
 ##  names where available, and only rows with valid locations
-temp <- g %>% an_preferred("United Kingdom") %>%
-  dplyr::filter(!is.na(longitude) & !is.na(latitude))
+temp <- g %>% an_preferred("United Kingdom")
+temp <- temp[!is.na(temp$longitude) & !is.na(temp$latitude),]
 
 ## replace NAs with empty strings in narrative
 temp$narrative[is.na(temp$narrative)] <- ""
