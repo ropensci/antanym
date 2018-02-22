@@ -22,10 +22,10 @@
 #' }
 #'
 #' @export
-an_preferred <- function(gaz,origin_country) {
+an_preferred <- function(gaz, origin_country) {
     assert_that(is.character(origin_country))
     ## this gets ugly with an sp gaz object because the dplyr operations don't work the same
-    is_sp <- inherits(gaz,"SpatialPointsDataFrame")
+    is_sp <- inherits(gaz, "SpatialPointsDataFrame")
     if (is_sp) {
         ## if sp, work on the @data object
         gaz_sp <- gaz
@@ -33,13 +33,13 @@ an_preferred <- function(gaz,origin_country) {
     }
     pn1 <- gaz %>% group_by(.data$scar_common_id) %>% dplyr::filter(.data$country_name %in% origin_country)
     ## order by origin_country (with ordering as per appearance in the origin_country vector)
-    temp <- factor(pn1$country_name,levels=origin_country)
-    pn1 <- dplyr::arrange(pn1,.data$scar_common_id,temp) %>% slice(1L)
+    temp <- factor(pn1$country_name, levels=origin_country)
+    pn1 <- dplyr::arrange(pn1, .data$scar_common_id, temp) %>% slice(1L)
     pn2 <- gaz %>% group_by(.data$scar_common_id) %>% dplyr::filter(!.data$country_name %in% origin_country) %>% slice(1L)
 
     pn2 <- pn2[!pn2$scar_common_id %in% pn1$scar_common_id,]
-    out <- ungroup(rbind(pn1,pn2))
-    ##out <- ungroup(bind_rows(pn1,pn2 %>% dplyr::filter(!.data$scar_common_id %in% pn1$scar_common_id)))
+    out <- ungroup(rbind(pn1, pn2))
+    ##out <- ungroup(bind_rows(pn1, pn2 %>% dplyr::filter(!.data$scar_common_id %in% pn1$scar_common_id)))
     if (is_sp) {
         ## return the subset of gaz_sp corresponding to the rows we just selected
         gaz_sp[gaz_sp$gaz_id %in% out$gaz_id,]
@@ -68,37 +68,37 @@ an_preferred <- function(gaz,origin_country) {
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Australian name where there is one
-#'  g <- an_preferred(g,"Australia")
+#'  g <- an_preferred(g, "Australia")
 #'
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
-#'  suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
-#'  head(suggested,20) ## top 20 names by score
-#'  an_thin(suggested,20) ## 20 names chosen for spatial coverage and score
+#'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+#'  head(suggested, 20) ## top 20 names by score
+#'  an_thin(suggested, 20) ## 20 names chosen for spatial coverage and score
 #' }
 #'
 #' @export
-an_thin <- function(gaz,n,score_col="score",score_weighting=5){
+an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
     ## thin points to give approximately uniform spatial coverage
     ## optionally including scores
     if (n>=nrow(gaz)) return(gaz)
-    idx <- rep(FALSE,nrow(gaz))
+    idx <- rep(FALSE, nrow(gaz))
     ## construct matrix of distances between all pairs of points
     ## note that we use Euclidean distance on coordinates, for computational reasons
-    if (inherits(gaz,"SpatialPointsDataFrame")) {
-        this.dist <- as.matrix(dist(as.data.frame(gaz)[,c("longitude","latitude")]))
+    if (inherits(gaz, "SpatialPointsDataFrame")) {
+        this.dist <- as.matrix(dist(as.data.frame(gaz)[,c("longitude", "latitude")]))
     } else {
-        this.dist <- as.matrix(dist(gaz[,c("longitude","latitude")]))
+        this.dist <- as.matrix(dist(gaz[,c("longitude", "latitude")]))
     }
     if (!is.null(score_col)) {
-        if (inherits(gaz,"SpatialPointsDataFrame")) {
+        if (inherits(gaz, "SpatialPointsDataFrame")) {
             sc <- as.data.frame(gaz)[,score_col]
         } else {
             sc <- gaz[,score_col]
         }
-        if (inherits(sc,"data.frame")) sc <- unlist(sc)
+        if (inherits(sc, "data.frame")) sc <- unlist(sc)
     } else {
-        sc <- rep(1,nrow(gaz))
+        sc <- rep(1, nrow(gaz))
     }
     tmp <- which.max(sc)
     idx[tmp] <- TRUE ## start with the first best-scored points
@@ -106,9 +106,9 @@ an_thin <- function(gaz,n,score_col="score",score_weighting=5){
     while(sum(idx) < n) {
         ## rank the distances
         ## for each point, find its distance to the closest point that's already been selected
-        dist_rank <- rank(apply(this.dist[,idx,drop=FALSE],1,min),na.last="keep")
+        dist_rank <- rank(apply(this.dist[,idx,drop=FALSE], 1, min), na.last = "keep")
         ## rank the scores
-        score_rank <- rank(sc,na.last="keep")
+        score_rank <- rank(sc, na.last = "keep")
         ## select the point with highest avg rank (i.e. highest composite distance and score)
         tmp <- which.max(score_weighting*score_rank+dist_rank)
         idx[tmp] <- TRUE
@@ -126,7 +126,7 @@ an_thin <- function(gaz,n,score_col="score",score_weighting=5){
 #'
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
-#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
+#' @param map_extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
 #'
 #' @return data.frame of names with a "score" column added. The data.frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
@@ -139,21 +139,21 @@ an_thin <- function(gaz,n,score_col="score",score_weighting=5){
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Australian name where there is one
-#'  g <- an_preferred(g,"Australia")
+#'  g <- an_preferred(g, "Australia")
 #'
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
-#'  suggested <- an_suggest(g,map_extent=c(60,90,-70,-60),map_dimensions=c(100,100))
-#'  head(suggested,20) ## top 20 names
+#'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+#'  head(suggested, 20) ## top 20 names
 #' }
 #' @export
-an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
+an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
     if (!missing(map_extent))
-        assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent,"Extent"))
+        assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent, "Extent"))
 
     if (missing(map_scale)) {
         if (missing(map_extent) || missing(map_dimensions)) stop("need either map_scale, or map_dimensions and map_extent")
-        map_scale <- an_mapscale(map_dimensions,map_extent)
+        map_scale <- an_mapscale(map_dimensions, map_extent)
     }
     ## scale >= 10e6: we have full coverage (nearly so for 12mill) of all scar_common_ids, so use per-feature predictions
     ## for scale < 10e6: use predictions by feature properties (except maybe if area of interest lies within a catalogued map)
@@ -167,8 +167,8 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
         idx <- which(temp$scar_common_id %in% uid)
         for (i in idx) {
             fidx <- which(temp$scar_common_id[i]==uid)
-            if (inherits(uid_fits[[fidx]],"C5.0")) {
-                temp$score[i] <- predict(uid_fits[[fidx]],newdata=temp[i,],type="prob")[,2]
+            if (inherits(uid_fits[[fidx]], "C5.0")) {
+                temp$score[i] <- predict(uid_fits[[fidx]], newdata=temp[i,], type = "prob")[,2]
             } else {
                 temp$score[i] <- uid_fits[[fidx]]
             }
@@ -176,7 +176,7 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
     } else {
         stop("an_suggest not yet implemented for map_scale value below 10 million")
     }
-    oidx <- order(temp$score,decreasing=TRUE)
+    oidx <- order(temp$score, decreasing = TRUE)
     temp[oidx,]
 }
 
@@ -184,22 +184,22 @@ an_suggest <- function(gaz,map_scale,map_extent,map_dimensions) {
 #' Calculate approximate map scale
 #'
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm
-#' @param map_extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): the geographic extent of the map
+#' @param map_extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the geographic extent of the map
 #'
 #' @return numeric
 #'
 #' @examples
 #' ## an A3-sized map of the Southern Ocean (1:20M)
-#' an_mapscale(c(400,570),c(-180,180,-90,-40))
+#' an_mapscale(c(400, 570), c(-180, 180, -90, -40))
 #'
 #' @export
-an_mapscale <- function(map_dimensions,map_extent) {
-    assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent,"Extent"))
-    if (!inherits(map_extent,"Extent")) map_extent <- extent(as.numeric(map_extent))
+an_mapscale <- function(map_dimensions, map_extent) {
+    assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent, "Extent"))
+    if (!inherits(map_extent, "Extent")) map_extent <- extent(as.numeric(map_extent))
     mapext <- raster()
     extent(mapext) <- map_extent
 
-    sqrt(cellStats(area(mapext),"sum")*1e3*1e3)/ ## sqrt of (map area in m^2)
+    sqrt(cellStats(area(mapext), "sum")*1e3*1e3)/ ## sqrt of (map area in m^2)
         sqrt(prod(map_dimensions)/1e3/1e3) ## sqrt of (map dimension area in m^2)
 }
 
@@ -214,14 +214,14 @@ an_mapscale <- function(map_dimensions,map_extent) {
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache_directory="c:/temp/gaz")
-#'  my_url <- an_url(an_filter(g,"Ufs Island")[1,])
+#'  my_url <- an_url(an_filter(g, "Ufs Island")[1,])
 #'  browseURL(my_url)
 #' }
 #' @export
 an_url <- function(gaz) {
     ## only CGA entries dealt with: needs modification once other gazetteers are added
-    out <- rep(as.character(NA),nrow(gaz))
+    out <- rep(as.character(NA), nrow(gaz))
     cga_idx <- gaz$gazetteer=="cga"
-    out[cga_idx] <- sprintf("https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d",gaz$gaz_id[cga_idx])
+    out[cga_idx] <- sprintf("https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d", gaz$gaz_id[cga_idx])
     out
 }

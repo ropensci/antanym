@@ -12,36 +12,36 @@
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache_directory="c:/temp/gaz")
-#'  an_near(g,c(110,-66),10)
+#'  an_near(g, c(110, -66), 10)
 #'
 #'  ## using dplyr or magrittr
-#'  g %>% an_near(c(100,-66),20)
+#'  g %>% an_near(c(100, -66), 20)
 #'
 #'  ## with sp objects
-#'  gsp <- an_read(cache_directory="c:/temp/gaz",sp=TRUE)
-#'  loc <- SpatialPoints(matrix(c(110,-66),nrow=1),
+#'  gsp <- an_read(cache_directory = "c:/temp/gaz", sp = TRUE)
+#'  loc <- SpatialPoints(matrix(c(110, -66), nrow = 1),
 #'    proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
-#'  an_near(gsp,loc,10)
+#'  an_near(gsp, loc, 10)
 #' }
 #'
 #' @export
-an_near <- function(gaz,loc,max_distance) {
+an_near <- function(gaz, loc, max_distance) {
     ## make sure gaz locations are in longitude and latitude
-    if (inherits(gaz,"SpatialPointsDataFrame")) {
+    if (inherits(gaz, "SpatialPointsDataFrame")) {
         tmp <- as.data.frame(gaz)
         if (!is.projected(gaz)) {
-            crds <- tmp[,c("longitude","latitude")]
+            crds <- tmp[,c("longitude", "latitude")]
         } else {
-            crds <- coordinates(spTransform(gaz,CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
+            crds <- coordinates(spTransform(gaz, CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
         }
     } else {
-        crds <- gaz[,c("longitude","latitude")]
+        crds <- gaz[,c("longitude", "latitude")]
     }
     ## make sure loc is in longitude and latitude
-    if (inherits(loc,"SpatialPoints")) {
-        if (is.projected(loc)) loc <- coordinates(spTransform(loc,CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
+    if (inherits(loc, "SpatialPoints")) {
+        if (is.projected(loc)) loc <- coordinates(spTransform(loc, CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
     }
-    dist <- geosphere::distVincentySphere(loc,crds)/1e3
+    dist <- geosphere::distVincentySphere(loc, crds)/1e3
     dist[is.na(dist)] <- Inf
     gaz[dist<=max_distance,]
 }
@@ -54,7 +54,7 @@ an_near <- function(gaz,loc,max_distance) {
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param query string, regular expression: Return only place names matching this pattern
-#' @param extent raster Extent object or vector of c(longitude_min,longitude_max,latitude_min,latitude_max): if provided, search only for names within this bounding box
+#' @param extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box
 #' @param feature_type string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}
 #' @param origin_country string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{an_countries}}
 #' @param origin_gazetteer string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}
@@ -67,48 +67,48 @@ an_near <- function(gaz,loc,max_distance) {
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache_directory="c:/temp/gaz")
-#'  an_filter(g,"Ufs")
-#'  an_filter(g,"Ufs",feature_type="Island")
-#'  an_filter(g,"Ufs",feature_type="Island",origin_country="Australia|United States of America")
+#'  an_filter(g, "Ufs")
+#'  an_filter(g, "Ufs",feature_type = "Island")
+#'  an_filter(g, "Ufs", feature_type = "Island", origin_country = "Australia|United States of America")
 #'
-#'  nms <- an_filter(g,extent=c(100,120,-70,-65),
-#'     origin_country="Australia")
-#'  with(nms,plot(longitude,latitude))
-#'  with(nms,text(longitude,latitude,place_name))
+#'  nms <- an_filter(g, extent = c(100, 120, -70, -65),
+#'     origin_country = "Australia")
+#'  with(nms, plot(longitude, latitude))
+#'  with(nms, text(longitude, latitude, place_name))
 #'
 #'  ## using dplyr or magrittr
-#'  g %>% an_filter("Ross",feature_type="Ice shelf|Mountain")
-#'  g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
+#'  g %>% an_filter("Ross", feature_type = "Ice shelf|Mountain")
+#'  g %>% an_near(c(100, -66), 20) %>% an_filter(feature_type = "Island")
 #' }
 #' @export
-an_filter <- function(gaz,query,extent,feature_type,origin_country,origin_gazetteer,cga_source) {
-    idx <- rep(TRUE,nrow(gaz))
+an_filter <- function(gaz, query, extent, feature_type, origin_country, origin_gazetteer, cga_source) {
+    idx <- rep(TRUE, nrow(gaz))
     if (!missing(query)) {
         ## split query into words, and match against each
-        sterms <- strsplit(query,"[ ,]+")[[1]]
-        for (st in sterms) idx <- idx & (grepl(st,gaz$place_name,ignore.case=TRUE) | grepl(st,gaz$place_name_transliterated,ignore.case=TRUE))
+        sterms <- strsplit(query, "[ ,]+")[[1]]
+        for (st in sterms) idx <- idx & (grepl(st, gaz$place_name, ignore.case = TRUE) | grepl(st, gaz$place_name_transliterated, ignore.case = TRUE))
     }
     out <- gaz[idx,]
     if (!missing(extent)) {
-        assert_that((is.numeric(extent) && length(extent)==4) || inherits(extent,"Extent"))
-        if (inherits(out,"SpatialPointsDataFrame")) {
-            out <- crop(out,extent)
+        assert_that((is.numeric(extent) && length(extent)==4) || inherits(extent, "Extent"))
+        if (inherits(out, "SpatialPointsDataFrame")) {
+            out <- crop(out, extent)
         } else {
             out <- out[out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4],]
         }
     }
     if (!missing(feature_type))
-        ##out <- dplyr::filter(out,grepl(feature_type,.data$feature_type_name))
-        out <- out[grepl(feature_type,out$feature_type_name),]
+        ##out <- dplyr::filter(out, grepl(feature_type, .data$feature_type_name))
+        out <- out[grepl(feature_type, out$feature_type_name),]
     if (!missing(origin_country))
-        ##out <- dplyr::filter(out,grepl(origin_country,.data$country_name))
-        out <- out[grepl(origin_country,out$country_name),]
+        ##out <- dplyr::filter(out, grepl(origin_country, .data$country_name))
+        out <- out[grepl(origin_country, out$country_name),]
     if (!missing(origin_gazetteer))
-        ##out <- dplyr::filter(out,grepl(origin_gazetteer,.data$gazetteer))
-        out <- out[grepl(origin_gazetteer,out$gazetteer),]
+        ##out <- dplyr::filter(out, grepl(origin_gazetteer, .data$gazetteer))
+        out <- out[grepl(origin_gazetteer, out$gazetteer),]
     if (!missing(cga_source))
-        ##out <- dplyr::filter(out,.data$gazetteer=="cga" & grepl(cga_source,.data$cga_source_gazetteer))
-        out <- out[!is.na(out$gazetteer) & out$gazetteer=="cga" & grepl(cga_source,out$cga_source_gazetteer),]
+        ##out <- dplyr::filter(out, .data$gazetteer=="cga" & grepl(cga_source, .data$cga_source_gazetteer))
+        out <- out[!is.na(out$gazetteer) & out$gazetteer=="cga" & grepl(cga_source, out$cga_source_gazetteer),]
     out
 }
 

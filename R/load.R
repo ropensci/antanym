@@ -15,7 +15,7 @@
 #' }
 #'
 #' @export
-an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALSE,verbose=FALSE) {
+an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cache = FALSE, verbose = FALSE) {
     assert_that(is.flag(refresh_cache))
     assert_that(is.flag(verbose))
     assert_that(is.flag(sp))
@@ -28,19 +28,19 @@ an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALS
     if (!missing(cache_directory)) {
         assert_that(is.string(cache_directory))
         if (!dir.exists(cache_directory)) {
-            if (verbose) message("creating data cache directory: ",cache_directory,"\n")
+            if (verbose) message("creating data cache directory: ", cache_directory, "\n")
             ok <- dir.create(cache_directory)
-            if (!ok) stop("could not create cache directory: ",cache_directory)
+            if (!ok) stop("could not create cache directory: ", cache_directory)
             do_cache_locally <- TRUE
         } else {
             ## cache dir exists
             ## does data file exist
-            local_file_name <- file.path(cache_directory,local_file_name)
+            local_file_name <- file.path(cache_directory, local_file_name)
             if (refresh_cache || !file.exists(local_file_name)) do_cache_locally <- TRUE
             ## is cached copy old?
             if (file.exists(local_file_name)) {
-                if (difftime(Sys.time(),file.info(local_file_name)$mtime,units="days")>30 && !refresh_cache)
-                    warning("cached copy of gazetteer data is more than 30 days old, consider refreshing your copy with an_read(...,refresh_cache=TRUE)")
+                if (difftime(Sys.time(), file.info(local_file_name)$mtime, units="days")>30 && !refresh_cache)
+                    warning("cached copy of gazetteer data is more than 30 days old, consider refreshing your copy with an_read(..., refresh_cache=TRUE)")
             }
         }
     } else {
@@ -48,20 +48,20 @@ an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALS
         local_file_name <- download_url
     }
     if (do_cache_locally) {
-        if (verbose) message("downloading gazetter data file to ",local_file_name," ...")
-        download.file(download_url,destfile=local_file_name,quiet=!verbose,mode="wb")
+        if (verbose) message("downloading gazetter data file to ", local_file_name, " ...")
+        download.file(download_url, destfile=local_file_name, quiet=!verbose, mode="wb")
     } else {
         if (verbose) {
             if (local_file_name==download_url)
-                message("fetching gazetteer data from: ",local_file_name,"\n")
+                message("fetching gazetteer data from: ", local_file_name, "\n")
             else
-                message("using cached copy of gazetteer data: ",local_file_name,"\n")
+                message("using cached copy of gazetteer data: ", local_file_name, "\n")
         }
     }
     if (local_file_name==download_url) {
         ## fetch using httr::GET, because read_csv chokes on SSL errors
         ## download.file (above) doesn't seem to care about SSL errors!
-        suppressMessages(g <- httr::content(httr::GET(download_url,httr::config(ssl_verifypeer = 0L)),as="parsed"))
+        suppressMessages(g <- httr::content(httr::GET(download_url, httr::config(ssl_verifypeer = 0L)), as="parsed"))
     } else {
         suppressMessages(g <- readr::read_csv(local_file_name))
     }
@@ -72,7 +72,7 @@ an_read <- function(gazetteers="all",sp=FALSE,cache_directory,refresh_cache=FALS
     ## previously we had just "place_name" column, now "place_name_mapping" (e.g. Lake Thing) and "place_name_gazetteer" (Thing, Lake)
     g$place_name <- g$place_name_mapping
     ## add version of place_name with no diacriticals
-    g$place_name_transliterated <- stringi::stri_trans_general(g$place_name,"latin-ascii")
+    g$place_name_transliterated <- stringi::stri_trans_general(g$place_name, "latin-ascii")
 
     ## some ad-hoc fixes
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL",] ## informal names shouldn't be part of the CGA
@@ -92,5 +92,5 @@ an_gazetteers <- function() c("cga") ## for now, the CGA is the only gazetteer p
 
 
 ## internal function, used to control the subset of columns returned to the user
-gaz_names_to_show <- function(gaz) intersect(names(gaz),c("gaz_id","place_name","latitude","longitude","altitude","feature_type_name","narrative","named_for","meeting_date","meeting_paper","date_revised","cga_source_gazetteer","scar_common_id","is_complete_flag","remote_sensor_info","coordinate_accuracy","altitude_accuracy","source_institution","source_person","source_country_code","source_name","comments","source_publisher","source_identifier","date_named","country_name","gazetteer","place_name_transliterated"))
+gaz_names_to_show <- function(gaz) intersect(names(gaz), c("gaz_id", "place_name", "latitude", "longitude", "altitude", "feature_type_name", "narrative", "named_for", "meeting_date", "meeting_paper", "date_revised", "cga_source_gazetteer", "scar_common_id", "is_complete_flag", "remote_sensor_info", "coordinate_accuracy", "altitude_accuracy", "source_institution", "source_person", "source_country_code", "source_name", "comments", "source_publisher", "source_identifier", "date_named", "country_name", "gazetteer", "place_name_transliterated"))
 
