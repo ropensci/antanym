@@ -15,7 +15,7 @@ test_that("caching works", {
     g <- an_read(cache_dir=cdir,refresh_cache=TRUE)
     expect_false(identical(finfo,file.info(cfile)))
     ## mtime should have changed
-    expect_gt(file.info(cfile)$mtime,finfo$mtime)
+    expect_gt(as.numeric(file.info(cfile)$mtime),as.numeric(finfo$mtime))
 })
 
 
