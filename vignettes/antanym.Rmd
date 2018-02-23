@@ -9,129 +9,132 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Background
+# antanym
 
-This R package provides easy access to Antarctic geographic place name information. Currently it uses the Composite Gazetteer of Antarctica (but may be expanded to other sources, such as subantarctic gazetteers, at a later date).
+## Overview
 
-The SCAR Composite Gazetteer of Antarctica (CGA) was begun in 1992 and consists of approximately 37,000 names corresponding to 19,000 distinct features. These place names have been submitted by the national names committees from 22 countries. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR [Standing Committee on Antarctic Geographic Information (SCAGI)](http://www.scar.org/data-products/scagi) coordinates the project.
+This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.
 
-This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
+The authoritative source of place names in Antarctica is the SCAR Composite Gazetteer of Antarctica (CGA), which consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 &deg;S, including terrestrial and undersea or under-ice.
 
-There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 &deg;S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
+There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.
 
-For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/).
+The composite nature of the CGA means that there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
 
-References
-----------
-
-Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)
+For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/). The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR [Standing Committee on Antarctic Geographic Information (SCAGI)](http://www.scar.org/data-products/scagi) coordinates the project. This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
 
 
-# Examples
+### Citing
 
-## Load the gazetter
+The SCAR Composite Gazetteer of Antarctica is made available under a CC-BY license. If you use it, please cite it:
 
-```{r message=FALSE,warning=FALSE}
+> Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)
+
+## Installing
+
+
+```{r, eval = FALSE}
+install.packages(c("devtools","rlang"))
+devtools::install_github("SCAR/antanym")
+```
+
+## Usage
+
+Start by fetching the names data from its host server. Here we cache it to a temporary directory so that we can access it later in the session without needing to re-download it:
+
+```{r message = FALSE, warning = FALSE}
 library(antanym)
-library(dplyr)
-g <- an_read()
+cache_dir <- tempdir()
+g <- an_read(cache_dir = cache_dir)
 ```
 
 If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
-```{r eval=FALSE}
-gsp <- an_read(sp=TRUE)
+```{r as_sp, eval = FALSE}
+gsp <- an_read(sp = TRUE)
 ```
 
-Find a single name per feature, preferring United Kingdom names where available, and only rows with valid locations:
-```{r message=FALSE,warning=FALSE}
-g <- g %>% an_preferred("United Kingdom") %>% filter(!is.na(longitude) & !is.na(latitude))
+How many names do we have in total?
+```{r message = FALSE, warning = FALSE}
+nrow(g)
 ```
 
-## Maps
+Corresponding to how many distinct features?
+```{r message = FALSE, warning = FALSE}
+length(unique(g$scar_common_id))
+```
 
-Specify a region of interest and use `an_suggest` to find the most relevant names to show. We use the greater Prydz Bay region as an example:
+Choose one name per feature, preferring the Polish name where there is one:
+```{r message = FALSE, warning = FALSE}
+g <- an_preferred(g, origin_country = "Poland")
+nrow(g)
+```
 
-```{r message=FALSE,warning=FALSE}
-my_longitude <- c(60,90)
-my_latitude <- c(-70,-65)
+Find islands within 20km of 100E, 66S:
+```{r message = FALSE, warning = FALSE}
+nms <- an_near(an_filter(g, feature_type = "Island"), c(100, -66), 20)
+
+## or equivalently, using the pipe operator
+nms <- g %>% an_filter(feature_type = "Island") %>% an_near(c(100, -66), 20)
+
+nms[,c("place_name", "longitude", "latitude")]
+```
+
+Find names starting with "Slom":
+```{r message = FALSE, warning = FALSE}
+an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
+```
+
+### Name suggestions
+
+Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
+
+Let's say we are preparing a figure of the greater Prydz Bay region (60&ndash;90 &deg;E, 65&ndash;70 &deg;S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:
+
+```{r message = FALSE, warning = FALSE}
+my_longitude <- c(60, 90)
+my_latitude <- c(-70, -65)
+suggested <- an_suggest(g, map_extent = c(my_longitude, my_latitude), map_dimensions = c(80, 80))
+```
+
+Plot the top ten names purely by score:
+
+```{r message = FALSE, warning = FALSE, dpi = 72, fig.width = 7, fig.height = 7, fig.align = "center"}
+this_names <- head(suggested, 10)
 
 library(rworldmap)
-map <- getMap(resolution="low")
-suggested <- an_suggest(g,map_extent=c(my_longitude,my_latitude),map_dimensions=c(80,80))
-```
-
-Choose the top ten names by score:
-
-```{r message=FALSE,warning=FALSE,dpi=72,fig.width=7,fig.height=7,fig.align="center"}
-this_names <- head(suggested,10)
-plot(map,xlim=my_longitude,ylim=my_latitude)
-points(this_names$longitude,this_names$latitude,col="blue")
-pos <- rep(c(1,2,3,4),ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+map <- getMap(resolution = "low")
+plot(map, xlim = my_longitude, ylim = my_latitude)
+points(this_names$longitude, this_names$latitude, col = "blue")
+pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
 pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
-text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=pos)
+text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```
 
-Or, choose the top ten names considering both score and spatial coverage:
+Or the ten best names considering both score and spatial coverage:
 
-```{r message=FALSE,warning=FALSE,dpi=72,fig.width=7,fig.height=7,fig.align="center"}
-this_names <- an_thin(suggested,10)
-plot(map,xlim=my_longitude,ylim=my_latitude)
-points(this_names$longitude,this_names$latitude,col="blue")
-pos <- rep(c(1,2,3,4),ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+```{r message = FALSE, warning = FALSE, dpi = 72, fig.width = 7, fig.height = 7, fig.align = "center"}
+this_names <- an_thin(suggested, 10)
+plot(map, xlim = my_longitude, ylim = my_latitude)
+points(this_names$longitude, this_names$latitude, col = "blue")
+pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
 pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
-text(this_names$longitude,this_names$latitude,labels=this_names$place_name,pos=pos)
+text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```
 
-## Map demonstrations
+## Other map examples
 
-### Leaflet
+A [leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
 
-A [simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="README-leaflet.png" width="40%" /></a>
+
+And a similar example using a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html).
+
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="README-leafletps.png" width="40%" /></a>
+
+See the [antanym-demo](https://github.com/AustralianAntarcticDataCentre/antanym-demo) repository for the source code of these examples.
 
 
-```{r eval=FALSE}
-library(leaflet)
+## Future directions
 
-temp <- g
+Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.
 
-## replace NAs with empty strings in narrative
-temp$narrative[is.na(temp$narrative)] <- ""
-
-## formatted popup HTML
-popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br /><strong>Longitude:</strong> %g<br /><strong>Latitude:</strong> %g<br /><a href=\"https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d\">Link to SCAR gazetteer</a></p>",temp$place_name,temp$country_name,temp$longitude,temp$latitude,temp$gaz_id)
-
-m <- leaflet() %>%
-  addProviderTiles("Esri.WorldImagery") %>%
-  addMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
-    clusterOptions = markerClusterOptions(),popup=popup,
-    label=temp$place_name,labelOptions=labelOptions(textOnly=TRUE))
-
-## not displayed here
-#print(m)
-```
-
-We can also use a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html). Note that the leaflet package here must be the rstudio version (use `devtools::install_github("rstudio/leaflet")`).
-
-```{r eval=FALSE}
-startZoom <- 1
-
-crsAntartica <-  leafletCRS(
-  crsClass = 'L.Proj.CRS',
-  code = 'EPSG:3031',
-  proj4def = '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs',
-  resolutions = c(8192, 4096, 2048, 1024, 512, 256),
-  origin = c(-4194304, 4194304),
-  bounds =  list( c(-4194304, -4194304), c(4194304, 4194304) )
-)
-
-leaflet(options= leafletOptions(crs=crsAntartica,minZoom=0,worldCopyJump=FALSE)) %>%
-setView(0,-90,startZoom) %>%
-addCircleMarkers(lng=temp$longitude,lat=temp$latitude,group="placenames",
-                     popup=popup,label=temp$place_name,
-                     labelOptions=labelOptions(textOnly=TRUE)) %>%
-    addWMSTiles(baseUrl="https://maps.environments.aq/mapcache/antarc/?",
-                layers="antarc_ramp_bath_shade_mask",
-                options=WMSTileOptions(format="image/png",transparent=TRUE),
-                attribution="Background imagery courtesy <a href='http://www.environments.aq/'>environments.aq</a>") %>%
-    addGraticule()
-```
