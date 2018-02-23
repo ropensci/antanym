@@ -98,16 +98,12 @@ an_filter <- function(gaz, query, extent, feature_type, origin_country, origin_g
         }
     }
     if (!missing(feature_type))
-        ##out <- dplyr::filter(out, grepl(feature_type, .data$feature_type_name))
         out <- out[grepl(feature_type, out$feature_type_name),]
     if (!missing(origin_country))
-        ##out <- dplyr::filter(out, grepl(origin_country, .data$country_name))
         out <- out[grepl(origin_country, out$country_name),]
     if (!missing(origin_gazetteer))
-        ##out <- dplyr::filter(out, grepl(origin_gazetteer, .data$gazetteer))
         out <- out[grepl(origin_gazetteer, out$gazetteer),]
     if (!missing(cga_source))
-        ##out <- dplyr::filter(out, .data$gazetteer=="CGA" & grepl(cga_source, .data$cga_source_gazetteer))
         out <- out[!is.na(out$gazetteer) & out$gazetteer=="CGA" & grepl(cga_source, out$cga_source_gazetteer),]
     out
 }
