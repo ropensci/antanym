@@ -107,8 +107,8 @@ an_filter <- function(gaz, query, extent, feature_type, origin_country, origin_g
         ##out <- dplyr::filter(out, grepl(origin_gazetteer, .data$gazetteer))
         out <- out[grepl(origin_gazetteer, out$gazetteer),]
     if (!missing(cga_source))
-        ##out <- dplyr::filter(out, .data$gazetteer=="cga" & grepl(cga_source, .data$cga_source_gazetteer))
-        out <- out[!is.na(out$gazetteer) & out$gazetteer=="cga" & grepl(cga_source, out$cga_source_gazetteer),]
+        ##out <- dplyr::filter(out, .data$gazetteer=="CGA" & grepl(cga_source, .data$cga_source_gazetteer))
+        out <- out[!is.na(out$gazetteer) & out$gazetteer=="CGA" & grepl(cga_source, out$cga_source_gazetteer),]
     out
 }
 
@@ -127,7 +127,7 @@ an_feature_types <- function(gaz) {
 #' @rdname an_filter
 #' @export
 an_cga_sources <- function(gaz) {
-    sort(as.character(na.omit(unique(gaz$cga_source_gazetteer[!is.na(gaz$gazetteer) & gaz$gazetteer=="cga"]))))
+    sort(as.character(na.omit(unique(gaz$cga_source_gazetteer[!is.na(gaz$gazetteer) & gaz$gazetteer=="CGA"]))))
 }
 
 

@@ -236,7 +236,7 @@ an_mapscale <- function(map_dimensions, map_extent) {
 an_url <- function(gaz) {
     ## only CGA entries dealt with: needs modification once other gazetteers are added
     out <- rep(as.character(NA), nrow(gaz))
-    cga_idx <- gaz$gazetteer=="cga"
+    cga_idx <- gaz$gazetteer=="CGA"
     out[cga_idx] <- sprintf("https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d", gaz$gaz_id[cga_idx])
     out
 }

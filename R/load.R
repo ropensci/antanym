@@ -109,8 +109,8 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cac
     }
     ## rename "gazetteer" to "cga_source_gazetteer"
     names(g)[names(g)=="gazetteer"] <- "cga_source_gazetteer"
-    ## add "gazetteer" column (meaning the overall gazetteer name, cga in this case)
-    g$gazetteer <- "cga"
+    ## add "gazetteer" column (meaning the overall gazetteer name, CGA in this case)
+    g$gazetteer <- "CGA"
     ## place names are recorded in two formats: column "place_name_mapping" (e.g. Lake Thing) and "place_name_gazetteer" (Thing, Lake)
     ## for consistency with previous versions of the CGA, create a "place_name" column that we will use by default
     g$place_name <- g$place_name_mapping
@@ -148,7 +148,7 @@ do_fetch_data <- function(download_url) {
 
 #' @rdname an_read
 #' @export
-an_gazetteers <- function() c("cga") ## for now, the CGA is the only gazetteer provided
+an_gazetteers <- function() c("CGA") ## for now, the CGA is the only gazetteer provided
 
 
 ## internal function, used to control the subset of columns returned to the user
