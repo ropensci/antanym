@@ -5,7 +5,7 @@
 \alias{an_countries}
 \alias{an_feature_types}
 \alias{an_cga_sources}
-\title{Subset place names by various criteria}
+\title{Filter a collection of place names by various criteria}
 \usage{
 an_filter(gaz, query, extent, feature_type, origin_country, origin_gazetteer,
   cga_source)
@@ -19,17 +19,17 @@ an_cga_sources(gaz)
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
-\item{query}{string, regular expression: Return only place names matching this pattern}
+\item{query}{string, regular expression: return only place names matching this pattern}
 
 \item{extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box}
 
-\item{feature_type}{string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}}
+\item{feature_type}{string, regular expression: return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}}
 
-\item{origin_country}{string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{an_countries}}}
+\item{origin_country}{string, regular expression: return only names originating from countries matching this pattern. For valid country names see \code{\link{an_countries}}}
 
-\item{origin_gazetteer}{string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}}
+\item{origin_gazetteer}{string, regular expression: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}}
 
-\item{cga_source}{string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)}
+\item{cga_source}{string, regular expression: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}}
 }
 \value{
 data.frame of results
@@ -41,7 +41,7 @@ All matches are case-insensitive.
 \dontrun{
  g <- an_read(cache_directory="c:/temp/gaz")
  an_filter(g, "Ufs")
- an_filter(g, "Ufs",feature_type = "Island")
+ an_filter(g, "Ufs", feature_type = "Island")
  an_filter(g, "Ufs", feature_type = "Island", origin_country = "Australia|United States of America")
 
  nms <- an_filter(g, extent = c(100, 120, -70, -65),
@@ -58,5 +58,5 @@ All matches are case-insensitive.
 \url{http://www.scar.org/data-products/cga}
 }
 \seealso{
-\code{\link{an_read}}
+\code{\link{an_read}}, \code{\link{an_gazetteers}}
 }

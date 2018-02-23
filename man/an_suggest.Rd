@@ -9,7 +9,7 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions)
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
-\item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}}
+\item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{map_extent} and \code{map_dimensions}}
 
 \item{map_extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided}
 
@@ -20,8 +20,7 @@ data.frame of names with a "score" column added. The data.frame will be sorted i
 }
 \description{
 Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger, and only for features in the
-SCAR composite gazetteer (features south of 60S).
+This is an experimental function and currently only implemented for \code{map_scale} values of 10 million or larger.
 }
 \examples{
 \dontrun{
@@ -33,6 +32,7 @@ SCAR composite gazetteer (features south of 60S).
 
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
+
  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
  head(suggested, 20) ## top 20 names
 }

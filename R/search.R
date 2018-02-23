@@ -2,7 +2,7 @@
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
-#' @param loc numeric: target location (numeric longitude and latitude, or SpatialPoints object)
+#' @param loc numeric: target location (a two-element numeric vector giving longitude and latitude, or a SpatialPoints object)
 #' @param max_distance numeric: maximum search distance in kilometres
 #'
 #' @return data.frame of results
@@ -12,10 +12,12 @@
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache_directory="c:/temp/gaz")
+#'
+#'  ## named features within 10km of 110E, 66S
 #'  an_near(g, c(110, -66), 10)
 #'
 #'  ## using pipe operator
-#'  g %>% an_near(c(100, -66), 20)
+#'  g %>% an_near(c(100, -66), 10)
 #'
 #'  ## with sp objects
 #'  gsp <- an_read(cache_directory = "c:/temp/gaz", sp = TRUE)
@@ -47,28 +49,28 @@ an_near <- function(gaz, loc, max_distance) {
 }
 
 
-#' Subset place names by various criteria
+#' Filter a collection of place names by various criteria
 #'
 #' All matches are case-insensitive.
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
-#' @param query string, regular expression: Return only place names matching this pattern
+#' @param query string, regular expression: return only place names matching this pattern
 #' @param extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box
-#' @param feature_type string, regular expression: Return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}
-#' @param origin_country string, regular expression: Return only names originating from this countries matching this pattern. For valid country names see \code{\link{an_countries}}
-#' @param origin_gazetteer string, regular expression: Return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}
-#' @param cga_source string, regular expression: Return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}. (Only applicable to the SCAR Composite Gazetteer)
+#' @param feature_type string, regular expression: return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}
+#' @param origin_country string, regular expression: return only names originating from countries matching this pattern. For valid country names see \code{\link{an_countries}}
+#' @param origin_gazetteer string, regular expression: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}
+#' @param cga_source string, regular expression: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}
 #'
 #' @return data.frame of results
 #'
-#' @seealso \code{\link{an_read}}
+#' @seealso \code{\link{an_read}}, \code{\link{an_gazetteers}}
 #'
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache_directory="c:/temp/gaz")
 #'  an_filter(g, "Ufs")
-#'  an_filter(g, "Ufs",feature_type = "Island")
+#'  an_filter(g, "Ufs", feature_type = "Island")
 #'  an_filter(g, "Ufs", feature_type = "Island", origin_country = "Australia|United States of America")
 #'
 #'  nms <- an_filter(g, extent = c(100, 120, -70, -65),

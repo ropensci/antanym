@@ -11,7 +11,7 @@ an_thin(gaz, n, score_col = "score", score_weighting = 5)
 
 \item{n}{numeric: number of names to return}
 
-\item{score_col}{string: the name of the column that gives the relative score (e.g. as returned by \code{an_suggest})}
+\item{score_col}{string: the name of the column that gives the relative score of each name (e.g. as returned by \code{an_suggest}). Names with higher scores will be preferred by the thinning process}
 
 \item{score_weighting}{numeric: weighting of scores relative to spatial distribution. A lower \code{score_weighting} value will tend to choose lower-scored names
 in order to achieve better spatial uniformity. A higher \code{score_weighting} value will trade spatial uniformity in favour of selecting
@@ -21,7 +21,7 @@ higher-scored names}
 data.frame
 }
 \description{
-Thin names to give approximately uniform spatial coverage
+The provided data.frame of names will be thinned down to a smaller number of names.
 }
 \examples{
 \dontrun{
@@ -29,11 +29,13 @@ Thin names to give approximately uniform spatial coverage
 
  ## get a single name per feature, preferring the
  ##  Australian name where there is one
+
  g <- an_preferred(g, "Australia")
 
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
- suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+
+ suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60), map_dimensions = c(100, 100))
  head(suggested, 20) ## top 20 names by score
  an_thin(suggested, 20) ## 20 names chosen for spatial coverage and score
 }

@@ -9,7 +9,7 @@ an_near(gaz, loc, max_distance)
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
-\item{loc}{numeric: target location (numeric longitude and latitude, or SpatialPoints object)}
+\item{loc}{numeric: target location (a two-element numeric vector giving longitude and latitude, or a SpatialPoints object)}
 
 \item{max_distance}{numeric: maximum search distance in kilometres}
 }
@@ -22,10 +22,12 @@ Find placenames near a given location
 \examples{
 \dontrun{
  g <- an_read(cache_directory="c:/temp/gaz")
+
+ ## named features within 10km of 110E, 66S
  an_near(g, c(110, -66), 10)
 
  ## using pipe operator
- g \%>\% an_near(c(100, -66), 20)
+ g \%>\% an_near(c(100, -66), 10)
 
  ## with sp objects
  gsp <- an_read(cache_directory = "c:/temp/gaz", sp = TRUE)

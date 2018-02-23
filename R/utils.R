@@ -1,24 +1,29 @@
-#' Find one name per feature according to specified preferences
+#' Find one name per feature
 #'
+#' The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature.
+#' 
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
-#' @param origin_country character: vector of country names. If a given feature has been named by one of these countries, this name will be returned. For valid values see \code{\link{an_countries}}
+#' @param origin_country character: vector of country names, in order of preference. If a given feature has been named by one of these countries, this place name will be chosen. If the feature in question has not been given a name by one of these countries, a place name given by another country will be chosen. For valid \code{origin_country} values, see \code{\link{an_countries}}
 #'
 #' @return data.frame of results
 #'
-#' @seealso \code{\link{an_read}}
+#' @seealso \code{\link{an_read}}, \code{\link{an_countries}}
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache_directory = "c:/temp/gaz")
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Polish name where there is one
-#'  pnames <- an_preferred(g,"Poland")
+#' 
+#'  pnames <- an_preferred(g, "Poland")
 #'
 #'  ## names starting with "Sm", preferring US names then
-#'  ##  Australian ones (then whatever is available after that)
-#'  g %>% an_filter("^Sm") %>% an_preferred(origin_country=c("United States of America","Australia"))
+#'  ##  Australian ones if available
+#' 
+#'  g %>% an_filter("^Sm") %>%
+#'    an_preferred(origin_country = c("United States of America", "Australia"))
 #' }
 #'
 #' @export
@@ -55,9 +60,11 @@ an_preferred <- function(gaz, origin_country) {
 
 #' Thin names to give approximately uniform spatial coverage
 #'
+#' The provided data.frame of names will be thinned down to a smaller number of names.
+#'
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param n numeric: number of names to return
-#' @param score_col string: the name of the column that gives the relative score (e.g. as returned by \code{an_suggest})
+#' @param score_col string: the name of the column that gives the relative score of each name (e.g. as returned by \code{an_suggest}). Names with higher scores will be preferred by the thinning process
 #' @param score_weighting numeric: weighting of scores relative to spatial distribution. A lower \code{score_weighting} value will tend to choose lower-scored names
 #' in order to achieve better spatial uniformity. A higher \code{score_weighting} value will trade spatial uniformity in favour of selecting
 #' higher-scored names
@@ -72,11 +79,13 @@ an_preferred <- function(gaz, origin_country) {
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Australian name where there is one
+#' 
 #'  g <- an_preferred(g, "Australia")
 #'
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
-#'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+#' 
+#'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60), map_dimensions = c(100, 100))
 #'  head(suggested, 20) ## top 20 names by score
 #'  an_thin(suggested, 20) ## 20 names chosen for spatial coverage and score
 #' }
@@ -106,7 +115,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
     }
     tmp <- which.max(sc)
     idx[tmp] <- TRUE ## start with the first best-scored points
-    sc[tmp] <- NA
+    sc[tmp] <- NA_real_
     while(sum(idx) < n) {
         ## rank the distances
         ## for each point, find its distance to the closest point that's already been selected
@@ -116,7 +125,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
         ## select the point with highest avg rank (i.e. highest composite distance and score)
         tmp <- which.max(score_weighting*score_rank+dist_rank)
         idx[tmp] <- TRUE
-        sc[tmp] <- NA
+        sc[tmp] <- NA_real_
     }
     gaz[idx,]
 }
@@ -125,11 +134,10 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #' Suggest names for a map (experimental)
 #'
 #' Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-#' This is an experimental function and currently only implemented for \code{map_scale} values of 20 million or larger, and only for features in the
-#' SCAR composite gazetteer (features south of 60S).
+#' This is an experimental function and currently only implemented for \code{map_scale} values of 10 million or larger.
 #'
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
-#' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{extent} and \code{map_dimensions}
+#' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{map_extent} and \code{map_dimensions}
 #' @param map_extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
 #'
@@ -147,6 +155,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #'
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
+#' 
 #'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
 #'  head(suggested, 20) ## top 20 names
 #' }
@@ -210,6 +219,8 @@ an_mapscale <- function(map_dimensions, map_extent) {
 
 #' Get links to gazetteer entries
 #'
+#' Each entry in the SCAR Composite Gazetteer of Antarctica has its own web page. The \code{an_url} function will return the URL of the page associated with a given gazetteer entry.
+#'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} (most commonly a subset thereof)
 #'
@@ -224,7 +235,7 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #' @export
 an_url <- function(gaz) {
     ## only CGA entries dealt with: needs modification once other gazetteers are added
-    out <- rep(as.character(NA), nrow(gaz))
+    out <- rep(NA_character_, nrow(gaz))
     cga_idx <- gaz$gazetteer=="CGA"
     out[cga_idx] <- sprintf("https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d", gaz$gaz_id[cga_idx])
     out

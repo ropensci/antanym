@@ -2,32 +2,35 @@
 % Please edit documentation in R/utils.R
 \name{an_preferred}
 \alias{an_preferred}
-\title{Find one name per feature according to specified preferences}
+\title{Find one name per feature}
 \usage{
 an_preferred(gaz, origin_country)
 }
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
-\item{origin_country}{character: vector of country names. If a given feature has been named by one of these countries, this name will be returned. For valid values see \code{\link{an_countries}}}
+\item{origin_country}{character: vector of country names, in order of preference. If a given feature has been named by one of these countries, this place name will be chosen. If the feature in question has not been given a name by one of these countries, a place name given by another country will be chosen. For valid \code{origin_country} values, see \code{\link{an_countries}}}
 }
 \value{
 data.frame of results
 }
 \description{
-Find one name per feature according to specified preferences
+The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature.
 }
 \examples{
 \dontrun{
- g <- an_read(cache_directory="c:/temp/gaz")
+ g <- an_read(cache_directory = "c:/temp/gaz")
 
  ## get a single name per feature, preferring the
  ##  Polish name where there is one
- pnames <- an_preferred(g,"Poland")
+
+ pnames <- an_preferred(g, "Poland")
 
  ## names starting with "Sm", preferring US names then
- ##  Australian ones (then whatever is available after that)
- g \%>\% an_filter("^Sm") \%>\% an_preferred(origin_country=c("United States of America","Australia"))
+ ##  Australian ones if available
+
+ g \%>\% an_filter("^Sm") \%>\%
+   an_preferred(origin_country = c("United States of America", "Australia"))
 }
 
 }
@@ -35,5 +38,5 @@ Find one name per feature according to specified preferences
 \url{http://www.scar.org/data-products/cga}
 }
 \seealso{
-\code{\link{an_read}}
+\code{\link{an_read}}, \code{\link{an_countries}}
 }
