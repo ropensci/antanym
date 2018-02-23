@@ -16,8 +16,7 @@
 #'   \item scar_common_id - the unique identifier of the feature. A single feature may have multiple names (given by different naming authorities)
 #'   \item place_name - the name of the feature
 #'   \item place_name_transliterated - the name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)
-#'   \item longitude - the longitude of the feature (negative values indicate degrees west). Note that many features are not point features (e.g. a mountain), in which case the \code{longitude} and \code{latitude} values are indicative only, generally of the centroid of the feature
-#'   \item latitude - the latitude of the feature
+#'   \item longitude and latitude - the longitude and latitude of the feature (negative values indicate degrees west or south). Note that many features are not point features (e.g. a mountain), in which case the \code{longitude} and \code{latitude} values are indicative only, generally of the centroid of the feature
 #'   \item altitude - the altitude (above sea level) of the feature
 #'   \item feature_type_name - the feature type (e.g. "Archipelago", "Channel", "Mountain")
 #'   \item date_named - the date on which the feature was named
