@@ -22,13 +22,13 @@ knitr::opts_chunk$set(
 
 This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.
 
-The authoritative source of place names in Antarctica is the SCAR Composite Gazetteer of Antarctica (CGA), which was begun in 1992 and consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 &deg;S, including terrestrial and undersea or under-ice.
+The authoritative source of place names in Antarctica is the SCAR Composite Gazetteer of Antarctica (CGA), which consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 &deg;S, including terrestrial and undersea or under-ice.
 
 There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.
 
 The composite nature of the CGA means that there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
 
-For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/). Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR [Standing Committee on Antarctic Geographic Information (SCAGI)](http://www.scar.org/data-products/scagi) coordinates the project. This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
+For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/). The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR [Standing Committee on Antarctic Geographic Information (SCAGI)](http://www.scar.org/data-products/scagi) coordinates the project. This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
 
 
 ### Citing
@@ -203,5 +203,5 @@ mapshot(mps, file = "vignettes/README-leafletps.png")
 
 ## Future directions
 
-Antanym currently only provides information from the SCAR CGA. This does not cover other areas that may be of interest to Antarctic researchers, such as features on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.
+Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.
 
