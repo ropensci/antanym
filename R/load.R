@@ -56,7 +56,7 @@
 #' }
 #'
 #' @export
-an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cache = FALSE, simplfied = TRUE, verbose = FALSE) {
+an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE) {
     assert_that(!is.na(refresh_cache),is.flag(refresh_cache))
     assert_that(!is.na(verbose),is.flag(verbose))
     assert_that(!is.na(sp),is.flag(sp))

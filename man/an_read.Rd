@@ -6,7 +6,7 @@
 \title{Load Antarctic place name data}
 \usage{
 an_read(gazetteers = "all", sp = FALSE, cache_directory,
-  refresh_cache = FALSE, simplfied = TRUE, verbose = FALSE)
+  refresh_cache = FALSE, simplified = TRUE, verbose = FALSE)
 
 an_gazetteers()
 }
@@ -19,9 +19,9 @@ an_gazetteers()
 
 \item{refresh_cache}{logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used}
 
-\item{verbose}{logical: show progress messages?}
-
 \item{simplified}{logical: if TRUE, only return a simplified set of columns (see details in "Value", below)}
+
+\item{verbose}{logical: show progress messages?}
 }
 \value{
 a data.frame or SpatialPointsDataFrame, with columns:
