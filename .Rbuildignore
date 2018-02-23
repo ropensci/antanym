@@ -5,3 +5,4 @@
 ^README.html$
 ^README.Rmd$
 ^codemeta\.json$
+^docs$

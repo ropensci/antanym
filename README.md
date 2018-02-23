@@ -101,7 +101,7 @@ an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
 
 Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
 
-Let's say we are preparing a figure of the greater Prydz Bay region (60&ndash;90 °E, 65&ndash;70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:
+Let's say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:
 
 ``` r
 my_longitude <- c(60, 90)
