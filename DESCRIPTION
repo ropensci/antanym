@@ -24,7 +24,6 @@ Imports:
   magrittr,
   raster,
   readr,
-  rlang,
   sp,
   stringi
 Suggests:

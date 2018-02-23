@@ -13,7 +13,6 @@
 #' @importFrom magrittr %>%
 #' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster
 #' @importFrom readr read_csv
-#' @importFrom rlang .data
 #' @importFrom sp coordinates coordinates<- CRS is.projected spTransform SpatialPoints
 #' @importFrom stats dist na.omit predict
 #' @importFrom stringi stri_trans_general

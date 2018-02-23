@@ -28,7 +28,7 @@ Installing
 ----------
 
 ``` r
-install.packages(c("devtools","rlang"))
+install.packages("devtools")
 devtools::install_github("SCAR/antanym")
 ```
 

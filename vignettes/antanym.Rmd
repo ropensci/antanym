@@ -32,7 +32,7 @@ The SCAR Composite Gazetteer of Antarctica is made available under a CC-BY licen
 
 
 ```{r, eval = FALSE}
-install.packages(c("devtools","rlang"))
+install.packages("devtools")
 devtools::install_github("SCAR/antanym")
 ```
 
