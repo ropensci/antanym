@@ -1,6 +1,6 @@
 ^appveyor\.yml$
 ^\.travis\.yml$
-^README\.Rmd$
-^README-.*\.png$
 ^cache
 ^data-raw$
+^README.html$
+^README.Rmd$

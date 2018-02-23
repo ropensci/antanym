@@ -8,7 +8,7 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "README-"
+  fig.path = "vignettes/README-"
 )
 ```
 
@@ -18,48 +18,46 @@ knitr::opts_chunk$set(
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SCAR/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/SCAR/antanym)
 [![codecov](https://codecov.io/gh/SCAR/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/SCAR/antanym)
 
-Overview
---------
+## Overview
 
-This R package provides easy access to Antarctic geographic place name information. Currently it uses the Composite Gazetteer of Antarctica (but may be expanded to other sources, such as subantarctic gazetteers, at a later date).
+This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.
 
-The SCAR Composite Gazetteer of Antarctica (CGA) was begun in 1992 and consists of approximately 37,000 names corresponding to 19,000 distinct features. These place names have been submitted by the national names committees from 22 countries. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR [Standing Committee on Antarctic Geographic Information (SCAGI)](http://www.scar.org/data-products/scagi) coordinates the project.
+The authoritative source of place names in Antarctica is the SCAR Composite Gazetteer of Antarctica (CGA), which was begun in 1992 and consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 &deg;S, including terrestrial and undersea or under-ice.
 
-This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
+There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.
 
-There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA includes the names of features south of 60 &deg;S, including terrestrial and undersea or under-ice. It is a compilation of all Antarctic names that have been submitted by representatives of national gazetteers, and so there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
+The composite nature of the CGA means that there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
 
-For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/).
-
-References
-----------
-
-Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)
+For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/). Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR [Standing Committee on Antarctic Geographic Information (SCAGI)](http://www.scar.org/data-products/scagi) coordinates the project. This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
 
 
+### Citing
 
-Installing
-----------
+The SCAR Composite Gazetteer of Antarctica is made available under a CC-BY license. If you use it, please cite it:
+
+> Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)
+
+## Installing
+
 
 ```{r, eval=FALSE}
-install.packages("devtools")
-library(devtools)
-install_github("SCAR/antanym")
+install.packages(c("devtools","rlang"))
+devtools::install_github("SCAR/antanym")
 ```
 
-Usage
------
+## Usage
 
-Start by reading in the names data:
+Start by fetching the names data from its host server. We cache it to a temporary directory so that we can access it later in the session without needing to re-download it:
 
-```{r, message=FALSE}
+```{r, message = FALSE}
 library(antanym)
-g <- an_read()
+cache_dir <- tempdir()
+g <- an_read(cache_dir = cache_dir)
 ```
 
 If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
-```{r as_sp,eval=FALSE}
-gsp <- an_read(sp=TRUE)
+```{r as_sp, eval = FALSE}
+gsp <- an_read(sp = TRUE)
 ```
 
 How many names do we have in total?
@@ -80,9 +78,12 @@ nrow(g)
 
 Find islands within 20km of 100E, 66S:
 ```{r}
-nms <- an_filter(an_near(g,c(100,-66),20),feature_type="Island")
-nms <- g %>% an_near(c(100,-66),20) %>% an_filter(feature_type="Island")
-nms[,c("place_name","longitude","latitude")]
+nms <- an_near(an_filter(g, feature_type = "Island"), c(100, -66), 20)
+
+## or equivalently, using the pipe operator
+nms <- g %>% an_filter(feature_type = "Island") %>% an_near(c(100, -66), 20)
+
+nms[,c("place_name", "longitude", "latitude")]
 ```
 
 Find names starting with "Slom":
@@ -122,14 +123,13 @@ text(this_names2$longitude, this_names2$latitude, labels = this_names2$place_nam
 ```
 
 
-Map demos
------
+## Other map examples
 
 ### Leaflet
 
 A [simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
 
-<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="README-leaflet.png" width="40%" /></a>
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="vignettes/README-leaflet.png" width="40%" /></a>
 
 Source code:
 
@@ -162,13 +162,13 @@ m <- leaflet() %>%
 
 ```{r echo=FALSE,eval=FALSE}
 library(mapview)
-mapshot(m %>% setView(0, -50, zoom = 2), file = "README-leaflet.png")
+mapshot(m %>% setView(0, -50, zoom = 2), file = "vignettes/README-leaflet.png")
 ```
 
 
 We can also use a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html). Note that the leaflet package here must be the rstudio version (use `devtools::install_github("rstudio/leaflet")`).
 
-<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="README-leafletps.png" width="40%" /></a>
+<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="vignettes/README-leafletps.png" width="40%" /></a>
 
 ```{r eval=FALSE}
 startZoom <- 1
@@ -197,7 +197,11 @@ mps <- leaflet(options = leafletOptions(crs = crsAntartica, minZoom = 0, worldCo
 
 ```{r echo=FALSE,eval=FALSE}
 library(mapview)
-mapshot(mps, file = "README-leafletps.png")
+mapshot(mps, file = "vignettes/README-leafletps.png")
 ```
 
+
+## Future directions
+
+Antanym currently only provides information from the SCAR CGA. This does not cover other areas that may be of interest to Antarctic researchers, such as features on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.
 
