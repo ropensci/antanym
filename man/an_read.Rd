@@ -3,15 +3,15 @@
 \name{an_read}
 \alias{an_read}
 \alias{an_gazetteers}
-\title{Load Antarctic and subantarctic place name gazetteers}
+\title{Load Antarctic place name data}
 \usage{
 an_read(gazetteers = "all", sp = FALSE, cache_directory,
-  refresh_cache = FALSE, verbose = FALSE)
+  refresh_cache = FALSE, simplfied = TRUE, verbose = FALSE)
 
 an_gazetteers()
 }
 \arguments{
-\item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers}
+\item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica}
 
 \item{sp}{logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame}
 
@@ -20,16 +20,58 @@ an_gazetteers()
 \item{refresh_cache}{logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used}
 
 \item{verbose}{logical: show progress messages?}
+
+\item{simplified}{logical: if TRUE, only return a simplified set of columns (see details in "Value", below)}
 }
 \value{
-a data.frame or SpatialPointsDataFrame
+a data.frame or SpatialPointsDataFrame, with columns:
+\itemize{
+  \item gaz_id - a unique identifier for each gazetteer entry. Note that the same feature (e.g. "Mount Brown") might have multiple gazetteer entries, each with their own \code{gaz_id}, because the feature has been named multiple times by different naming authorities. The \code{scar_common_id} for these entries will be identical, because this identifier is for the feature itself
+  \item scar_common_id - the unique identifier of the feature. A single feature may have multiple names (given by different naming authorities)
+  \item place_name - the name of the feature
+  \item place_name_transliterated - the name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)
+  \item longitude - the longitude of the feature (negative values indicate degrees west). Note that many features are not point features (e.g. a mountain), in which case the \code{longitude} and \code{latitude} values are indicative only, generally of the centroid of the feature
+  \item latitude - the latitude of the feature
+  \item altitude - the altitude (above sea level) of the feature
+  \item feature_type_name - the feature type (e.g. "Archipelago", "Channel", "Mountain")
+  \item date_named - the date on which the feature was named
+  \item narrative - a text description of the feature, usually including a synopsis of the history of its name
+  \item named_for - the person after whom the feature was named, or other reason for its naming
+  \item cga_source_gazetteer - the source gazetter from which this entry was taken. This is generally a country abbreviation (e.g. "ESP", "USA") but may also be "GEBCO" (for the GEBCO gazetteer of undersea features)
+  \item country_name - the full name of the country where \code{cga_source_gazetteer} is a country
+  \item gazetteer - the gazetter from which this information came (currently only "CGA")
+}
+If \code{simplified} is FALSE, these additional columns will also be included:
+\itemize{
+  \item meeting_date - the date on which the name was approved
+  \item meeting_paper - the paper or document associated with the approval
+  \item date_revised - the last date on which this gazetter entry was revised
+  \item is_complete_flag - \code{TRUE} if the entry is complete
+  \item remote_sensor_info - text describing the remote sensing information (e.g. satellite platform name and image details) used to define the feature, if applicable
+  \item coordinate_accuracy - an indicator of the accuracy of the coordinates, in metres
+  \item altitude_accuracy - an indicator of the accuracy of the altitude value, in metres
+  \item source_institution - the institution from which the name information came
+  \item source_person - the person from whom the name information came
+  \item source_country_code - th country from which the name information came
+  \item source_name - the cartographic/GIS/remote sensing source from which the name came
+  \item source_publisher - the publisher of the source
+  \item source_identifier - further identifying information about the source of the name
+  \item comments - comments about the name or naming process
+}
 }
 \description{
-Load Antarctic and subantarctic place name gazetteers
+Place name data will be downloaded and optionally cached to a local file. If you wish to be able to use \code{antanym} offline, consider using a cache directory that will persist from one R session to the next.
 }
 \examples{
 \dontrun{
+ ## download without caching
+ g <- an_read()
+
+ ## download and cache to a persistent directory for later, offline use
  g <- an_read(cache_directory="c:/temp/gaz")
+
+ ## refresh the cached copy
+ g <- an_read(cache_directory="c:/temp/gaz",refresh_cache=TRUE)
 }
 
 }
