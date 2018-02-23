@@ -4,3 +4,4 @@
 ^data-raw$
 ^README.html$
 ^README.Rmd$
+^codemeta\.json$
