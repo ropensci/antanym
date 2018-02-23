@@ -26,7 +26,7 @@ an_gazetteers()
 \value{
 a data.frame or SpatialPointsDataFrame, with columns:
 \itemize{
-  \item gaz_id - a unique identifier for each gazetteer entry. Note that the same feature (e.g. "Mount Brown") might have multiple gazetteer entries, each with their own \code{gaz_id}, because the feature has been named multiple times by different naming authorities. The \code{scar_common_id} for these entries will be identical, because this identifier is for the feature itself
+  \item gaz_id - a unique identifier for each gazetteer entry. Note that the same feature (e.g. "Browns Glacier") might have multiple gazetteer entries, each with their own \code{gaz_id}, because the feature has been named multiple times by different naming authorities. The \code{scar_common_id} for these entries will be identical, because this identifies the feature itself
   \item scar_common_id - the unique identifier of the feature. A single feature may have multiple names (given by different naming authorities)
   \item place_name - the name of the feature
   \item place_name_transliterated - the name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)
