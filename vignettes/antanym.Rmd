@@ -9,8 +9,6 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# antanym
-
 ## Overview
 
 This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.

@@ -101,8 +101,7 @@ an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
 
 Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
 
-Ask for suggested names to show on a map covering the region 60&ndash;90 &deg;E, 65&ndash;70 &deg;S, to be shown at 80mm x 80mm in size:
-
+Let's say we are preparing a figure of the greater Prydz Bay region (60&ndash;90 °E, 65&ndash;70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:
 
 ``` r
 my_longitude <- c(60, 90)
@@ -110,7 +109,7 @@ my_latitude <- c(-70, -65)
 suggested <- an_suggest(g, map_extent = c(my_longitude, my_latitude), map_dimensions = c(80, 80))
 ```
 
-Plot the 10 best names purely by score:
+Plot the top ten names purely by score:
 
 ``` r
 this_names <- head(suggested, 10)
@@ -124,88 +123,33 @@ pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
 text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```
 
-![](vignettes/README-unnamed-chunk-10-1.png)
+<img src="vignettes/README-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
-Or the 10 best names considering both score and spatial coverage:
+Or the ten best names considering both score and spatial coverage:
 
 ``` r
-this_names2 <- an_thin(suggested, 10)
-
+this_names <- an_thin(suggested, 10)
 plot(map, xlim = my_longitude, ylim = my_latitude)
-points(this_names2$longitude, this_names2$latitude, col = "blue")
-pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names2)/4)) ## alternate positions of labels to reduce overlap
-pos[order(this_names2$longitude)] <- pos[1:nrow(this_names2)]
-text(this_names2$longitude, this_names2$latitude, labels = this_names2$place_name, pos = pos)
+points(this_names$longitude, this_names$latitude, col = "blue")
+pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
+text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```
 
-![](vignettes/README-unnamed-chunk-11-1.png)
+<img src="vignettes/README-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
 
 Other map examples
 ------------------
 
-### Leaflet
-
-A [simple leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
+A [leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
 
 <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="vignettes/README-leaflet.png" width="40%" /></a>
 
-Source code:
-
-``` r
-library(antanym)
-library(leaflet)
-g <- an_read()
-
-## find single name per feature, preferring United Kingdom
-##  names where available, and only rows with valid locations
-temp <- g %>% an_preferred("United Kingdom")
-temp <- temp[!is.na(temp$longitude) & !is.na(temp$latitude),]
-
-## replace NAs with empty strings in narrative
-temp$narrative[is.na(temp$narrative)] <- ""
-
-## formatted popup HTML
-popup <- sprintf("<h1>%s</h1><p><strong>Country of origin:</strong> %s<br />
-  <strong>Longitude:</strong> %g<br /><strong>Latitude:</strong> %g<br />
-  <a href=\"https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d\">
-    Link to SCAR gazetteer</a></p>",temp$place_name,temp$country_name,
-  temp$longitude,temp$latitude,temp$gaz_id)
-
-m <- leaflet() %>%
-  addProviderTiles("Esri.WorldImagery") %>%
-  addMarkers(lng = temp$longitude, lat = temp$latitude, group = "placenames",
-    clusterOptions = markerClusterOptions(),popup = popup,
-    label = temp$place_name)
-```
-
-We can also use a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html). Note that the leaflet package here must be the rstudio version (use `devtools::install_github("rstudio/leaflet")`).
+And a similar example using a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html).
 
 <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="vignettes/README-leafletps.png" width="40%" /></a>
 
-``` r
-startZoom <- 1
-
-crsAntartica <-  leafletCRS(
-  crsClass = 'L.Proj.CRS',
-  code = 'EPSG:3031',
-  proj4def = '+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs',
-  resolutions = c(8192, 4096, 2048, 1024, 512, 256),
-  origin = c(-4194304, 4194304),
-  bounds =  list( c(-4194304, -4194304), c(4194304, 4194304) )
-)
-
-mps <- leaflet(options = leafletOptions(crs = crsAntartica, minZoom = 0, worldCopyJump = FALSE)) %>%
-    setView(0, -90, startZoom) %>%
-    addCircleMarkers(lng = temp$longitude, lat = temp$latitude, group = "placenames",
-                     popup = popup, label = temp$place_name,
-                     fillOpacity = 0.5, radius = 8, stroke = FALSE, color = "#000",
-                     labelOptions = labelOptions(textOnly = FALSE)) %>%
-    addWMSTiles(baseUrl = "https://maps.environments.aq/mapcache/antarc/?",
-                layers = "antarc_ramp_bath_shade_mask",
-                options = WMSTileOptions(format = "image/png", transparent = TRUE),
-                attribution = "Background imagery courtesy <a href='http://www.environments.aq/'>environments.aq</a>") %>%
-    addGraticule()
-```
+See the [antanym-demo](https://github.com/AustralianAntarcticDataCentre/antanym-demo) repository for the source code of these examples.
 
 Future directions
 -----------------
