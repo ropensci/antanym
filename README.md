@@ -35,7 +35,7 @@ devtools::install_github("SCAR/antanym")
 Usage
 -----
 
-Start by fetching the names data from its host server. We cache it to a temporary directory so that we can access it later in the session without needing to re-download it:
+Start by fetching the names data from its host server. Here we cache it to a temporary directory so that we can access it later in the session without needing to re-download it:
 
 ``` r
 library(antanym)
@@ -97,7 +97,12 @@ an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
 #> 2 Slomer Cove        -59.4    -63.8
 ```
 
-Ask for suggested names to show on a given map:
+### Name suggestions
+
+Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
+
+Ask for suggested names to show on a map covering the region 60&ndash;90 &deg;E, 65&ndash;70 &deg;S, to be shown at 80mm x 80mm in size:
+
 
 ``` r
 my_longitude <- c(60, 90)
