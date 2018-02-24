@@ -19,23 +19,23 @@ an_cga_sources(gaz)
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
-\item{query}{string, regular expression: return only place names matching this pattern}
+\item{query}{string: return only place names matching this pattern (regular expression)}
 
 \item{extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box}
 
-\item{feature_type}{string, regular expression: return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}}
+\item{feature_type}{string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see \code{\link{an_feature_types}}}
 
-\item{origin_country}{string, regular expression: return only names originating from countries matching this pattern. For valid country names see \code{\link{an_countries}}}
+\item{origin_country}{string: return only names originating from countries matching this pattern (regular expression). For valid country names see \code{\link{an_countries}}}
 
-\item{origin_gazetteer}{string, regular expression: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}}
+\item{origin_gazetteer}{string: return only place names originating from gazetteers matching this pattern (regular expression). For valid gazetteer names see \code{\link{an_gazetteers}}}
 
-\item{cga_source}{string, regular expression: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}}
+\item{cga_source}{string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern (regular expression). For valid CGA source gazetteer names see \code{\link{an_cga_sources}}}
 }
 \value{
 data.frame of results
 }
 \description{
-All matches are case-insensitive.
+A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are treated as regular expressions and are case-insensitive.
 }
 \examples{
 \dontrun{

@@ -21,7 +21,7 @@ higher-scored names}
 data.frame
 }
 \description{
-The provided data.frame of names will be thinned down to a smaller number of names.
+The provided data.frame of names will be thinned down to a smaller number of names. The thinning process attempts to select a subset of names that are uniformly spatially distributed, while simultaneously choosing the most important names (according to their relative score in the \code{score_col} column.
 }
 \examples{
 \dontrun{

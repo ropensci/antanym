@@ -51,16 +51,16 @@ an_near <- function(gaz, loc, max_distance) {
 
 #' Filter a collection of place names by various criteria
 #'
-#' All matches are case-insensitive.
+#' A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are treated as regular expressions and are case-insensitive.
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
-#' @param query string, regular expression: return only place names matching this pattern
+#' @param query string: return only place names matching this pattern (regular expression)
 #' @param extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box
-#' @param feature_type string, regular expression: return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}
-#' @param origin_country string, regular expression: return only names originating from countries matching this pattern. For valid country names see \code{\link{an_countries}}
-#' @param origin_gazetteer string, regular expression: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}
-#' @param cga_source string, regular expression: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}
+#' @param feature_type string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see \code{\link{an_feature_types}}
+#' @param origin_country string: return only names originating from countries matching this pattern (regular expression). For valid country names see \code{\link{an_countries}}
+#' @param origin_gazetteer string: return only place names originating from gazetteers matching this pattern (regular expression). For valid gazetteer names see \code{\link{an_gazetteers}}
+#' @param cga_source string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern (regular expression). For valid CGA source gazetteer names see \code{\link{an_cga_sources}}
 #'
 #' @return data.frame of results
 #'

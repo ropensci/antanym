@@ -1,7 +1,7 @@
 #' Find one name per feature
 #'
 #' The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature.
-#' 
+#'
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param origin_country character: vector of country names, in order of preference. If a given feature has been named by one of these countries, this place name will be chosen. If the feature in question has not been given a name by one of these countries, a place name given by another country will be chosen. For valid \code{origin_country} values, see \code{\link{an_countries}}
@@ -16,12 +16,12 @@
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Polish name where there is one
-#' 
+#'
 #'  pnames <- an_preferred(g, "Poland")
 #'
 #'  ## names starting with "Sm", preferring US names then
 #'  ##  Australian ones if available
-#' 
+#'
 #'  g %>% an_filter("^Sm") %>%
 #'    an_preferred(origin_country = c("United States of America", "Australia"))
 #' }
@@ -35,7 +35,7 @@ an_preferred <- function(gaz, origin_country) {
         gaz_sp <- gaz
         gaz <- gaz@data
     }
-    
+
     ## features that have a name from one of our countries of interest
     in_ids <- unique(gaz$scar_common_id[gaz$country_name %in% origin_country])
     in_coi <- gaz[gaz$scar_common_id %in% in_ids,]
@@ -43,10 +43,10 @@ an_preferred <- function(gaz, origin_country) {
     ord <- order(in_coi$scar_common_id, factor(in_coi$country_name, levels=origin_country))
     in_coi <- in_coi[ord,]
     in_coi <- in_coi[!duplicated(in_coi$scar_common_id),] ## take first entry for each scar_common_id
-    
+
     out_coi <- gaz[!gaz$scar_common_id %in% in_ids,]
     out_coi <- out_coi[!duplicated(out_coi$scar_common_id),] ## take first entry for each scar_common_id
-    
+
     out <- rbind(in_coi, out_coi)
 
     if (is_sp) {
@@ -60,7 +60,7 @@ an_preferred <- function(gaz, origin_country) {
 
 #' Thin names to give approximately uniform spatial coverage
 #'
-#' The provided data.frame of names will be thinned down to a smaller number of names.
+#' The provided data.frame of names will be thinned down to a smaller number of names. The thinning process attempts to select a subset of names that are uniformly spatially distributed, while simultaneously choosing the most important names (according to their relative score in the \code{score_col} column.
 #'
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param n numeric: number of names to return
@@ -79,12 +79,12 @@ an_preferred <- function(gaz, origin_country) {
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Australian name where there is one
-#' 
+#'
 #'  g <- an_preferred(g, "Australia")
 #'
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
-#' 
+#'
 #'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60), map_dimensions = c(100, 100))
 #'  head(suggested, 20) ## top 20 names by score
 #'  an_thin(suggested, 20) ## 20 names chosen for spatial coverage and score
@@ -147,7 +147,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache_directory = "c:/temp/gaz")
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Australian name where there is one
@@ -155,8 +155,8 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #'
 #'  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
 #'  ##  (this is about a 1:12M scale map)
-#' 
-#'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+#'
+#'  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60), map_dimensions = c(100, 100))
 #'  head(suggested, 20) ## top 20 names
 #' }
 #' @export

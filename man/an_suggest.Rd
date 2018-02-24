@@ -24,7 +24,7 @@ This is an experimental function and currently only implemented for \code{map_sc
 }
 \examples{
 \dontrun{
- g <- an_read(cache_directory="c:/temp/gaz")
+ g <- an_read(cache_directory = "c:/temp/gaz")
 
  ## get a single name per feature, preferring the
  ##  Australian name where there is one
@@ -33,7 +33,7 @@ This is an experimental function and currently only implemented for \code{map_sc
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
 
- suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60),map_dimensions = c(100, 100))
+ suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60), map_dimensions = c(100, 100))
  head(suggested, 20) ## top 20 names
 }
 }
