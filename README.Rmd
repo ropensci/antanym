@@ -91,6 +91,12 @@ Find names starting with "Slom":
 an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
 ```
 
+Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
+```{r message = FALSE, warning = FALSE}
+an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
+```
+
+
 ### Name suggestions
 
 Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.

@@ -56,6 +56,7 @@ an_near <- function(gaz, loc, max_distance) {
 #' @references \url{http://www.scar.org/data-products/cga}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param query string: return only place names matching this pattern (regular expression)
+#' @param feature_ids numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values
 #' @param extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box
 #' @param feature_type string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see \code{\link{an_feature_types}}
 #' @param origin_country string: return only names originating from countries matching this pattern (regular expression). For valid country names see \code{\link{an_countries}}
@@ -81,11 +82,18 @@ an_near <- function(gaz, loc, max_distance) {
 #'  ## using pipe operator
 #'  g %>% an_filter("Ross", feature_type = "Ice shelf|Mountain")
 #'  g %>% an_near(c(100, -66), 20) %>% an_filter(feature_type = "Island")
+#'
+#'  ## all names for feature 1589 and the country that issued the name
+#'  an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
 #' }
 #' @export
-an_filter <- function(gaz, query, extent, feature_type, origin_country, origin_gazetteer, cga_source) {
+an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_country, origin_gazetteer, cga_source) {
     idx <- rep(TRUE, nrow(gaz))
+    if (!missing(feature_ids)) {
+        idx <- gaz$scar_common_id %in% feature_ids
+    }
     if (!missing(query)) {
+        assert_that(is.string(query))
         ## split query into words, and match against each
         sterms <- strsplit(query, "[ ,]+")[[1]]
         for (st in sterms) idx <- idx & (grepl(st, gaz$place_name, ignore.case = TRUE) | grepl(st, gaz$place_name_transliterated, ignore.case = TRUE))
@@ -99,14 +107,22 @@ an_filter <- function(gaz, query, extent, feature_type, origin_country, origin_g
             out <- out[out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4],]
         }
     }
-    if (!missing(feature_type))
+    if (!missing(feature_type)) {
+        assert_that(is.string(feature_type))
         out <- out[grepl(feature_type, out$feature_type_name),]
-    if (!missing(origin_country))
+    }
+    if (!missing(origin_country)) {
+        assert_that(is.string(origin_country))
         out <- out[grepl(origin_country, out$country_name),]
-    if (!missing(origin_gazetteer))
+    }
+    if (!missing(origin_gazetteer)) {
+        assert_that(is.string(origin_gazetteer))        
         out <- out[grepl(origin_gazetteer, out$gazetteer),]
-    if (!missing(cga_source))
+    }
+    if (!missing(cga_source)) {
+        assert_that(is.string(cga_source))
         out <- out[!is.na(out$gazetteer) & out$gazetteer=="CGA" & grepl(cga_source, out$cga_source_gazetteer),]
+    }
     out
 }
 

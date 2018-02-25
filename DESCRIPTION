@@ -1,7 +1,7 @@
 Package: antanym
 Type: Package
 Title: Antarctic geographic place names
-Version: 0.2.6
+Version: 0.2.7
 Authors@R: c(person("Ben","Raymond",email="ben.raymond@aad.gov.au",role=c("aut","cre")),
 	     person("Michael","Sumner",email="michael.sumner@aad.gov.au",role="aut"),
 	     person("Ursula","Harris",role="ctb"),

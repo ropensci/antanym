@@ -7,8 +7,8 @@
 \alias{an_cga_sources}
 \title{Filter a collection of place names by various criteria}
 \usage{
-an_filter(gaz, query, extent, feature_type, origin_country, origin_gazetteer,
-  cga_source)
+an_filter(gaz, query, feature_ids, extent, feature_type, origin_country,
+  origin_gazetteer, cga_source)
 
 an_countries(gaz)
 
@@ -20,6 +20,8 @@ an_cga_sources(gaz)
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
 \item{query}{string: return only place names matching this pattern (regular expression)}
+
+\item{feature_ids}{numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values}
 
 \item{extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box}
 
@@ -52,6 +54,9 @@ A data.frame of place names can be filtered according to name, geographic locati
  ## using pipe operator
  g \%>\% an_filter("Ross", feature_type = "Ice shelf|Mountain")
  g \%>\% an_near(c(100, -66), 20) \%>\% an_filter(feature_type = "Island")
+
+ ## all names for feature 1589 and the country that issued the name
+ an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
 }
 }
 \references{
