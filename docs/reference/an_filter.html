@@ -29,7 +29,7 @@
   
 <meta property="og:title" content="Filter a collection of place names by various criteria — an_filter" />
 
-<meta property="og:description" content="All matches are case-insensitive." />
+<meta property="og:description" content="A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are treated as regular expressions and are case-insensitive." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -93,11 +93,11 @@
     </div>
 
     
-    <p>All matches are case-insensitive.</p>
+    <p>A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are treated as regular expressions and are case-insensitive.</p>
     
 
-    <pre class="usage"><span class='fu'>an_filter</span>(<span class='no'>gaz</span>, <span class='no'>query</span>, <span class='no'>extent</span>, <span class='no'>feature_type</span>, <span class='no'>origin_country</span>, <span class='no'>origin_gazetteer</span>,
-  <span class='no'>cga_source</span>)
+    <pre class="usage"><span class='fu'>an_filter</span>(<span class='no'>gaz</span>, <span class='no'>query</span>, <span class='no'>feature_ids</span>, <span class='no'>extent</span>, <span class='no'>feature_type</span>, <span class='no'>origin_country</span>,
+  <span class='no'>origin_gazetteer</span>, <span class='no'>cga_source</span>)
 
 <span class='fu'>an_countries</span>(<span class='no'>gaz</span>)
 
@@ -114,7 +114,11 @@
     </tr>
     <tr>
       <th>query</th>
-      <td><p>string, regular expression: return only place names matching this pattern</p></td>
+      <td><p>string: return only place names matching this pattern (regular expression)</p></td>
+    </tr>
+    <tr>
+      <th>feature_ids</th>
+      <td><p>numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be <code>scar_common_id</code> values</p></td>
     </tr>
     <tr>
       <th>extent</th>
@@ -122,19 +126,19 @@
     </tr>
     <tr>
       <th>feature_type</th>
-      <td><p>string, regular expression: return only place names corresponding to feature types matching this pattern. For valid feature type names see <code>an_feature_types</code></p></td>
+      <td><p>string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see <code>an_feature_types</code></p></td>
     </tr>
     <tr>
       <th>origin_country</th>
-      <td><p>string, regular expression: return only names originating from countries matching this pattern. For valid country names see <code>an_countries</code></p></td>
+      <td><p>string: return only names originating from countries matching this pattern (regular expression). For valid country names see <code>an_countries</code></p></td>
     </tr>
     <tr>
       <th>origin_gazetteer</th>
-      <td><p>string, regular expression: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see <code><a href='an_read.html'>an_gazetteers</a></code></p></td>
+      <td><p>string: return only place names originating from gazetteers matching this pattern (regular expression). For valid gazetteer names see <code><a href='an_read.html'>an_gazetteers</a></code></p></td>
     </tr>
     <tr>
       <th>cga_source</th>
-      <td><p>string, regular expression: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see <code>an_cga_sources</code></p></td>
+      <td><p>string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern (regular expression). For valid CGA source gazetteer names see <code>an_cga_sources</code></p></td>
     </tr>
     </table>
     
@@ -166,6 +170,9 @@
  <span class='co'>## using pipe operator</span>
  <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'>an_filter</span>(<span class='st'>"Ross"</span>, <span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Ice shelf|Mountain"</span>)
  <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='an_near.html'>an_near</a></span>(<span class='fu'>c</span>(<span class='fl'>100</span>, -<span class='fl'>66</span>), <span class='fl'>20</span>) <span class='kw'>%&gt;%</span> <span class='fu'>an_filter</span>(<span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Island"</span>)
+
+ <span class='co'>## all names for feature 1589 and the country that issued the name</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>feature_ids</span> <span class='kw'>=</span> <span class='fl'>1589</span>)[,<span class='fu'>c</span>(<span class='st'>"place_name"</span>, <span class='st'>"country_name"</span>)]
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

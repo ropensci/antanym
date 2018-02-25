@@ -132,7 +132,7 @@ This is an experimental function and currently only implemented for <code>map_sc
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache_directory</span><span class='kw'>=</span><span class='st'>"c:/temp/gaz"</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache_directory</span> <span class='kw'>=</span> <span class='st'>"c:/temp/gaz"</span>)
 
  <span class='co'>## get a single name per feature, preferring the</span>
  <span class='co'>##  Australian name where there is one</span>
@@ -141,7 +141,7 @@ This is an experimental function and currently only implemented for <code>map_sc
  <span class='co'>## suggested names for a 100x100 mm map covering 60-90E, 70-60S</span>
  <span class='co'>##  (this is about a 1:12M scale map)</span>
 
- <span class='no'>suggested</span> <span class='kw'>&lt;-</span> <span class='fu'>an_suggest</span>(<span class='no'>g</span>, <span class='kw'>map_extent</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>60</span>, <span class='fl'>90</span>, -<span class='fl'>70</span>, -<span class='fl'>60</span>),<span class='kw'>map_dimensions</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>100</span>))
+ <span class='no'>suggested</span> <span class='kw'>&lt;-</span> <span class='fu'>an_suggest</span>(<span class='no'>g</span>, <span class='kw'>map_extent</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>60</span>, <span class='fl'>90</span>, -<span class='fl'>70</span>, -<span class='fl'>60</span>), <span class='kw'>map_dimensions</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>100</span>))
  <span class='fu'>head</span>(<span class='no'>suggested</span>, <span class='fl'>20</span>) <span class='co'>## top 20 names</span>
 <span class='co'># }</span></pre>
   </div>

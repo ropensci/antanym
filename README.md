@@ -117,11 +117,28 @@ an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
 
 Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
 
-Let's say we are preparing a figure of the greater Prydz Bay region (60&ndash;90 °E, 65&ndash;70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:
+Let's say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let's plot all of the place names in this region:
 
 ``` r
 my_longitude <- c(60, 90)
 my_latitude <- c(-70, -65)
+
+this_names <- an_filter(g, extent = c(my_longitude, my_latitude))
+
+library(rworldmap)
+map <- getMap(resolution = "low")
+plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50") ## extra xlim space for labels
+points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
+pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
+text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
+```
+
+<img src="vignettes/README-map0-1.png" style="display: block; margin: auto;" />
+
+Oooooo-kay. That's not ideal. We can ask for suggested names to show on this map:
+
+``` r
 suggested <- an_suggest(g, map_extent = c(my_longitude, my_latitude), map_dimensions = c(80, 80))
 ```
 
@@ -132,9 +149,9 @@ this_names <- head(suggested, 10)
 
 library(rworldmap)
 map <- getMap(resolution = "low")
-plot(map, xlim = my_longitude, ylim = my_latitude)
-points(this_names$longitude, this_names$latitude, col = "blue")
-pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
+points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
+pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
 pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
 text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```
@@ -145,9 +162,9 @@ Or the ten best names considering both score and spatial coverage:
 
 ``` r
 this_names <- an_thin(suggested, 10)
-plot(map, xlim = my_longitude, ylim = my_latitude)
-points(this_names$longitude, this_names$latitude, col = "blue")
-pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
+plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
+points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
+pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
 pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
 text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```

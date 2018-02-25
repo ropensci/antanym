@@ -92,7 +92,7 @@
 <div id="installing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing" class="anchor"></a>Installing</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">"devtools"</span>,<span class="st">"rlang"</span>))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
 devtools::<span class="kw">install_github</span>(<span class="st">"SCAR/antanym"</span>)</code></pre></div>
 </div>
 <div id="usage" class="section level2">
@@ -110,6 +110,18 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_read.html
 <p>Corresponding to how many distinct features?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(g$scar_common_id))
 <span class="co">#&gt; [1] 19569</span></code></pre></div>
+<p>Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_ids =</span> <span class="dv">1589</span>)[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"country_name"</span>)]
+<span class="co">#&gt; # A tibble: 7 x 2</span>
+<span class="co">#&gt;   place_name   country_name            </span>
+<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                   </span>
+<span class="co">#&gt; 1 Booth, isla  Argentina               </span>
+<span class="co">#&gt; 2 Wandel, Ile  Belgium                 </span>
+<span class="co">#&gt; 3 Booth, Isla  Chile                   </span>
+<span class="co">#&gt; 4 Boothinsel   Germany                 </span>
+<span class="co">#&gt; 5 Booth Island United Kingdom          </span>
+<span class="co">#&gt; 6 Booth Island Russia                  </span>
+<span class="co">#&gt; 7 Booth Island United States of America</span></code></pre></div>
 <p>Choose one name per feature, preferring the Polish name where there is one:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_preferred.html">an_preferred</a></span>(g, <span class="dt">origin_country =</span> <span class="st">"Poland"</span>)
 <span class="kw">nrow</span>(g)
@@ -136,29 +148,41 @@ nms[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class
 <h3 class="hasAnchor">
 <a href="#name-suggestions" class="anchor"></a>Name suggestions</h3>
 <p>Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.</p>
-<p>Let’s say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:</p>
+<p>Let’s say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let’s plot all of the place names in this region:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_longitude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">60</span>, <span class="dv">90</span>)
 my_latitude &lt;-<span class="st"> </span><span class="kw">c</span>(-<span class="dv">70</span>, -<span class="dv">65</span>)
-suggested &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_suggest.html">an_suggest</a></span>(g, <span class="dt">map_extent =</span> <span class="kw">c</span>(my_longitude, my_latitude), <span class="dt">map_dimensions =</span> <span class="kw">c</span>(<span class="dv">80</span>, <span class="dv">80</span>))</code></pre></div>
+
+this_names &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">extent =</span> <span class="kw">c</span>(my_longitude, my_latitude))
+
+<span class="kw">library</span>(rworldmap)
+map &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">"low"</span>)
+<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>) ## extra xlim space for labels
+<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>)) ## alternate positions of labels to reduce overlap
+pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
+<span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
+<p><img src="articles/README-map0-1.png" width="648" style="display: block; margin: auto;"></p>
+<p>Oooooo-kay. That’s not ideal. We can ask for suggested names to show on this map:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">suggested &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_suggest.html">an_suggest</a></span>(g, <span class="dt">map_extent =</span> <span class="kw">c</span>(my_longitude, my_latitude), <span class="dt">map_dimensions =</span> <span class="kw">c</span>(<span class="dv">80</span>, <span class="dv">80</span>))</code></pre></div>
 <p>Plot the top ten names purely by score:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">this_names &lt;-<span class="st"> </span><span class="kw">head</span>(suggested, <span class="dv">10</span>)
 
 <span class="kw">library</span>(rworldmap)
 map &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">"low"</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude, <span class="dt">ylim =</span> my_latitude)
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">col =</span> <span class="st">"blue"</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>)) ## alternate positions of labels to reduce overlap
+<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
+<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>))
 pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
 <span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
-<p><img src="articles/README-unnamed-chunk-10-1.png" width="504" style="display: block; margin: auto;"></p>
+<p><img src="articles/README-map1-1.png" width="648" style="display: block; margin: auto;"></p>
 <p>Or the ten best names considering both score and spatial coverage:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">this_names &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_thin.html">an_thin</a></span>(suggested, <span class="dv">10</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude, <span class="dt">ylim =</span> my_latitude)
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">col =</span> <span class="st">"blue"</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>)) ## alternate positions of labels to reduce overlap
+<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
+<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>))
 pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
 <span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
-<p><img src="articles/README-unnamed-chunk-11-1.png" width="504" style="display: block; margin: auto;"></p>
+<p><img src="articles/README-map2-1.png" width="648" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div id="other-map-examples" class="section level2">

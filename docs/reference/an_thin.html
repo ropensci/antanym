@@ -29,7 +29,7 @@
   
 <meta property="og:title" content="Thin names to give approximately uniform spatial coverage — an_thin" />
 
-<meta property="og:description" content="The provided data.frame of names will be thinned down to a smaller number of names." />
+<meta property="og:description" content="The provided data.frame of names will be thinned down to a smaller number of names. The thinning process attempts to select a subset of names that are uniformly spatially distributed, while simultaneously choosing the most important names (according to their relative score in the score_col column." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -93,7 +93,7 @@
     </div>
 
     
-    <p>The provided data.frame of names will be thinned down to a smaller number of names.</p>
+    <p>The provided data.frame of names will be thinned down to a smaller number of names. The thinning process attempts to select a subset of names that are uniformly spatially distributed, while simultaneously choosing the most important names (according to their relative score in the <code>score_col</code> column.</p>
     
 
     <pre class="usage"><span class='fu'>an_thin</span>(<span class='no'>gaz</span>, <span class='no'>n</span>, <span class='kw'>score_col</span> <span class='kw'>=</span> <span class='st'>"score"</span>, <span class='kw'>score_weighting</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
