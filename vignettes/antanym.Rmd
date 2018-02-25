@@ -61,6 +61,11 @@ Corresponding to how many distinct features?
 length(unique(g$scar_common_id))
 ```
 
+Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
+```{r message = FALSE, warning = FALSE}
+an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
+```
+
 Choose one name per feature, preferring the Polish name where there is one:
 ```{r message = FALSE, warning = FALSE}
 g <- an_preferred(g, origin_country = "Poland")
@@ -82,10 +87,6 @@ Find names starting with "Slom":
 an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
 ```
 
-Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
-```{r message = FALSE, warning = FALSE}
-an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
-```
 
 ### Name suggestions
 
@@ -101,7 +102,7 @@ suggested <- an_suggest(g, map_extent = c(my_longitude, my_latitude), map_dimens
 
 Plot the top ten names purely by score:
 
-```{r message = FALSE, warning = FALSE, dpi = 72, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r map1, message = FALSE, warning = FALSE, dpi = 72, fig.width = 7, fig.height = 7, fig.align = "center"}
 this_names <- head(suggested, 10)
 
 library(rworldmap)
@@ -115,7 +116,7 @@ text(this_names$longitude, this_names$latitude, labels = this_names$place_name, 
 
 Or the ten best names considering both score and spatial coverage:
 
-```{r message = FALSE, warning = FALSE, dpi = 72, fig.width = 7, fig.height = 7, fig.align = "center"}
+```{r map2, message = FALSE, warning = FALSE, dpi = 72, fig.width = 7, fig.height = 7, fig.align = "center"}
 this_names <- an_thin(suggested, 10)
 plot(map, xlim = my_longitude, ylim = my_latitude)
 points(this_names$longitude, this_names$latitude, col = "blue")

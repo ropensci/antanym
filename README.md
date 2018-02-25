@@ -63,6 +63,22 @@ length(unique(g$scar_common_id))
 #> [1] 19569
 ```
 
+Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
+
+``` r
+an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
+#> # A tibble: 7 x 2
+#>   place_name   country_name            
+#>   <chr>        <chr>                   
+#> 1 Booth, isla  Argentina               
+#> 2 Wandel, Ile  Belgium                 
+#> 3 Booth, Isla  Chile                   
+#> 4 Boothinsel   Germany                 
+#> 5 Booth Island United Kingdom          
+#> 6 Booth Island Russia                  
+#> 7 Booth Island United States of America
+```
+
 Choose one name per feature, preferring the Polish name where there is one:
 
 ``` r
@@ -101,7 +117,7 @@ an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
 
 Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
 
-Let's say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:
+Let's say we are preparing a figure of the greater Prydz Bay region (60&ndash;90 °E, 65&ndash;70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). We can ask for suggested names to show on this map:
 
 ``` r
 my_longitude <- c(60, 90)
@@ -123,7 +139,7 @@ pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
 text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```
 
-<img src="vignettes/README-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
+<img src="vignettes/README-map1-1.png" style="display: block; margin: auto;" />
 
 Or the ten best names considering both score and spatial coverage:
 
@@ -136,7 +152,7 @@ pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
 text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
 ```
 
-<img src="vignettes/README-unnamed-chunk-11-1.png" style="display: block; margin: auto;" />
+<img src="vignettes/README-map2-1.png" style="display: block; margin: auto;" />
 
 Other map examples
 ------------------
