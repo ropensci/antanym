@@ -66,7 +66,7 @@ length(unique(g$scar_common_id))
 Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
 
 ``` r
-an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
+an_filter(g, feature_ids = 1589)[, c("place_name", "country_name")]
 #> # A tibble: 7 x 2
 #>   place_name   country_name            
 #>   <chr>        <chr>                   
@@ -95,7 +95,7 @@ nms <- an_near(an_filter(g, feature_type = "Island"), c(100, -66), 20)
 ## or equivalently, using the pipe operator
 nms <- g %>% an_filter(feature_type = "Island") %>% an_near(c(100, -66), 20)
 
-nms[,c("place_name", "longitude", "latitude")]
+nms[, c("place_name", "longitude", "latitude")]
 #> # A tibble: 1 x 3
 #>   place_name    longitude latitude
 #>   <chr>             <dbl>    <dbl>
@@ -105,7 +105,7 @@ nms[,c("place_name", "longitude", "latitude")]
 Find names starting with "Slom":
 
 ``` r
-an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
+an_filter(g, "^Slom")[, c("place_name", "longitude", "latitude")]
 #> # A tibble: 2 x 3
 #>   place_name     longitude latitude
 #>   <chr>              <dbl>    <dbl>
@@ -188,3 +188,8 @@ Future directions
 -----------------
 
 Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.
+
+Other packages
+-----------------
+
+The [geonames package](https://cran.r-project.org/package=geonames) also provides access to geographic place names, including from the SCAR composite gazetteer. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn't easily used while offline.
