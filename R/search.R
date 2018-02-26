@@ -93,7 +93,7 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_coun
         idx <- gaz$scar_common_id %in% feature_ids
     }
     if (!missing(query)) {
-        assert_that(is.string(query))
+        assert_that(is.string(query),!is.na(query),nzchar(query))
         ## split query into words, and match against each
         sterms <- strsplit(query, "[ ,]+")[[1]]
         for (st in sterms) idx <- idx & (grepl(st, gaz$place_name, ignore.case = TRUE) | grepl(st, gaz$place_name_transliterated, ignore.case = TRUE))
@@ -104,23 +104,25 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_coun
         if (inherits(out, "SpatialPointsDataFrame")) {
             out <- crop(out, extent)
         } else {
-            out <- out[out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4],]
+            sidx <- !is.na(out$longitude) & !is.na(out$latitude)
+            sidx <- sidx & out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4]
+            out <- out[sidx,]
         }
     }
     if (!missing(feature_type)) {
-        assert_that(is.string(feature_type))
+        assert_that(is.string(feature_type),!is.na(feature_type),nzchar(feature_type))
         out <- out[grepl(feature_type, out$feature_type_name),]
     }
     if (!missing(origin_country)) {
-        assert_that(is.string(origin_country))
+        assert_that(is.string(origin_country),!is.na(origin_country),nzchar(origin_country))
         out <- out[grepl(origin_country, out$country_name),]
     }
     if (!missing(origin_gazetteer)) {
-        assert_that(is.string(origin_gazetteer))        
+        assert_that(is.string(origin_gazetteer),!is.na(origin_gazetteer),nzchar(origin_gazetteer))
         out <- out[grepl(origin_gazetteer, out$gazetteer),]
     }
     if (!missing(cga_source)) {
-        assert_that(is.string(cga_source))
+        assert_that(is.string(cga_source),!is.na(cga_source),nzchar(cga_source))
         out <- out[!is.na(out$gazetteer) & out$gazetteer=="CGA" & grepl(cga_source, out$cga_source_gazetteer),]
     }
     out
