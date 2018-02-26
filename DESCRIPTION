@@ -1,12 +1,12 @@
 Package: antanym
 Type: Package
-Title: Antarctic geographic place names
-Version: 0.2.7
-Authors@R: c(person("Ben","Raymond",email="ben.raymond@aad.gov.au",role=c("aut","cre")),
-	     person("Michael","Sumner",email="michael.sumner@aad.gov.au",role="aut"),
-	     person("Ursula","Harris",role="ctb"),
-	     person("Andrew","Cowie",role="ctb"),
-	     person("Fraser","Morgan",role="ctb")
+Title: Antarctic Geographic Place Names
+Version: 0.3.0
+Authors@R: c(person("Ben", "Raymond", email = "ben.raymond@aad.gov.au", role = c("aut", "cre")),
+	     person("Michael", "Sumner", email = "michael.sumner@aad.gov.au", role="aut"),
+	     person("Ursula", "Harris", role = "ctb"),
+	     person("Andrew", "Cowie", role = "ctb"),
+	     person("Fraser", "Morgan", role = "ctb")
 	    )
 Description: Antarctic geographic names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.
 URL: https://github.com/SCAR/antanym
