@@ -35,7 +35,7 @@ devtools::install_github("SCAR/antanym")
 Usage
 -----
 
-Start by fetching the names data from its host server. Here we cache it to a temporary directory so that we can access it later in the session without needing to re-download it:
+Start by fetching the names data from the host server. Here we use a temporary cache directory so that we can re-load it later in the session without needing to re-download it:
 
 ``` r
 library(antanym)
@@ -43,10 +43,12 @@ cache_dir <- tempdir()
 g <- an_read(cache_dir = cache_dir)
 ```
 
+If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions.
+
 If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
 
 ``` r
-gsp <- an_read(sp = TRUE)
+gsp <- an_read(sp = TRUE, cache_dir = cache_dir)
 ```
 
 How many names do we have in total?
@@ -117,7 +119,7 @@ an_filter(g, "^Slom")[, c("place_name", "longitude", "latitude")]
 
 Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
 
-Let's say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let's plot all of the place names in this region:
+Let's say we are preparing a figure of the greater Prydz Bay region (60&ndash;90 °E, 65&ndash;70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let's plot all of the place names in this region:
 
 ``` r
 my_longitude <- c(60, 90)
@@ -190,6 +192,6 @@ Future directions
 Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.
 
 Other packages
------------------
+--------------
 
 The [geonames package](https://cran.r-project.org/package=geonames) also provides access to geographic place names, including from the SCAR composite gazetteer. If you need *global* place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn't easily used while offline.

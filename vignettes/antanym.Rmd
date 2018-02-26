@@ -38,7 +38,7 @@ devtools::install_github("SCAR/antanym")
 
 ## Usage
 
-Start by fetching the names data from its host server. Here we cache it to a temporary directory so that we can access it later in the session without needing to re-download it:
+Start by fetching the names data from the host server. Here we use a temporary cache directory so that we can re-load it later in the session without needing to re-download it:
 
 ```{r message = FALSE, warning = FALSE}
 library(antanym)
@@ -46,9 +46,11 @@ cache_dir <- tempdir()
 g <- an_read(cache_dir = cache_dir)
 ```
 
+If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions.
+
 If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
 ```{r as_sp, eval = FALSE}
-gsp <- an_read(sp = TRUE)
+gsp <- an_read(sp = TRUE, cache_dir = cache_dir)
 ```
 
 How many names do we have in total?
