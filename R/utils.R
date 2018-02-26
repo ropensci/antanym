@@ -38,20 +38,20 @@ an_preferred <- function(gaz, origin_country) {
 
     ## features that have a name from one of our countries of interest
     in_ids <- unique(gaz$scar_common_id[gaz$country_name %in% origin_country])
-    in_coi <- gaz[gaz$scar_common_id %in% in_ids,]
+    in_coi <- gaz[gaz$scar_common_id %in% in_ids, ]
     ## order within scar_common_id by origin_country (with ordering as per appearance in the origin_country vector)
     ord <- order(in_coi$scar_common_id, factor(in_coi$country_name, levels=origin_country))
-    in_coi <- in_coi[ord,]
-    in_coi <- in_coi[!duplicated(in_coi$scar_common_id),] ## take first entry for each scar_common_id
+    in_coi <- in_coi[ord, ]
+    in_coi <- in_coi[!duplicated(in_coi$scar_common_id), ] ## take first entry for each scar_common_id
 
-    out_coi <- gaz[!gaz$scar_common_id %in% in_ids,]
-    out_coi <- out_coi[!duplicated(out_coi$scar_common_id),] ## take first entry for each scar_common_id
+    out_coi <- gaz[!gaz$scar_common_id %in% in_ids, ]
+    out_coi <- out_coi[!duplicated(out_coi$scar_common_id), ] ## take first entry for each scar_common_id
 
     out <- rbind(in_coi, out_coi)
 
     if (is_sp) {
         ## return the subset of gaz_sp corresponding to the rows we just selected
-        gaz_sp[gaz_sp$gaz_id %in% out$gaz_id,]
+        gaz_sp[gaz_sp$gaz_id %in% out$gaz_id, ]
     } else {
         out
     }
@@ -99,15 +99,15 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
     ## construct matrix of distances between all pairs of points
     ## note that we use Euclidean distance on coordinates, for computational reasons
     if (inherits(gaz, "SpatialPointsDataFrame")) {
-        this.dist <- as.matrix(dist(as.data.frame(gaz)[,c("longitude", "latitude")]))
+        this.dist <- as.matrix(dist(as.data.frame(gaz)[, c("longitude", "latitude")]))
     } else {
-        this.dist <- as.matrix(dist(gaz[,c("longitude", "latitude")]))
+        this.dist <- as.matrix(dist(gaz[, c("longitude", "latitude")]))
     }
     if (!is.null(score_col)) {
         if (inherits(gaz, "SpatialPointsDataFrame")) {
-            sc <- as.data.frame(gaz)[,score_col]
+            sc <- as.data.frame(gaz)[, score_col]
         } else {
-            sc <- gaz[,score_col]
+            sc <- gaz[, score_col]
         }
         if (inherits(sc, "data.frame")) sc <- unlist(sc)
     } else {
@@ -119,15 +119,15 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
     while(sum(idx) < n) {
         ## rank the distances
         ## for each point, find its distance to the closest point that's already been selected
-        dist_rank <- rank(apply(this.dist[,idx,drop=FALSE], 1, min), na.last = "keep")
+        dist_rank <- rank(apply(this.dist[, idx, drop=FALSE], 1, min), na.last = "keep")
         ## rank the scores
         score_rank <- rank(sc, na.last = "keep")
         ## select the point with highest avg rank (i.e. highest composite distance and score)
-        tmp <- which.max(score_weighting*score_rank+dist_rank)
+        tmp <- which.max(score_weighting * score_rank + dist_rank)
         idx[tmp] <- TRUE
         sc[tmp] <- NA_real_
     }
-    gaz[idx,]
+    gaz[idx, ]
 }
 
 
@@ -162,7 +162,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #' @export
 an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
     if (!missing(map_extent))
-        assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent, "Extent"))
+        assert_that((is.numeric(map_extent) && length(map_extent) == 4) || inherits(map_extent, "Extent"))
 
     if (missing(map_scale)) {
         if (missing(map_extent) || missing(map_dimensions)) stop("need either map_scale, or map_dimensions and map_extent")
@@ -179,9 +179,9 @@ an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
         temp$scale <- map_scale
         idx <- which(temp$scar_common_id %in% uid)
         for (i in idx) {
-            fidx <- which(temp$scar_common_id[i]==uid)
+            fidx <- which(temp$scar_common_id[i] == uid)
             if (inherits(uid_fits[[fidx]], "C5.0")) {
-                temp$score[i] <- predict(uid_fits[[fidx]], newdata=temp[i,], type = "prob")[,2]
+                temp$score[i] <- predict(uid_fits[[fidx]], newdata = temp[i,], type = "prob")[, 2]
             } else {
                 temp$score[i] <- uid_fits[[fidx]]
             }
@@ -190,7 +190,7 @@ an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
         stop("an_suggest not yet implemented for map_scale value below 10 million")
     }
     oidx <- order(temp$score, decreasing = TRUE)
-    temp[oidx,]
+    temp[oidx, ]
 }
 
 
@@ -207,13 +207,13 @@ an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
 #'
 #' @export
 an_mapscale <- function(map_dimensions, map_extent) {
-    assert_that((is.numeric(map_extent) && length(map_extent)==4) || inherits(map_extent, "Extent"))
+    assert_that((is.numeric(map_extent) && length(map_extent) == 4) || inherits(map_extent, "Extent"))
     if (!inherits(map_extent, "Extent")) map_extent <- extent(as.numeric(map_extent))
     mapext <- raster()
     extent(mapext) <- map_extent
 
-    sqrt(cellStats(area(mapext), "sum")*1e3*1e3)/ ## sqrt of (map area in m^2)
-        sqrt(prod(map_dimensions)/1e3/1e3) ## sqrt of (map dimension area in m^2)
+    sqrt(cellStats(area(mapext), "sum") * 1e3 * 1e3)/ ## sqrt of (map area in m^2)
+        sqrt(prod(map_dimensions) / 1e3 / 1e3) ## sqrt of (map dimension area in m^2)
 }
 
 
@@ -229,14 +229,14 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache_directory="c:/temp/gaz")
-#'  my_url <- an_url(an_filter(g, "Ufs Island")[1,])
+#'  my_url <- an_url(an_filter(g, "Ufs Island")[1, ])
 #'  browseURL(my_url)
 #' }
 #' @export
 an_url <- function(gaz) {
     ## only CGA entries dealt with: needs modification once other gazetteers are added
     out <- rep(NA_character_, nrow(gaz))
-    cga_idx <- gaz$gazetteer=="CGA"
+    cga_idx <- gaz$gazetteer == "CGA"
     out[cga_idx] <- sprintf("https://data.aad.gov.au/aadc/gaz/scar/display_name.cfm?gaz_id=%d", gaz$gaz_id[cga_idx])
     out
 }

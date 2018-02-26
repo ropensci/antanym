@@ -94,20 +94,20 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cac
         write.csv(g, file = local_file_name, fileEncoding = "UTF-8", row.names = FALSE, na = "")
     } else {
         if (verbose) {
-            if (local_file_name==download_url)
+            if (local_file_name == download_url)
                 message("fetching gazetteer data from: ", local_file_name, "\n")
             else
                 message("using cached copy of gazetteer data: ", local_file_name, "\n")
         }
     }
-    if (local_file_name==download_url) {
+    if (local_file_name == download_url) {
         ## fetch using httr::GET, because read_csv chokes on SSL errors
         g <- do_fetch_data(download_url)
     } else {
         suppressMessages(g <- readr::read_csv(local_file_name))
     }
     ## rename "gazetteer" to "cga_source_gazetteer"
-    names(g)[names(g)=="gazetteer"] <- "cga_source_gazetteer"
+    names(g)[names(g) == "gazetteer"] <- "cga_source_gazetteer"
     ## add "gazetteer" column (meaning the overall gazetteer name, CGA in this case)
     g$gazetteer <- "CGA"
     ## place names are recorded in two formats: column "place_name_mapping" (e.g. Lake Thing) and "place_name_gazetteer" (Thing, Lake)
@@ -117,9 +117,9 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cac
     g$place_name_transliterated <- stringi::stri_trans_general(g$place_name, "latin-ascii")
 
     ## some ad-hoc fixes
-    g$is_complete_flag <- tolower(g$is_complete_flag)=="y"
+    g$is_complete_flag <- tolower(g$is_complete_flag) == "y"
 
-    `%eq%` <- function(x,y) !is.na(x) & !is.na(y) & x==y
+    `%eq%` <- function(x,y) !is.na(x) & !is.na(y) & x == y
 
     g$source_institution[tolower(g$source_institution) %eq% "aad"] <- "Australian Antarctic Division"
     g$source_institution[tolower(g$source_institution) %eq% "australian antarctic diviison"] <- "Australian Antarctic Division"
@@ -127,11 +127,11 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cac
     g$source_institution[tolower(g$source_institution) %eq% "australian antartic division"] <- "Australian Antarctic Division"
     g$source_institution[tolower(g$source_institution) %eq% "usgs"] <- "United States Geological Survey"
 
-    g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL",] ## informal names shouldn't be part of the CGA
-    g <- g[,gaz_cols_to_show(g,simplified=simplified)]
+    g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL", ] ## informal names shouldn't be part of the CGA
+    g <- g[, gaz_cols_to_show(g,simplified=simplified)]
     if (sp) {
         idx <- !is.na(g$longitude) & !is.na(g$latitude)
-        g <- g[idx,]
+        g <- g[idx, ]
         coordinates(g) <- ~longitude+latitude
         projection(g) <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     }

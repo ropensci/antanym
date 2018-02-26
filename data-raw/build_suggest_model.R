@@ -19,12 +19,12 @@ thisx <- read_csv("data-raw/map_feature_data.csv")
 ## for features that are always shown (or never shown) we don't bother building a model
 ## just default to TRUE or FALSE as appropriate
 
-thisx <- thisx[thisx$scale>=10e6,c("scar_common_id","place_name","named","scale")]
+thisx <- thisx[thisx$scale >= 10e6, c("scar_common_id", "place_name", "named", "scale")]
 uid <- unique(thisx$scar_common_id)
-uid_fits <- lapply(uid,function(z) {
-    temp <- subset(thisx,scar_common_id==z)
-    if (length(unique(temp$named))>1)
-        C5.0(as.factor(named)~scale,data=temp)
+uid_fits <- lapply(uid, function(z) {
+    temp <- subset(thisx, scar_common_id == z)
+    if (length(unique(temp$named)) > 1)
+        C5.0(as.factor(named) ~ scale, data = temp)
     else {
         if (isTRUE(unique(temp$named))) {
             1
@@ -33,4 +33,4 @@ uid_fits <- lapply(uid,function(z) {
         }
     }
 })
-devtools::use_data(uid,uid_fits,internal=TRUE,overwrite=TRUE)
+devtools::use_data(uid, uid_fits, internal = TRUE, overwrite = TRUE)

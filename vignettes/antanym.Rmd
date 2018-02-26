@@ -63,7 +63,7 @@ length(unique(g$scar_common_id))
 
 Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
 ```{r message = FALSE, warning = FALSE}
-an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
+an_filter(g, feature_ids = 1589)[, c("place_name", "country_name")]
 ```
 
 Choose one name per feature, preferring the Polish name where there is one:
@@ -79,12 +79,12 @@ nms <- an_near(an_filter(g, feature_type = "Island"), c(100, -66), 20)
 ## or equivalently, using the pipe operator
 nms <- g %>% an_filter(feature_type = "Island") %>% an_near(c(100, -66), 20)
 
-nms[,c("place_name", "longitude", "latitude")]
+nms[, c("place_name", "longitude", "latitude")]
 ```
 
 Find names starting with "Slom":
 ```{r message = FALSE, warning = FALSE}
-an_filter(g, "^Slom")[,c("place_name", "longitude", "latitude")]
+an_filter(g, "^Slom")[, c("place_name", "longitude", "latitude")]
 ```
 
 

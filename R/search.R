@@ -32,20 +32,20 @@ an_near <- function(gaz, loc, max_distance) {
     if (inherits(gaz, "SpatialPointsDataFrame")) {
         tmp <- as.data.frame(gaz)
         if (!is.projected(gaz)) {
-            crds <- tmp[,c("longitude", "latitude")]
+            crds <- tmp[, c("longitude", "latitude")]
         } else {
             crds <- coordinates(spTransform(gaz, CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
         }
     } else {
-        crds <- gaz[,c("longitude", "latitude")]
+        crds <- gaz[, c("longitude", "latitude")]
     }
     ## make sure loc is in longitude and latitude
     if (inherits(loc, "SpatialPoints")) {
         if (is.projected(loc)) loc <- coordinates(spTransform(loc, CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
     }
-    dist <- geosphere::distVincentySphere(loc, crds)/1e3
+    dist <- geosphere::distVincentySphere(loc, crds) / 1e3
     dist[is.na(dist)] <- Inf
-    gaz[dist<=max_distance,]
+    gaz[dist<=max_distance, ]
 }
 
 
@@ -84,7 +84,7 @@ an_near <- function(gaz, loc, max_distance) {
 #'  g %>% an_near(c(100, -66), 20) %>% an_filter(feature_type = "Island")
 #'
 #'  ## all names for feature 1589 and the country that issued the name
-#'  an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
+#'  an_filter(g, feature_ids = 1589)[, c("place_name", "country_name")]
 #' }
 #' @export
 an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_country, origin_gazetteer, cga_source) {
@@ -98,32 +98,32 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_coun
         sterms <- strsplit(query, "[ ,]+")[[1]]
         for (st in sterms) idx <- idx & (grepl(st, gaz$place_name, ignore.case = TRUE) | grepl(st, gaz$place_name_transliterated, ignore.case = TRUE))
     }
-    out <- gaz[idx,]
+    out <- gaz[idx, ]
     if (!missing(extent)) {
-        assert_that((is.numeric(extent) && length(extent)==4) || inherits(extent, "Extent"))
+        assert_that((is.numeric(extent) && length(extent) == 4) || inherits(extent, "Extent"))
         if (inherits(out, "SpatialPointsDataFrame")) {
             out <- crop(out, extent)
         } else {
             sidx <- !is.na(out$longitude) & !is.na(out$latitude)
             sidx <- sidx & out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4]
-            out <- out[sidx,]
+            out <- out[sidx, ]
         }
     }
     if (!missing(feature_type)) {
         assert_that(is.string(feature_type),!is.na(feature_type),nzchar(feature_type))
-        out <- out[grepl(feature_type, out$feature_type_name),]
+        out <- out[grepl(feature_type, out$feature_type_name), ]
     }
     if (!missing(origin_country)) {
         assert_that(is.string(origin_country),!is.na(origin_country),nzchar(origin_country))
-        out <- out[grepl(origin_country, out$country_name),]
+        out <- out[grepl(origin_country, out$country_name), ]
     }
     if (!missing(origin_gazetteer)) {
         assert_that(is.string(origin_gazetteer),!is.na(origin_gazetteer),nzchar(origin_gazetteer))
-        out <- out[grepl(origin_gazetteer, out$gazetteer),]
+        out <- out[grepl(origin_gazetteer, out$gazetteer), ]
     }
     if (!missing(cga_source)) {
         assert_that(is.string(cga_source),!is.na(cga_source),nzchar(cga_source))
-        out <- out[!is.na(out$gazetteer) & out$gazetteer=="CGA" & grepl(cga_source, out$cga_source_gazetteer),]
+        out <- out[!is.na(out$gazetteer) & out$gazetteer == "CGA" & grepl(cga_source, out$cga_source_gazetteer), ]
     }
     out
 }
@@ -143,7 +143,7 @@ an_feature_types <- function(gaz) {
 #' @rdname an_filter
 #' @export
 an_cga_sources <- function(gaz) {
-    sort(as.character(na.omit(unique(gaz$cga_source_gazetteer[!is.na(gaz$gazetteer) & gaz$gazetteer=="CGA"]))))
+    sort(as.character(na.omit(unique(gaz$cga_source_gazetteer[!is.na(gaz$gazetteer) & gaz$gazetteer == "CGA"]))))
 }
 
 

@@ -56,7 +56,7 @@ A data.frame of place names can be filtered according to name, geographic locati
  g \%>\% an_near(c(100, -66), 20) \%>\% an_filter(feature_type = "Island")
 
  ## all names for feature 1589 and the country that issued the name
- an_filter(g, feature_ids = 1589)[,c("place_name", "country_name")]
+ an_filter(g, feature_ids = 1589)[, c("place_name", "country_name")]
 }
 }
 \references{
