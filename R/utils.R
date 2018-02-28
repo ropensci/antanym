@@ -28,6 +28,7 @@
 #'
 #' @export
 an_preferred <- function(gaz, origin_country) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     assert_that(is.character(origin_country))
     is_sp <- inherits(gaz, "SpatialPointsDataFrame")
     if (is_sp) {
@@ -92,6 +93,7 @@ an_preferred <- function(gaz, origin_country) {
 #'
 #' @export
 an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     ## thin points to give approximately uniform spatial coverage
     ## optionally including scores
     if (n>=nrow(gaz)) return(gaz)
@@ -161,6 +163,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #' }
 #' @export
 an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     if (!missing(map_extent))
         assert_that((is.numeric(map_extent) && length(map_extent) == 4) || inherits(map_extent, "Extent"))
 
@@ -234,6 +237,7 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #' }
 #' @export
 an_url <- function(gaz) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     ## only CGA entries dealt with: needs modification once other gazetteers are added
     out <- rep(NA_character_, nrow(gaz))
     cga_idx <- gaz$gazetteer == "CGA"

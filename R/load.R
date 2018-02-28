@@ -152,6 +152,7 @@ an_gazetteers <- function() c("CGA") ## for now, the CGA is the only gazetteer p
 
 ## internal function, used to control the subset of columns returned to the user
 gaz_cols_to_show <- function(gaz,simplified) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     nms <- c("gaz_id", "scar_common_id", "place_name", "place_name_transliterated", "longitude", "latitude", "altitude", "feature_type_name", "date_named", "narrative", "named_for", "cga_source_gazetteer", "country_name", "gazetteer")
     if (!simplified) nms <- c(nms, c("meeting_date", "meeting_paper", "date_revised", "is_complete_flag", "remote_sensor_info", "coordinate_accuracy", "altitude_accuracy", "source_institution", "source_person", "source_country_code", "source_name", "comments", "source_publisher", "source_identifier"))
     intersect(nms, names(gaz))
