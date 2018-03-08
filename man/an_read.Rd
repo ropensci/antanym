@@ -31,30 +31,30 @@ a data.frame or SpatialPointsDataFrame, with the following columns (note that no
   \item place_name - the name of the feature
   \item place_name_transliterated - the name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)
   \item longitude and latitude - the longitude and latitude of the feature (negative values indicate degrees west or south). Note that many features are not point features (e.g. mountains, lakes), in which case the \code{longitude} and \code{latitude} values are indicative only, generally of the centroid of the feature
-  \item altitude - the altitude (above sea level) of the feature
+  \item altitude - the altitude of the feature, in metres relative to sea level. Negative values indicate features below sea level
   \item feature_type_name - the feature type (e.g. "Archipelago", "Channel", "Mountain")
   \item date_named - the date on which the feature was named
-  \item narrative - a text description of the feature, usually including a synopsis of the history of its name
-  \item named_for - the person after whom the feature was named, or other reason for its naming
-  \item cga_source_gazetteer - for the SCAR CGA, this entry gives the source gazetteer from which this entry was taken. This is currently either a country abbreviation (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
+  \item narrative - a text description of the feature; may include a synopsis of the history of its name
+  \item named_for - the person after whom the feature was named, or other reason for its naming. For historical reasons the distinction between "narrative" and "named for" is not always obvious
+  \item cga_source_gazetteer - for the SCAR CGA, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
   \item country_name - the full name of the country where \code{cga_source_gazetteer} is a country
+  \item relic - if \code{TRUE}, this name is associated with a feature that no longer exists (e.g. an ice shelf feature that has disappeared)
   \item gazetteer - the gazetteer from which this information came (currently only "CGA")
 }
 If \code{simplified} is FALSE, these additional columns will also be included:
 \itemize{
-  \item meeting_date - the date on which the name was approved
-  \item meeting_paper - the paper or document associated with the approval
-  \item date_revised - the last date on which this gazetteer entry was revised
-  \item is_complete_flag - \code{TRUE} if the entry is complete
+  \item meeting_date - the date on which the name was formally approved by the associated national names committee. This is not available for many names: see the \code{date_named} column
+  \item meeting_paper - references to papers or documents associated with the naming of the feature
   \item remote_sensor_info - text describing the remote sensing information (e.g. satellite platform name and image details) used to define the feature, if applicable
   \item coordinate_accuracy - an indicator of the accuracy of the coordinates, in metres
   \item altitude_accuracy - an indicator of the accuracy of the altitude value, in metres
-  \item source_institution - the institution from which the name information came
-  \item source_person - the person from whom the name information came
-  \item source_country_code - th country from which the name information came
-  \item source_name - the cartographic/GIS/remote sensing source from which the name came
-  \item source_publisher - the publisher of the source
-  \item source_identifier - further identifying information about the source of the name
+  \item source_name - the cartographic/GIS/remote sensing source from which the coordinates were derived
+  \item source_publisher - where coordinates were derived from a map, the publisher of that map
+  \item source_scale - the scale of the map from which the coordinates were derived
+  \item source_institution - the institution from which the coordinate information came
+  \item source_person - the contact person at the source institution, if applicable
+  \item source_country_code - th country from which the coordinate information came
+  \item source_identifier - where a coordinate or elevation was derived from a map, the unique identifier of that map
   \item comments - comments about the name or naming process
 }
 }
