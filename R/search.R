@@ -28,6 +28,7 @@
 #'
 #' @export
 an_near <- function(gaz, loc, max_distance) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     ## make sure gaz locations are in longitude and latitude
     if (inherits(gaz, "SpatialPointsDataFrame")) {
         tmp <- as.data.frame(gaz)
@@ -88,6 +89,7 @@ an_near <- function(gaz, loc, max_distance) {
 #' }
 #' @export
 an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_country, origin_gazetteer, cga_source) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     idx <- rep(TRUE, nrow(gaz))
     if (!missing(feature_ids)) {
         idx <- gaz$scar_common_id %in% feature_ids
@@ -131,18 +133,21 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_coun
 #' @rdname an_filter
 #' @export
 an_countries <- function(gaz) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     sort(na.omit(unique(gaz$country_name)))
 }
 
 #' @rdname an_filter
 #' @export
 an_feature_types <- function(gaz) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     sort(as.character(na.omit(unique(gaz$feature_type_name))))
 }
 
 #' @rdname an_filter
 #' @export
 an_cga_sources <- function(gaz) {
+    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     sort(as.character(na.omit(unique(gaz$cga_source_gazetteer[!is.na(gaz$gazetteer) & gaz$gazetteer == "CGA"]))))
 }
 
