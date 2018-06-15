@@ -23,7 +23,7 @@ an_cga_sources(gaz)
 
 \item{feature_ids}{numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values}
 
-\item{extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box}
+\item{extent}{vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box. \code{extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})}
 
 \item{feature_type}{string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see \code{\link{an_feature_types}}}
 
@@ -50,6 +50,17 @@ A data.frame of place names can be filtered according to name, geographic locati
     origin_country = "Australia")
  with(nms, plot(longitude, latitude))
  with(nms, text(longitude, latitude, place_name))
+
+ ## searching within the extent of an sp object
+ my_sp <- SpatialPoints(cbind(c(100, 120), c(-70, -65)))
+ an_filter(g, extent = my_sp)
+
+ ## or equivalently
+ an_filter(g, extent = bbox(my_sp))
+
+ ## or using the sp form of the gazetteer data
+ gsp <- an_read(cache = "session", sp=TRUE)
+ an_filter(gsp, extent = my_sp)
 
  ## using pipe operator
  g \%>\% an_filter("Ross", feature_type = "Ice shelf|Mountain")

@@ -58,7 +58,7 @@ an_near <- function(gaz, loc, max_distance) {
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
 #' @param query string: return only place names matching this pattern (regular expression)
 #' @param feature_ids numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values
-#' @param extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box
+#' @param extent vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box. \code{extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})
 #' @param feature_type string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see \code{\link{an_feature_types}}
 #' @param origin_country string: return only names originating from countries matching this pattern (regular expression). For valid country names see \code{\link{an_countries}}
 #' @param origin_gazetteer string: return only place names originating from gazetteers matching this pattern (regular expression). For valid gazetteer names see \code{\link{an_gazetteers}}
@@ -79,6 +79,17 @@ an_near <- function(gaz, loc, max_distance) {
 #'     origin_country = "Australia")
 #'  with(nms, plot(longitude, latitude))
 #'  with(nms, text(longitude, latitude, place_name))
+#'
+#'  ## searching within the extent of an sp object
+#'  my_sp <- SpatialPoints(cbind(c(100, 120), c(-70, -65)))
+#'  an_filter(g, extent = my_sp)
+#'
+#'  ## or equivalently
+#'  an_filter(g, extent = bbox(my_sp))
+#'
+#'  ## or using the sp form of the gazetteer data
+#'  gsp <- an_read(cache = "session", sp=TRUE)
+#'  an_filter(gsp, extent = my_sp)
 #'
 #'  ## using pipe operator
 #'  g %>% an_filter("Ross", feature_type = "Ice shelf|Mountain")
@@ -102,13 +113,24 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_coun
     }
     out <- gaz[idx, ]
     if (!missing(extent)) {
-        assert_that((is.numeric(extent) && length(extent) == 4) || inherits(extent, "Extent"))
+        assert_that((is.numeric(extent) && length(extent) == 4) || inherits(extent, "Extent") || inherits(extent, "Raster") || inherits(extent, "Spatial"))
         if (inherits(out, "SpatialPointsDataFrame")) {
             out <- crop(out, extent)
         } else {
-            sidx <- !is.na(out$longitude) & !is.na(out$latitude)
-            sidx <- sidx & out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4]
-            out <- out[sidx, ]
+            if (inherits(extent, "Raster")) extent <- raster::extent(extent)
+            if (inherits(extent, "Spatial")) extent <- sp::bbox(extent)
+            if (inherits(extent, "matrix")) {
+                ## if matrix, assume is an sp::bbox object
+                extent <- as.numeric(extent)
+                ## this is ordered c(xmin, ymin, xmax, ymax)
+                sidx <- !is.na(out$longitude) & !is.na(out$latitude)
+                sidx <- sidx & out$longitude>=extent[1] & out$longitude<=extent[3] & out$latitude>=extent[2] & out$latitude<=extent[4]
+                out <- out[sidx, ]
+            } else {
+                sidx <- !is.na(out$longitude) & !is.na(out$latitude)
+                sidx <- sidx & out$longitude>=extent[1] & out$longitude<=extent[2] & out$latitude>=extent[3] & out$latitude<=extent[4]
+                out <- out[sidx, ]
+            }
         }
     }
     if (!missing(feature_type)) {
