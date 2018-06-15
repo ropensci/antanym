@@ -9,7 +9,7 @@
 #' @importFrom assertthat assert_that is.string is.flag
 #' @importFrom C50 predict.C5.0
 #' @importFrom geosphere distVincentySphere
-#' @importFrom httr GET config content http_error http_status
+#' @importFrom httr GET config content http_error http_status RETRY
 #' @importFrom magrittr %>%
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster

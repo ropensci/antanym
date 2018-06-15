@@ -58,10 +58,10 @@
 #'
 #' @export
 an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE, cache_directory) {
-    assert_that(!is.na(refresh_cache),is.flag(refresh_cache))
-    assert_that(!is.na(verbose),is.flag(verbose))
-    assert_that(!is.na(sp),is.flag(sp))
-    assert_that(!is.na(simplified),is.flag(simplified))
+    assert_that(!is.na(refresh_cache), is.flag(refresh_cache))
+    assert_that(!is.na(verbose), is.flag(verbose))
+    assert_that(!is.na(sp), is.flag(sp))
+    assert_that(!is.na(simplified), is.flag(simplified))
     ## currently the gazetteers parameter does nothing, since we only have the CGA to load
     need_to_fetch_data <- FALSE
     local_file_name <- "gaz_data.csv"
@@ -105,7 +105,7 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     }
     if (need_to_fetch_data) {
         if (verbose) message("downloading gazetteer data file to ", local_file_name, " ...")
-        g <- do_fetch_data(download_url)
+        g <- do_fetch_data(download_url, verbose)
         ## cache it
         write.csv(g, file = local_file_name, fileEncoding = "UTF-8", row.names = FALSE, na = "")
     } else {
@@ -118,7 +118,7 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     }
     if (local_file_name == download_url) {
         ## fetch using httr::GET, because read_csv chokes on SSL errors
-        g <- do_fetch_data(download_url)
+        g <- do_fetch_data(download_url, verbose)
     } else {
         suppressMessages(g <- readr::read_csv(local_file_name))
     }
@@ -154,8 +154,15 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
 }
 
 ## internal helper function
-do_fetch_data <- function(download_url) {
+do_fetch_data <- function(download_url, verbose) {
     temp <- GET(download_url, httr::config(ssl_verifypeer = 0L))
+    if (http_error(temp)) {
+        temp <- RETRY("GET", download_url, httr::config(ssl_verifypeer = 0L),
+                      times = 3,
+                      pause_base = 0.1,
+                      pause_cap = 3,
+                      quiet = !verbose)
+    }
     if (http_error(temp)) stop("error downloading gazetteer data: ", http_status(temp)$message)
     suppressMessages(httr::content(temp, as = "parsed", encoding = "UTF-8"))
 }
