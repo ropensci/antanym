@@ -68,8 +68,8 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     if (!missing(cache)) {
         assert_that(is.string(cache), !is.na(cache))
         if (tolower(cache) == "session") {
-            cache_directory <- tempfile(pattern = "antanym-cache")
-            if (!dir.exists(cache_directory)) dir.create(cache_directory, recursive = TRUE)
+            cache_directory <- file.path(tempdir(), "antanym-cache")
+            if (!dir.exists(cache_directory)) dir.create(cache_directory)
         } else if (tolower(cache) == "persistent") {
             cache_directory <- rappdirs::user_cache_dir("antanym", "SCAR")
             if (!dir.exists(cache_directory)) dir.create(cache_directory, recursive = TRUE)
