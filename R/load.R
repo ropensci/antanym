@@ -9,6 +9,7 @@
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache, it will be refreshed. If FALSE, the cached copy will be used
 #' @param simplified logical: if TRUE, only return a simplified set of columns (see details in "Value", below)
 #' @param verbose logical: show progress messages?
+#' @param cache_directory string: deprecated. Use \code{cache} instead
 #'
 #' @return a data.frame or SpatialPointsDataFrame, with the following columns (note that not all information is populated for all place names):
 #' \itemize{
@@ -56,7 +57,7 @@
 #' }
 #'
 #' @export
-an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE) {
+an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE, cache_directory) {
     assert_that(!is.na(refresh_cache),is.flag(refresh_cache))
     assert_that(!is.na(verbose),is.flag(verbose))
     assert_that(!is.na(sp),is.flag(sp))
@@ -65,7 +66,11 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     need_to_fetch_data <- FALSE
     local_file_name <- "gaz_data.csv"
     download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES&outputFormat=csv"
-    if (!missing(cache)) {
+    if (!missing(cache_directory)) {
+        warning("the 'cache_directory' parameter is deprecated and will be removed in a future release. Use 'cache' instead.")
+        cache <- cache_directory
+    }
+    if (!missing(cache) || nzchar(cache)) {
         assert_that(is.string(cache), !is.na(cache))
         if (tolower(cache) == "session") {
             cache_directory <- file.path(tempdir(), "antanym-cache")

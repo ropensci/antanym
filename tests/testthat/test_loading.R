@@ -1,5 +1,10 @@
 context("fetching and caching data")
 
+test_that("deprecated cache_directory parameter throws a warning", {
+    skip_on_cran()
+    expect_warning(g <- an_read(cache_directory = tempdir()))
+})
+
 test_that("session caching works", {
     skip_on_cran()
     cdir <- file.path(tempdir(), "antanym-cache")
