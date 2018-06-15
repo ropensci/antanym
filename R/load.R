@@ -1,6 +1,6 @@
 #' Load Antarctic place name data
 #'
-#' Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache="persistent"} so that the cached data will persist from one R session to the next.
+#' Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache="persistent"} so that the cached data will persist from one R session to the next. See \code{\link{an_cache_directory}} to get the path to the cache directory.
 #'
 #' @references \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
 #' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica
@@ -56,6 +56,8 @@
 #'  g <- an_read(cache = "persistent", refresh_cache = TRUE)
 #' }
 #'
+#' @seealso \code{\link{an_cache_directory}}
+#'
 #' @export
 an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE, cache_directory) {
     assert_that(!is.na(refresh_cache), is.flag(refresh_cache))
@@ -71,16 +73,14 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
         cache <- cache_directory
     }
     if (!missing(cache) || nzchar(cache)) {
-        assert_that(is.string(cache), !is.na(cache))
+        cache_directory <- an_cache_directory(cache)
+        ## create cache directory if necessary
         if (tolower(cache) == "session") {
-            cache_directory <- file.path(tempdir(), "antanym-cache")
             if (!dir.exists(cache_directory)) dir.create(cache_directory)
         } else if (tolower(cache) == "persistent") {
-            cache_directory <- rappdirs::user_cache_dir("antanym", "SCAR")
             if (!dir.exists(cache_directory)) dir.create(cache_directory, recursive = TRUE)
         } else {
             ## user has given a custom string, which we'll take to be the directory to use
-            cache_directory <- cache
             if (!dir.exists(cache_directory)) {
                 if (verbose) message("creating data cache directory: ", cache_directory, "\n")
                 ok <- dir.create(cache_directory)
@@ -166,6 +166,38 @@ do_fetch_data <- function(download_url, verbose) {
     if (http_error(temp)) stop("error downloading gazetteer data: ", http_status(temp)$message)
     suppressMessages(httr::content(temp, as = "parsed", encoding = "UTF-8"))
 }
+
+
+
+#' The cache directory used by antanym
+#'
+#' @param cache string: the gazetteer data can be cached locally, so that it can be used offline later. Valid values are \code{"session"}, \code{"persistent"}, or a directory name. Specifying \code{cache="session"} will use a temporary directory that persists only for the current session. \code{cache="persistent"} will use \code{rappdirs::user_cache_dir()} to determine the appropriate directory to use. Otherwise, the input string will be assumed to be the path to the directory to use
+#'
+#' @return directory path
+#'
+#' @seealso \code{\link{an_read}}
+#'
+#' @examples
+#' ## per-session caching
+#' an_cache_directory(cache = "session")
+#'
+#' ## persistent caching that will keep the data from one R session to the next
+#' an_cache_directory(cache = "persistent")
+#'
+#' @export
+an_cache_directory <- function(cache) {
+    assert_that(is.string(cache), !is.na(cache), nzchar(cache))
+    if (tolower(cache) == "session") {
+        file.path(tempdir(), "antanym-cache")
+    } else if (tolower(cache) == "persistent") {
+        rappdirs::user_cache_dir("antanym", "SCAR")
+    } else {
+        ## user has given a custom string, which we'll take to be the directory to use
+        cache
+    }
+}
+
+
 
 #' @rdname an_read
 #' @export

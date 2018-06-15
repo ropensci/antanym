@@ -61,7 +61,7 @@ If \code{simplified} is FALSE, these additional columns will also be included:
 }
 }
 \description{
-Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache="persistent"} so that the cached data will persist from one R session to the next.
+Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache="persistent"} so that the cached data will persist from one R session to the next. See \code{\link{an_cache_directory}} to get the path to the cache directory.
 }
 \examples{
 \dontrun{
@@ -78,4 +78,7 @@ Place name data will be downloaded and optionally cached locally. If you wish to
 }
 \references{
 \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
+}
+\seealso{
+\code{\link{an_cache_directory}}
 }
