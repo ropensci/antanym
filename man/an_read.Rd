@@ -5,8 +5,8 @@
 \alias{an_gazetteers}
 \title{Load Antarctic place name data}
 \usage{
-an_read(gazetteers = "all", sp = FALSE, cache_directory,
-  refresh_cache = FALSE, simplified = TRUE, verbose = FALSE)
+an_read(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE,
+  simplified = TRUE, verbose = FALSE)
 
 an_gazetteers()
 }
@@ -15,9 +15,9 @@ an_gazetteers()
 
 \item{sp}{logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame}
 
-\item{cache_directory}{string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist. A warning will be given if a cached copy exists and is more than 30 days old}
+\item{cache}{string: the gazetteer data can be cached locally, so that it can be used offline later. Valid values are \code{"session"}, \code{"persistent"}, or a directory name. Specifying \code{cache="session"} will use a temporary directory that persists only for the current session. \code{cache="persistent"} will use \code{rappdirs::user_cache_dir()} to determine the appropriate directory to use. Otherwise, if a string is provided it will be assumed to be the path to the directory to use. In this case, an attempt will be made to create the cache directory if it does not exist. A warning will be given if a cached copy of the data exists and is more than 30 days old}
 
-\item{refresh_cache}{logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used}
+\item{refresh_cache}{logical: if TRUE, and a data file already exists in the cache, it will be refreshed. If FALSE, the cached copy will be used}
 
 \item{simplified}{logical: if TRUE, only return a simplified set of columns (see details in "Value", below)}
 
@@ -59,7 +59,7 @@ If \code{simplified} is FALSE, these additional columns will also be included:
 }
 }
 \description{
-Place name data will be downloaded and optionally cached to a local file. If you wish to be able to use \code{antanym} offline, consider using a cache directory that will persist from one R session to the next.
+Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache="persistent"} so that the cached data will persist from one R session to the next.
 }
 \examples{
 \dontrun{
@@ -67,10 +67,10 @@ Place name data will be downloaded and optionally cached to a local file. If you
  g <- an_read()
 
  ## download and cache to a persistent directory for later, offline use
- g <- an_read(cache_directory="c:/temp/gaz")
+ g <- an_read(cache = "persistent")
 
  ## refresh the cached copy
- g <- an_read(cache_directory="c:/temp/gaz",refresh_cache=TRUE)
+ g <- an_read(cache = "persistent", refresh_cache = TRUE)
 }
 
 }

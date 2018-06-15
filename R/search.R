@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache = "session")
 #'
 #'  ## named features within 10km of 110E, 66S
 #'  an_near(g, c(110, -66), 10)
@@ -20,7 +20,7 @@
 #'  g %>% an_near(c(100, -66), 10)
 #'
 #'  ## with sp objects
-#'  gsp <- an_read(cache_directory = "c:/temp/gaz", sp = TRUE)
+#'  gsp <- an_read(cache = "session", sp = TRUE)
 #'  loc <- SpatialPoints(matrix(c(110, -66), nrow = 1),
 #'    proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
 #'  an_near(gsp, loc, 10)
@@ -70,7 +70,7 @@ an_near <- function(gaz, loc, max_distance) {
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache = "session")
 #'  an_filter(g, "Ufs")
 #'  an_filter(g, "Ufs", feature_type = "Island")
 #'  an_filter(g, "Ufs", feature_type = "Island", origin_country = "Australia|United States of America")

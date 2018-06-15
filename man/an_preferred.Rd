@@ -19,7 +19,7 @@ The SCAR Composite Gazetteer of Antarctic is a compilation of place names provid
 }
 \examples{
 \dontrun{
- g <- an_read(cache_directory = "c:/temp/gaz")
+ g <- an_read(cache = "session")
 
  ## get a single name per feature, preferring the
  ##  Polish name where there is one

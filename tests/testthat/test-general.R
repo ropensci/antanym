@@ -1,6 +1,6 @@
 context("antanym data structures")
 
-g <- an_read(cache_directory = test_cache_dir)
+g <- an_read(cache = "session")
 
 test_that("gaz_id is present and unique", {
     ## some functions rely on gaz_id, check that it's present and unique

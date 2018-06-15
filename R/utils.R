@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory = "c:/temp/gaz")
+#'  g <- an_read(cache = "session")
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Polish name where there is one
@@ -76,7 +76,7 @@ an_preferred <- function(gaz, origin_country) {
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache = "session")
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Australian name where there is one
@@ -149,7 +149,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory = "c:/temp/gaz")
+#'  g <- an_read(cache = "session")
 #'
 #'  ## get a single name per feature, preferring the
 #'  ##  Australian name where there is one
@@ -231,7 +231,7 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #'
 #' @examples
 #' \dontrun{
-#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache = "session")
 #'  my_url <- an_url(an_filter(g, "Ufs Island")[1, ])
 #'  browseURL(my_url)
 #' }

@@ -11,6 +11,7 @@
 #' @importFrom geosphere distVincentySphere
 #' @importFrom httr GET config content http_error http_status
 #' @importFrom magrittr %>%
+#' @importFrom rappdirs user_cache_dir
 #' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster
 #' @importFrom readr read_csv
 #' @importFrom sp coordinates coordinates<- CRS is.projected spTransform SpatialPoints

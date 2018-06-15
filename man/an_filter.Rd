@@ -41,7 +41,7 @@ A data.frame of place names can be filtered according to name, geographic locati
 }
 \examples{
 \dontrun{
- g <- an_read(cache_directory="c:/temp/gaz")
+ g <- an_read(cache = "session")
  an_filter(g, "Ufs")
  an_filter(g, "Ufs", feature_type = "Island")
  an_filter(g, "Ufs", feature_type = "Island", origin_country = "Australia|United States of America")

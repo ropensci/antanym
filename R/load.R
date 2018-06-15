@@ -1,12 +1,12 @@
 #' Load Antarctic place name data
 #'
-#' Place name data will be downloaded and optionally cached to a local file. If you wish to be able to use \code{antanym} offline, consider using a cache directory that will persist from one R session to the next.
+#' Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache="persistent"} so that the cached data will persist from one R session to the next.
 #'
 #' @references \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
 #' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica
 #' @param sp logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame
-#' @param cache_directory string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist. A warning will be given if a cached copy exists and is more than 30 days old
-#' @param refresh_cache logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used
+#' @param cache string: the gazetteer data can be cached locally, so that it can be used offline later. Valid values are \code{"session"}, \code{"persistent"}, or a directory name. Specifying \code{cache="session"} will use a temporary directory that persists only for the current session. \code{cache="persistent"} will use \code{rappdirs::user_cache_dir()} to determine the appropriate directory to use. Otherwise, if a string is provided it will be assumed to be the path to the directory to use. In this case, an attempt will be made to create the cache directory if it does not exist. A warning will be given if a cached copy of the data exists and is more than 30 days old
+#' @param refresh_cache logical: if TRUE, and a data file already exists in the cache, it will be refreshed. If FALSE, the cached copy will be used
 #' @param simplified logical: if TRUE, only return a simplified set of columns (see details in "Value", below)
 #' @param verbose logical: show progress messages?
 #'
@@ -49,45 +49,56 @@
 #'  g <- an_read()
 #'
 #'  ## download and cache to a persistent directory for later, offline use
-#'  g <- an_read(cache_directory="c:/temp/gaz")
+#'  g <- an_read(cache = "persistent")
 #'
 #'  ## refresh the cached copy
-#'  g <- an_read(cache_directory="c:/temp/gaz",refresh_cache=TRUE)
+#'  g <- an_read(cache = "persistent", refresh_cache = TRUE)
 #' }
 #'
 #' @export
-an_read <- function(gazetteers = "all", sp = FALSE, cache_directory, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE) {
+an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE) {
     assert_that(!is.na(refresh_cache),is.flag(refresh_cache))
     assert_that(!is.na(verbose),is.flag(verbose))
     assert_that(!is.na(sp),is.flag(sp))
     assert_that(!is.na(simplified),is.flag(simplified))
     ## currently the gazetteers parameter does nothing, since we only have the CGA to load
-    do_cache_locally <- FALSE
+    need_to_fetch_data <- FALSE
     local_file_name <- "gaz_data.csv"
     download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES&outputFormat=csv"
-    if (!missing(cache_directory)) {
-        assert_that(is.string(cache_directory))
-        if (!dir.exists(cache_directory)) {
-            if (verbose) message("creating data cache directory: ", cache_directory, "\n")
-            ok <- dir.create(cache_directory)
-            if (!ok) stop("could not create cache directory: ", cache_directory)
-            do_cache_locally <- TRUE
+    if (!missing(cache)) {
+        assert_that(is.string(cache), !is.na(cache))
+        if (tolower(cache) == "session") {
+            cache_directory <- tempfile(pattern = "antanym-cache")
+            if (!dir.exists(cache_directory)) dir.create(cache_directory, recursive = TRUE)
+        } else if (tolower(cache) == "persistent") {
+            cache_directory <- rappdirs::user_cache_dir("antanym", "SCAR")
+            if (!dir.exists(cache_directory)) dir.create(cache_directory, recursive = TRUE)
         } else {
-            ## cache dir exists
-            ## does data file exist
-            local_file_name <- file.path(cache_directory, local_file_name)
-            if (refresh_cache || !file.exists(local_file_name)) do_cache_locally <- TRUE
-            ## is cached copy old?
-            if (file.exists(local_file_name)) {
-                if (difftime(Sys.time(), file.info(local_file_name)$mtime, units="days")>30 && !refresh_cache)
-                    warning("cached copy of gazetteer data is more than 30 days old, consider refreshing your copy with an_read(..., refresh_cache=TRUE)")
+            ## user has given a custom string, which we'll take to be the directory to use
+            cache_directory <- cache
+            if (!dir.exists(cache_directory)) {
+                if (verbose) message("creating data cache directory: ", cache_directory, "\n")
+                ok <- dir.create(cache_directory)
+                if (!ok) stop("could not create cache directory: ", cache_directory,
+                              ". Consider creating the directory yourself and trying again.")
             }
+        }
+        ## so the cache directory will exist at this point
+        ## it may or may not have a data file already present
+        ## does data file exist?
+        local_file_name <- file.path(cache_directory, local_file_name)
+        if (refresh_cache || !file.exists(local_file_name)) need_to_fetch_data <- TRUE
+        ## is cached copy old?
+        if (file.exists(local_file_name)) {
+            if (difftime(Sys.time(), file.info(local_file_name)$mtime, units = "days") > 30 && !refresh_cache)
+                warning("cached copy of gazetteer data is more than 30 days old, ",
+                        "consider refreshing your copy with an_read(..., refresh_cache=TRUE)")
         }
     } else {
         ## just provide the URL, and read_csv will fetch it
         local_file_name <- download_url
     }
-    if (do_cache_locally) {
+    if (need_to_fetch_data) {
         if (verbose) message("downloading gazetteer data file to ", local_file_name, " ...")
         g <- do_fetch_data(download_url)
         ## cache it

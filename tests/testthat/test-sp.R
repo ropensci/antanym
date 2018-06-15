@@ -1,7 +1,7 @@
 context("antanym spatial objects")
 
-g <- an_read(cache_directory = test_cache_dir)
-gsp <- an_read(cache_directory = test_cache_dir, sp = TRUE)
+g <- an_read(cache = "session")
+gsp <- an_read(cache = "session", sp = TRUE)
 testpt <- c(110, -66)
 namelist <- function(z) sort(z$place_name)
 

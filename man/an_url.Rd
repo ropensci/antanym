@@ -17,7 +17,7 @@ Each entry in the SCAR Composite Gazetteer of Antarctica has its own web page. T
 }
 \examples{
 \dontrun{
- g <- an_read(cache_directory="c:/temp/gaz")
+ g <- an_read(cache = "session")
  my_url <- an_url(an_filter(g, "Ufs Island")[1, ])
  browseURL(my_url)
 }

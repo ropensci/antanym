@@ -25,7 +25,7 @@ The provided data.frame of names will be thinned down to a smaller number of nam
 }
 \examples{
 \dontrun{
- g <- an_read(cache_directory="c:/temp/gaz")
+ g <- an_read(cache = "session")
 
  ## get a single name per feature, preferring the
  ##  Australian name where there is one

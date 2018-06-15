@@ -24,7 +24,7 @@ This is an experimental function and currently only implemented for \code{map_sc
 }
 \examples{
 \dontrun{
- g <- an_read(cache_directory = "c:/temp/gaz")
+ g <- an_read(cache = "session")
 
  ## get a single name per feature, preferring the
  ##  Australian name where there is one

@@ -5,16 +5,16 @@ test_that("caching works", {
     cdir <- tempdir()
     cfile <- file.path(cdir, "gaz_data.csv")
     if (file.exists(cfile)) file.remove(cfile)
-    g <- an_read(cache_dir = cdir)
+    g <- an_read(cache = cdir)
     expect_true(file.exists(cfile))
     finfo <- file.info(cfile)
 
     ## re-read using cache
-    g <- an_read(cache_dir = cdir)
+    g <- an_read(cache = cdir)
     expect_identical(finfo$mtime, file.info(cfile)$mtime)
 
     ## refresh cache
-    g <- an_read(cache_dir = cdir, refresh_cache = TRUE)
+    g <- an_read(cache = cdir, refresh_cache = TRUE)
 
     ## mtime should have changed
     expect_gt(as.numeric(file.info(cfile)$mtime), as.numeric(finfo$mtime))

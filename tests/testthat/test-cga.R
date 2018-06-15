@@ -1,6 +1,6 @@
 context("antanym")
 
-g <- an_read(cache_directory = test_cache_dir)
+g <- an_read(cache = "session")
 
 test_that("subsetting works", {
     expect_equal(nrow(an_near(g, c(100, -66), 20)), 5)

@@ -22,6 +22,7 @@ Imports:
   geosphere,
   httr,
   magrittr,
+  rappdirs,
   raster,
   readr,
   sp,
