@@ -1,5 +1,7 @@
 context("antanym")
 
+g <- an_read(cache_directory = test_cache_dir)
+
 test_that("subsetting works", {
     expect_equal(nrow(an_near(g, c(100, -66), 20)), 5)
     expect_gt(nrow(g %>% an_near(c(100, -66), 20)), nrow(g %>% an_near(c(100, -66), 20) %>% an_filter(feature_type = "Island")))
