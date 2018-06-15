@@ -66,7 +66,7 @@ an_near <- function(gaz, loc, max_distance) {
 #'
 #' @return data.frame of results
 #'
-#' @seealso \code{\link{an_read}}, \code{\link{an_gazetteers}}
+#' @seealso \code{\link{an_gazetteers}}, \code{\link{an_read}}
 #'
 #' @examples
 #' \dontrun{

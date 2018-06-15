@@ -2,13 +2,10 @@
 % Please edit documentation in R/load.R
 \name{an_read}
 \alias{an_read}
-\alias{an_gazetteers}
 \title{Load Antarctic place name data}
 \usage{
 an_read(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE,
   simplified = TRUE, verbose = FALSE, cache_directory)
-
-an_gazetteers()
 }
 \arguments{
 \item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica}
@@ -80,5 +77,5 @@ Place name data will be downloaded and optionally cached locally. If you wish to
 \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
 }
 \seealso{
-\code{\link{an_cache_directory}}
+\code{\link{an_cache_directory}}, \code{\link{an_gazetteers}}
 }

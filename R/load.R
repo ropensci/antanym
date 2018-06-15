@@ -56,7 +56,7 @@
 #'  g <- an_read(cache = "persistent", refresh_cache = TRUE)
 #' }
 #'
-#' @seealso \code{\link{an_cache_directory}}
+#' @seealso \code{\link{an_cache_directory}}, \code{\link{an_gazetteers}}
 #'
 #' @export
 an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE, simplified = TRUE, verbose = FALSE, cache_directory) {
@@ -196,13 +196,6 @@ an_cache_directory <- function(cache) {
         cache
     }
 }
-
-
-
-#' @rdname an_read
-#' @export
-an_gazetteers <- function() c("CGA") ## for now, the CGA is the only gazetteer provided
-
 
 ## internal function, used to control the subset of columns returned to the user
 gaz_cols_to_show <- function(gaz,simplified) {

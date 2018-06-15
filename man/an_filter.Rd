@@ -63,5 +63,5 @@ A data.frame of place names can be filtered according to name, geographic locati
 \url{http://www.scar.org/data-products/cga}
 }
 \seealso{
-\code{\link{an_read}}, \code{\link{an_gazetteers}}
+\code{\link{an_gazetteers}}, \code{\link{an_read}}
 }
