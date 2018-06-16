@@ -47,7 +47,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5, row_limit=
     idx <- rep(FALSE, nrow(gaz))
     ## construct matrix of distances between all pairs of points
     ## note that for computational reasons we use Euclidean distance on coordinates
-    ## (even if the coords are long/lat, which would really be better dealt with using great-circle distances)
+    ## (even if the coords are long/lat, which would ideally be better dealt with using great-circle distances)
     if (inherits(gaz, "SpatialPointsDataFrame")) {
         this.dist <- as.matrix(dist(coordinates(gaz)))
     } else {
@@ -116,13 +116,12 @@ an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
         if (missing(map_extent) || missing(map_dimensions)) stop("need either map_scale, or map_dimensions and map_extent")
         map_scale <- an_mapscale(map_dimensions, map_extent)
     }
-    ## scale >= 10e6: we have full coverage (nearly so for 12mill) of all scar_common_ids, so use per-feature predictions
-    ## for scale < 10e6: use predictions by feature properties (except maybe if area of interest lies within a catalogued map)
-    ## stations as special case?
-    temp <- gaz %>% an_filter(extent=map_extent)
+    temp <- an_filter(gaz, extent = map_extent)
     if (map_scale>=10e6) {
-        ## per-feature predictions
-        ##load("uidfits.RData") ## in sysdata.rda
+        ## for scale >= 10e6: we have full coverage (nearly so for 12mill) of all scar_common_ids,
+        ## so we use per-feature predictions. That is, for every feature we have a regression tree
+        ## that models the probability of this feature being shown on a map of given scale
+        ## the uid_fits object lives in sysdata.rda
         temp$score <- 0
         temp$scale <- map_scale
         idx <- which(temp$scar_common_id %in% uid)
@@ -135,6 +134,10 @@ an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
             }
         }
     } else {
+        ## for scale < 10e6: we do not have information on every feature at all scales
+        ## so we have to build models that predict the likelihood of a given feature
+        ## being shown on a given map, depending on the properties of the feature and
+        ## the scale (and perhaps other properties) of the map
         stop("an_suggest not yet implemented for map_scale value below 10 million")
     }
     oidx <- order(temp$score, decreasing = TRUE)
