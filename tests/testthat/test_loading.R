@@ -1,10 +1,5 @@
 context("fetching and caching data")
 
-test_that("deprecated cache_directory parameter throws a warning", {
-    skip_on_cran()
-    expect_warning(g <- an_read(cache_directory = tempdir()))
-})
-
 test_that("session caching works", {
     skip_on_cran()
     cdir <- file.path(tempdir(), "antanym-cache")
@@ -25,7 +20,6 @@ test_that("session caching works", {
     expect_gt(as.numeric(file.info(cfile)$mtime), as.numeric(finfo$mtime))
 })
 
-
 test_that("persistent caching works", {
     skip_on_cran()
     cdir <- rappdirs::user_cache_dir("antanym", "SCAR")
@@ -45,7 +39,6 @@ test_that("persistent caching works", {
     ## mtime should have changed
     expect_gt(as.numeric(file.info(cfile)$mtime), as.numeric(finfo$mtime))
 })
-
 
 test_that("persistent caching to custom directory works", {
     skip_on_cran()

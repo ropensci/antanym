@@ -60,15 +60,14 @@ an_near <- function(gaz, loc, max_distance) {
 #' @param feature_ids numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values
 #' @param extent vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box. \code{extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})
 #' @param feature_type string: return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}
-#' @param origin_country string: return only names originating from countries matching this pattern. For valid country names see \code{\link{an_countries}}
+#' @param origin string: return only place names originating from bodies (countries or organisations) matching this pattern. For valid \code{origin} values see \code{link{an_origins}}
 #' @param origin_gazetteer string: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}
-#' @param cga_source string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}
 #' @param ignore_case logical: if \code{TRUE}, use case-insensitive text matching
 #' @param as_regex logical: if \code{TRUE}, treat \code{query} and other string input parameters as regular expressions. If \code{FALSE}, they will be treated as fixed strings to match against
 #'
 #' @return data.frame of results
 #'
-#' @seealso \code{\link{an_gazetteers}}, \code{\link{an_read}}
+#' @seealso \code{\link{an_read}}, \code{\link{an_gazetteers}}, \code{\link{an_origins}}
 #'
 #' @examples
 #' \dontrun{
@@ -78,7 +77,7 @@ an_near <- function(gaz, loc, max_distance) {
 #'  an_filter(g, "William")
 #'
 #'  ## only those names originating from Australia or USA
-#'  an_filter(g, "William", origin_country = "Australia|United States of America")
+#'  an_filter(g, "William", origin = "Australia|United States of America")
 #'
 #'  ## this search will return no matches
 #'  ## because the actual place name is 'William Scoresby Archipelago'
@@ -104,8 +103,7 @@ an_near <- function(gaz, loc, max_distance) {
 #'  an_filter(g, "\\b(West|East)\\b")
 #'
 #'  ## filtering by spatial extent
-#'  nms <- an_filter(g, extent = c(100, 120, -70, -65),
-#'     origin_country = "Australia")
+#'  nms <- an_filter(g, extent = c(100, 120, -70, -65), origin = "Australia")
 #'  with(nms, plot(longitude, latitude))
 #'  with(nms, text(longitude, latitude, place_name))
 #'
@@ -125,10 +123,10 @@ an_near <- function(gaz, loc, max_distance) {
 #'  g %>% an_near(c(100, -66), 20) %>% an_filter(feature_type = "Island")
 #'
 #'  ## all names for feature 1589 and the country that issued the name
-#'  an_filter(g, feature_ids = 1589)[, c("place_name", "country_name")]
+#'  an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 #' }
 #' @export
-an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_country, origin_gazetteer, cga_source, ignore_case=TRUE, as_regex=TRUE) {
+an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin, origin_gazetteer, ignore_case=TRUE, as_regex=TRUE) {
     assert_that(is.flag(ignore_case), !is.na(ignore_case))
     assert_that(is.flag(as_regex), !is.na(as_regex))
     ## note that we do our own case-conversion when ignore_case is TRUE, rather than using the ignore.case parameter in grepl
@@ -177,40 +175,57 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin_coun
         assert_that(is.string(feature_type), !is.na(feature_type), nzchar(feature_type))
         out <- out[grepl(tlc(feature_type), tlc(out$feature_type_name), fixed = !as_regex), ]
     }
-    if (!missing(origin_country)) {
-        assert_that(is.string(origin_country), !is.na(origin_country), nzchar(origin_country))
-        out <- out[grepl(tlc(origin_country), tlc(out$country_name), fixed = !as_regex), ]
+    if (!missing(origin)) {
+        assert_that(is.string(origin), !is.na(origin), nzchar(origin))
+        out <- out[grepl(tlc(origin), tlc(out$origin), fixed = !as_regex), ]
     }
     if (!missing(origin_gazetteer)) {
         assert_that(is.string(origin_gazetteer), !is.na(origin_gazetteer), nzchar(origin_gazetteer))
         out <- out[grepl(tlc(origin_gazetteer), tlc(out$gazetteer), fixed = !as_regex), ]
     }
-    if (!missing(cga_source)) {
-        assert_that(is.string(cga_source), !is.na(cga_source), nzchar(cga_source))
-        out <- out[!is.na(out$gazetteer) & out$gazetteer == "CGA" & grepl(tlc(cga_source), tlc(out$cga_source_gazetteer), fixed = !as_regex), ]
-    }
     out
 }
 
-#' @rdname an_filter
+
+#' List the origins of place names present in gazetteer data
+#'
+#' The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by different countries and organisations. This function lists the originating bodies that provided the names in a given data frame.
+#'
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#'
+#' @return character vector of origin names (countries or organisations)
+#'
+#' @seealso \code{\link{an_filter}} for filtering data according to origin
+#'
+#' @examples
+#' \dontrun{
+#'  g <- an_read(cache = "session")
+#'  an_origins(g)
+#' }
 #' @export
-an_countries <- function(gaz) {
+an_origins <- function(gaz) {
     assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
-    sort(na.omit(unique(gaz$country_name)))
+    sort(no_na(unique(gaz$origin)))
 }
 
-#' @rdname an_filter
+
+#' List feature types present in gazetteer data
+#'
+#' The gazetteer place names are associated with different feature types (e.g. "Hill", "Mountain", "Water body"). This function lists the feature types that are present in a given data frame.
+#'
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#'
+#' @return character vector of country names
+#'
+#' @seealso \code{\link{an_filter}} for filtering data according to feature type
+#'
+#' @examples
+#' \dontrun{
+#'  g <- an_read(cache = "session")
+#'  an_feature_types(g)
+#' }
 #' @export
 an_feature_types <- function(gaz) {
     assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
-    sort(as.character(na.omit(unique(gaz$feature_type_name))))
+    sort(as.character(no_na(unique(gaz$feature_type_name))))
 }
-
-#' @rdname an_filter
-#' @export
-an_cga_sources <- function(gaz) {
-    assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
-    sort(as.character(na.omit(unique(gaz$cga_source_gazetteer[!is.na(gaz$gazetteer) & gaz$gazetteer == "CGA"]))))
-}
-
-

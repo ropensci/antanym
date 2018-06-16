@@ -66,12 +66,12 @@ length(unique(g$scar_common_id))
 
 Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
 ```{r message = FALSE, warning = FALSE}
-an_filter(g, feature_ids = 1589)[, c("place_name", "country_name")]
+an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 ```
 
 Choose one name per feature, preferring the Polish name where there is one:
 ```{r message = FALSE, warning = FALSE}
-g <- an_preferred(g, origin_country = "Poland")
+g <- an_preferred(g, origin = "Poland")
 nrow(g)
 ```
 

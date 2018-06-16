@@ -5,22 +5,20 @@
 \title{Load Antarctic place name data}
 \usage{
 an_read(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE,
-  simplified = TRUE, verbose = FALSE, cache_directory)
+  simplified = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers="all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica}
+\item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers = "all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica}
 
 \item{sp}{logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame}
 
-\item{cache}{string: the gazetteer data can be cached locally, so that it can be used offline later. Valid values are \code{"session"}, \code{"persistent"}, or a directory name. Specifying \code{cache="session"} will use a temporary directory that persists only for the current session. \code{cache="persistent"} will use \code{rappdirs::user_cache_dir()} to determine the appropriate directory to use. Otherwise, if a string is provided it will be assumed to be the path to the directory to use. In this case, an attempt will be made to create the cache directory if it does not exist. A warning will be given if a cached copy of the data exists and is more than 30 days old}
+\item{cache}{string: the gazetteer data can be cached locally, so that it can be used offline later. Valid values are \code{"session"}, \code{"persistent"}, or a directory name. Specifying \code{cache = "session"} will use a temporary directory that persists only for the current session. \code{cache = "persistent"} will use \code{rappdirs::user_cache_dir()} to determine the appropriate directory to use. Otherwise, if a string is provided it will be assumed to be the path to the directory to use. In this case, an attempt will be made to create the cache directory if it does not exist. A warning will be given if a cached copy of the data exists and is more than 30 days old}
 
 \item{refresh_cache}{logical: if TRUE, and a data file already exists in the cache, it will be refreshed. If FALSE, the cached copy will be used}
 
 \item{simplified}{logical: if TRUE, only return a simplified set of columns (see details in "Value", below)}
 
 \item{verbose}{logical: show progress messages?}
-
-\item{cache_directory}{string: deprecated. Use \code{cache} instead}
 }
 \value{
 a data.frame or SpatialPointsDataFrame, with the following columns (note that not all information is populated for all place names):
@@ -35,8 +33,7 @@ a data.frame or SpatialPointsDataFrame, with the following columns (note that no
   \item date_named - the date on which the feature was named
   \item narrative - a text description of the feature; may include a synopsis of the history of its name
   \item named_for - the person after whom the feature was named, or other reason for its naming. For historical reasons the distinction between "narrative" and "named for" is not always obvious
-  \item cga_source_gazetteer - for the SCAR CGA, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
-  \item country_name - the full name of the country where \code{cga_source_gazetteer} is a country
+  \item origin - the originating body of the name - either a country name, or organisation name for names that did not come from a national source
   \item relic - if \code{TRUE}, this name is associated with a feature that no longer exists (e.g. an ice shelf feature that has disappeared)
   \item gazetteer - the gazetteer from which this information came (currently only "CGA")
 }
@@ -47,6 +44,8 @@ If \code{simplified} is FALSE, these additional columns will also be included:
   \item remote_sensor_info - text describing the remote sensing information (e.g. satellite platform name and image details) used to define the feature, if applicable
   \item coordinate_accuracy - an indicator of the accuracy of the coordinates, in metres
   \item altitude_accuracy - an indicator of the accuracy of the altitude value, in metres
+  \item cga_source_gazetteer - for the SCAR CGA, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
+  \item country_name - the full name of the country where \code{cga_source_gazetteer} is a country
   \item source_name - the cartographic/GIS/remote sensing source from which the coordinates were derived
   \item source_publisher - where coordinates were derived from a map, the publisher of that map
   \item source_scale - the scale of the map from which the coordinates were derived
@@ -58,7 +57,7 @@ If \code{simplified} is FALSE, these additional columns will also be included:
 }
 }
 \description{
-Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache="persistent"} so that the cached data will persist from one R session to the next. See \code{\link{an_cache_directory}} to get the path to the cache directory.
+Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache = "persistent"} so that the cached data will persist from one R session to the next. See \code{\link{an_cache_directory}} to get the path to the cache directory.
 }
 \examples{
 \dontrun{

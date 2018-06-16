@@ -13,9 +13,8 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
     ext <- c(100, 110, -70, -60)
     expect_gt(nrow(an_filter(g, extent = ext)), 100)
     expect_identical(namelist(an_filter(g, extent = ext)), namelist(an_filter(gsp, extent = ext)))
-    expect_identical(an_countries(g), an_countries(gsp))
+    expect_identical(an_origins(g), an_origins(gsp))
     expect_identical(an_feature_types(g), an_feature_types(gsp))
-    expect_identical(an_cga_sources(g), an_cga_sources(gsp))
 
     pt <- testpt
     expect_identical(namelist(an_near(g, pt, 50)), namelist(an_near(gsp, pt, 50)))
@@ -23,10 +22,10 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
     projection(pt) <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     expect_identical(namelist(an_near(g, pt, 50)), namelist(an_near(gsp, pt, 50)))
 
-    expect_identical(namelist(an_preferred(g, cga_source="AUS", unmatched="count")),
-                     namelist(an_preferred(gsp, cga_source="AUS", unmatched="count")))
-    expect_identical(namelist(an_preferred(g, cga_source=c("AUS", "POL"), unmatched="count")),
-                     namelist(an_preferred(gsp, cga_source=c("AUS", "POL"), unmatched="count")))
+    expect_identical(namelist(an_preferred(g, origin="Australia", unmatched="count")),
+                     namelist(an_preferred(gsp, origin="Australia", unmatched="count")))
+    expect_identical(namelist(an_preferred(g, origin=c("Australia", "Poland"), unmatched="count")),
+                     namelist(an_preferred(gsp, origin=c("Australia", "Poland"), unmatched="count")))
 
     expect_identical(an_url(g[1:10, ]), an_url(gsp[1:10, ]))
 
@@ -46,9 +45,8 @@ test_that("sp versions of functions match non-sp for projected data", {
     projll <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     stersouth <-  "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
     gxy <- spTransform(gsp, CRS(stersouth))
-    expect_identical(an_countries(g), an_countries(gxy))
+    expect_identical(an_origins(g), an_origins(gxy))
     expect_identical(an_feature_types(g), an_feature_types(gxy))
-    expect_identical(an_cga_sources(g), an_cga_sources(gxy))
 
     pt <- testpt
     pt2 <- SpatialPoints(cbind(testpt[1], testpt[2]))
@@ -60,10 +58,10 @@ test_that("sp versions of functions match non-sp for projected data", {
     ## but now all are great-circles, so these should now match
     expect_identical(namelist(an_near(g, pt, 50)), namelist(an_near(gxy, pt2, 50)))
 
-    expect_identical(namelist(an_preferred(g, cga_source="AUS", unmatched="count")),
-                     namelist(an_preferred(gsp, cga_source="AUS", unmatched="count")))
-    expect_identical(namelist(an_preferred(g, cga_source=c("AUS", "POL"), unmatched="count")),
-                     namelist(an_preferred(gsp, cga_source=c("AUS", "POL"), unmatched="count")))
+    expect_identical(namelist(an_preferred(g, origin="Australia", unmatched="count")),
+                     namelist(an_preferred(gsp, origin="Australia", unmatched="count")))
+    expect_identical(namelist(an_preferred(g, origin=c("Australia", "Poland"), unmatched="count")),
+                     namelist(an_preferred(gsp, origin=c("Australia", "Poland"), unmatched="count")))
 
     expect_identical(an_url(g[1:10, ]), an_url(gxy[1:10, ]))
 })

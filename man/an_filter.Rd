@@ -2,19 +2,10 @@
 % Please edit documentation in R/search.R
 \name{an_filter}
 \alias{an_filter}
-\alias{an_countries}
-\alias{an_feature_types}
-\alias{an_cga_sources}
 \title{Filter a collection of place names by various criteria}
 \usage{
-an_filter(gaz, query, feature_ids, extent, feature_type, origin_country,
-  origin_gazetteer, cga_source, ignore_case = TRUE, as_regex = TRUE)
-
-an_countries(gaz)
-
-an_feature_types(gaz)
-
-an_cga_sources(gaz)
+an_filter(gaz, query, feature_ids, extent, feature_type, origin,
+  origin_gazetteer, ignore_case = TRUE, as_regex = TRUE)
 }
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
@@ -27,11 +18,9 @@ an_cga_sources(gaz)
 
 \item{feature_type}{string: return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}}
 
-\item{origin_country}{string: return only names originating from countries matching this pattern. For valid country names see \code{\link{an_countries}}}
+\item{origin}{string: return only place names originating from bodies (countries or organisations) matching this pattern. For valid \code{origin} values see \code{link{an_origins}}}
 
 \item{origin_gazetteer}{string: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}}
-
-\item{cga_source}{string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}}
 
 \item{ignore_case}{logical: if \code{TRUE}, use case-insensitive text matching}
 
@@ -51,7 +40,7 @@ A data.frame of place names can be filtered according to name, geographic locati
  an_filter(g, "William")
 
  ## only those names originating from Australia or USA
- an_filter(g, "William", origin_country = "Australia|United States of America")
+ an_filter(g, "William", origin = "Australia|United States of America")
 
  ## this search will return no matches
  ## because the actual place name is 'William Scoresby Archipelago'
@@ -77,8 +66,7 @@ A data.frame of place names can be filtered according to name, geographic locati
  an_filter(g, "\\\\b(West|East)\\\\b")
 
  ## filtering by spatial extent
- nms <- an_filter(g, extent = c(100, 120, -70, -65),
-    origin_country = "Australia")
+ nms <- an_filter(g, extent = c(100, 120, -70, -65), origin = "Australia")
  with(nms, plot(longitude, latitude))
  with(nms, text(longitude, latitude, place_name))
 
@@ -98,12 +86,12 @@ A data.frame of place names can be filtered according to name, geographic locati
  g \%>\% an_near(c(100, -66), 20) \%>\% an_filter(feature_type = "Island")
 
  ## all names for feature 1589 and the country that issued the name
- an_filter(g, feature_ids = 1589)[, c("place_name", "country_name")]
+ an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 }
 }
 \references{
 \url{http://www.scar.org/data-products/cga}
 }
 \seealso{
-\code{\link{an_gazetteers}}, \code{\link{an_read}}
+\code{\link{an_read}}, \code{\link{an_gazetteers}}, \code{\link{an_origins}}
 }

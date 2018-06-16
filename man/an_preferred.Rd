@@ -4,22 +4,20 @@
 \alias{an_preferred}
 \title{Find one name per feature in the SCAR Composite Gazetteer}
 \usage{
-an_preferred(gaz, origin_country, cga_source, unmatched = "random")
+an_preferred(gaz, origin, unmatched = "random")
 }
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
-\item{origin_country}{character: deprecated. Use \code{cga_source} instead}
+\item{origin}{character: vector of preferred name origins (countries or organisations), in order of preference. If a given feature has been named by one of these bodies, this place name will be chosen. If the feature in question has not been given a name by any of these bodies, a place name given by another body will be chosen, with preference according to the \code{unmatched} parameter. For valid \code{origin} values, see \code{\link{an_origins}}}
 
-\item{cga_source}{character: vector of source gazetteers, in order of preference. If a given feature has been named in one of these gazetteers, this place name will be chosen. If the feature in question has not been given a name in any of these gazetteers, a place name given in another gazetteer will be chosen, with preference according to the \code{unmatched} parameter. For valid \code{cga_source} values, see \code{\link{an_cga_sources}}}
-
-\item{unmatched}{string: how should names be chosen for features that do not have a name in one of the preferred \code{cga_source} gazetteers? Valid values are "random" (the non-preferred gazetteers will be randomly ordered) or "count" (the non-preferred gazetteers will be ordered by their number of entries, with the largest gazetteer first)}
+\item{unmatched}{string: how should names be chosen for features that have not been been named by one of the preferred \code{origin} bodies? Valid values are "random" (the non-preferred originating bodies will be randomly ordered) or "count" (the non-preferred originating bodies will be ordered by their number of entries, with the largest first)}
 }
 \value{
 data.frame of results
 }
 \description{
-The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature. Specify one or more \code{cga_source} entries and the input \code{gaz} will be filtered to a single name per feature. For features that have multiple names (i.e. appear in multiple source gazetteers), a single name will be chosen, preferring names from the specified \code{cga_source} entries where possible.
+The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by different countries and organisations. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature. Provide one or more \code{origin} entries and the input \code{gaz} will be filtered to a single name per feature. For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified \code{origin} bodies where possible.
 }
 \examples{
 \dontrun{
@@ -27,11 +25,12 @@ The SCAR Composite Gazetteer of Antarctic is a compilation of place names provid
 
  ## get a single name per feature, preferring the
  ##  Polish name where there is one
- pnames <- an_preferred(g, cga_source = "POL")
+ pnames <- an_preferred(g, origin = "Poland")
 
  ## names starting with "Sm", preferring US names then
  ##  Australian ones if available
- g \%>\% an_filter("^Sm") \%>\% an_preferred(cga_source = c("USA", "AUS"))
+ g \%>\% an_filter("^Sm") \%>\%
+       an_preferred(origin = c("United States of America", "Australia"))
 }
 
 }
@@ -39,5 +38,5 @@ The SCAR Composite Gazetteer of Antarctic is a compilation of place names provid
 \url{http://www.scar.org/data-products/cga}
 }
 \seealso{
-\code{\link{an_read}}, \code{\link{an_cga_sources}}
+\code{\link{an_read}}, \code{\link{an_origins}}
 }
