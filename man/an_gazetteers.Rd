@@ -7,7 +7,7 @@
 an_gazetteers(gaz)
 }
 \arguments{
-\item{gaz}{data.frame or SpatialPointsDataFrame: (optional) as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: (optional) as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}}
 }
 \value{
 character vector. If \code{gaz} was provided, this will be a list of all gazetteers present in \code{gaz}. Otherwise, it will be a list of all gazetteers available through the antanym package

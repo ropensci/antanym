@@ -2,7 +2,7 @@
 #'
 #' The provided data.frame of names will be thinned down to a smaller number of names. The thinning process attempts to select a subset of names that are uniformly spatially distributed, while simultaneously choosing the most important names (according to their relative score in the \code{score_col} column.
 #'
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #' @param n numeric: number of names to return
 #' @param score_col string: the name of the column that gives the relative score of each name (e.g. as returned by \code{an_suggest}). Names with higher scores will be preferred by the thinning process
 #' @param score_weighting numeric: weighting of scores relative to spatial distribution. A lower \code{score_weighting} value will tend to choose lower-scored names
@@ -77,7 +77,7 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5){
 #' Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
 #' This is an experimental function and currently only implemented for \code{map_scale} values of 10 million or larger.
 #'
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{map_extent} and \code{map_dimensions}
 #' @param map_extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. Not required if \code{map_scale} is provided
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided
@@ -164,7 +164,7 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #' Each entry in the SCAR Composite Gazetteer of Antarctica has its own web page. The \code{an_url} function will return the URL of the page associated with a given gazetteer entry.
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} (most commonly a subset thereof)
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #'
 #' @return character vector, where each component is a URL to a web page giving more information about the associated gazetteer entry
 #'

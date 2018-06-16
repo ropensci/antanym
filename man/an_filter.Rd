@@ -8,7 +8,7 @@ an_filter(gaz, query, feature_ids, extent, feature_type, origin,
   origin_gazetteer, ignore_case = TRUE, as_regex = TRUE)
 }
 \arguments{
-\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} or \code{\link{an_preferred}}}
 
 \item{query}{character: vector of place name terms to search for. Returned place names will be those that match all entries in \code{query}}
 

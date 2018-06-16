@@ -7,7 +7,7 @@
 an_preferred(gaz, origin, unmatched = "random")
 }
 \arguments{
-\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} or \code{\link{an_filter}}}
 
 \item{origin}{character: vector of preferred name origins (countries or organisations), in order of preference. If a given feature has been named by one of these bodies, this place name will be chosen. If the feature in question has not been given a name by any of these bodies, a place name given by another body will be chosen, with preference according to the \code{unmatched} parameter. For valid \code{origin} values, see \code{\link{an_origins}}}
 

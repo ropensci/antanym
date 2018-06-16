@@ -1,7 +1,7 @@
 #' Find placenames near a given location
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #' @param loc numeric: target location (a two-element numeric vector giving longitude and latitude, or a SpatialPoints object)
 #' @param max_distance numeric: maximum search distance in kilometres
 #'
@@ -55,7 +55,7 @@ an_near <- function(gaz, loc, max_distance) {
 #' A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are by default treated as regular expressions and are case-insensitive: you can change this behaviour via the \code{ignore_case} and \code{as_regex} parameters.
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} or \code{\link{an_preferred}}
 #' @param query character: vector of place name terms to search for. Returned place names will be those that match all entries in \code{query}
 #' @param feature_ids numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values
 #' @param extent vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box. \code{extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})
@@ -191,7 +191,7 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin, ori
 #'
 #' The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by different countries and organisations. This function lists the originating bodies that provided the names in a given data frame.
 #'
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #'
 #' @return character vector of origin names (countries or organisations)
 #'
@@ -213,7 +213,7 @@ an_origins <- function(gaz) {
 #'
 #' The gazetteer place names are associated with different feature types (e.g. "Hill", "Mountain", "Water body"). This function lists the feature types that are present in a given data frame.
 #'
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #'
 #' @return character vector of country names
 #'

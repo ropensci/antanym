@@ -3,7 +3,7 @@
 #' The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by different countries and organisations. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature. Provide one or more \code{origin} entries and the input \code{gaz} will be filtered to a single name per feature. For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified \code{origin} bodies where possible.
 #'
 #' @references \url{http://www.scar.org/data-products/cga}
-#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}
+#' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} or \code{\link{an_filter}}
 #' @param origin character: vector of preferred name origins (countries or organisations), in order of preference. If a given feature has been named by one of these bodies, this place name will be chosen. If the feature in question has not been given a name by any of these bodies, a place name given by another body will be chosen, with preference according to the \code{unmatched} parameter. For valid \code{origin} values, see \code{\link{an_origins}}
 #' @param unmatched string: how should names be chosen for features that have not been been named by one of the preferred \code{origin} bodies? Valid values are "random" (the non-preferred originating bodies will be randomly ordered) or "count" (the non-preferred originating bodies will be ordered by their number of entries, with the largest first)
 #'

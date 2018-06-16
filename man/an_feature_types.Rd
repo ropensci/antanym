@@ -7,7 +7,7 @@
 an_feature_types(gaz)
 }
 \arguments{
-\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}}
 }
 \value{
 character vector of country names
