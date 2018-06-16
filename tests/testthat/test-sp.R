@@ -23,10 +23,10 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
     projection(pt) <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     expect_identical(namelist(an_near(g, pt, 50)), namelist(an_near(gsp, pt, 50)))
 
-    expect_identical(namelist(an_preferred(g, "Australia")),
-                     namelist(an_preferred(gsp, "Australia")))
-    expect_identical(namelist(an_preferred(g, c("Australia", "Poland"))),
-                     namelist(an_preferred(gsp, c("Australia", "Poland"))))
+    expect_identical(namelist(an_preferred(g, cga_source="AUS", unmatched="count")),
+                     namelist(an_preferred(gsp, cga_source="AUS", unmatched="count")))
+    expect_identical(namelist(an_preferred(g, cga_source=c("AUS", "POL"), unmatched="count")),
+                     namelist(an_preferred(gsp, cga_source=c("AUS", "POL"), unmatched="count")))
 
     expect_identical(an_url(g[1:10, ]), an_url(gsp[1:10, ]))
 
@@ -60,10 +60,10 @@ test_that("sp versions of functions match non-sp for projected data", {
     ## but now all are great-circles, so these should now match
     expect_identical(namelist(an_near(g, pt, 50)), namelist(an_near(gxy, pt2, 50)))
 
-    expect_identical(namelist(an_preferred(g, "Australia")),
-                     namelist(an_preferred(gxy, "Australia")))
-    expect_identical(namelist(an_preferred(g, c("Australia", "Poland"))),
-                     namelist(an_preferred(gxy, c("Australia", "Poland"))))
+    expect_identical(namelist(an_preferred(g, cga_source="AUS", unmatched="count")),
+                     namelist(an_preferred(gsp, cga_source="AUS", unmatched="count")))
+    expect_identical(namelist(an_preferred(g, cga_source=c("AUS", "POL"), unmatched="count")),
+                     namelist(an_preferred(gsp, cga_source=c("AUS", "POL"), unmatched="count")))
 
     expect_identical(an_url(g[1:10, ]), an_url(gxy[1:10, ]))
 })
