@@ -31,9 +31,8 @@ an_near <- function(gaz, loc, max_distance) {
     assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     ## make sure gaz locations are in longitude and latitude
     if (inherits(gaz, "SpatialPointsDataFrame")) {
-        tmp <- as.data.frame(gaz)
         if (!is.projected(gaz)) {
-            crds <- tmp[, c("longitude", "latitude")]
+            crds <- coordinates(gaz)
         } else {
             crds <- coordinates(spTransform(gaz, CRS("+proj=longlat +datum=WGS84 +ellps=WGS84")))
         }

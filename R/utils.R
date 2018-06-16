@@ -46,25 +46,22 @@ an_thin <- function(gaz, n, score_col = "score", score_weighting = 5, row_limit=
     if (nrow(gaz) > row_limit) stop("the input gaz data.frame has more rows than row_limit")
     idx <- rep(FALSE, nrow(gaz))
     ## construct matrix of distances between all pairs of points
-    ## note that we use Euclidean distance on coordinates, for computational reasons
+    ## note that for computational reasons we use Euclidean distance on coordinates
+    ## (even if the coords are long/lat, which would really be better dealt with using great-circle distances)
     if (inherits(gaz, "SpatialPointsDataFrame")) {
-        this.dist <- as.matrix(dist(as.data.frame(gaz)[, c("longitude", "latitude")]))
+        this.dist <- as.matrix(dist(coordinates(gaz)))
     } else {
         this.dist <- as.matrix(dist(gaz[, c("longitude", "latitude")]))
     }
     if (!is.null(score_col) && score_col %in% names(gaz)) {
-        if (inherits(gaz, "SpatialPointsDataFrame")) {
-            sc <- as.data.frame(gaz)[, score_col]
-        } else {
-            sc <- gaz[, score_col]
-        }
-        if (inherits(sc, "data.frame")) sc <- unlist(sc)
+        sc <- gaz[[score_col]]
     } else {
         sc <- rep(1, nrow(gaz))
     }
-    if (sum(!is.na(sc))<n) stop("there are less non-NA score values (", sum(!is.na(sc)), ") than the requested number of names (", n, ")")
+    if (sum(!is.na(sc))<n) stop("there are less non-NA score values (", sum(!is.na(sc)),
+                                ") than the requested number of names (", n, ")")
     tmp <- which.max(sc)
-    idx[tmp] <- TRUE ## start with the first best-scored points
+    idx[tmp] <- TRUE ## start with the first best-scored point
     sc[tmp] <- NA_real_
     while(sum(idx) < n) {
         ## rank the distances
