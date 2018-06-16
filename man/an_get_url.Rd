@@ -23,5 +23,5 @@ Each entry in the Composite Gazetteer of Antarctica has its own web page. The \c
 }
 }
 \references{
-\url{http://www.scar.org/data-products/cga}
+\url{https://www.scar.org/data-products/place-names/}
 }

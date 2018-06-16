@@ -1,6 +1,6 @@
 #' Find placenames near a given location
 #'
-#' @references \url{http://www.scar.org/data-products/cga}
+#' @references \url{https://www.scar.org/data-products/place-names/}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #' @param loc numeric: target location (a two-element numeric vector giving longitude and latitude, or a SpatialPoints object)
 #' @param max_distance numeric: maximum search distance in kilometres
@@ -53,7 +53,7 @@ an_near <- function(gaz, loc, max_distance) {
 #'
 #' A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are by default treated as regular expressions and are case-insensitive: you can change this behaviour via the \code{ignore_case} and \code{as_regex} parameters.
 #'
-#' @references \url{http://www.scar.org/data-products/cga}
+#' @references \url{https://www.scar.org/data-products/place-names/}
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} or \code{\link{an_preferred}}
 #' @param query character: vector of place name terms to search for. Returned place names will be those that match all entries in \code{query}
 #' @param feature_ids numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values

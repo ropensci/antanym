@@ -90,7 +90,7 @@ A data.frame of place names can be filtered according to name, geographic locati
 }
 }
 \references{
-\url{http://www.scar.org/data-products/cga}
+\url{https://www.scar.org/data-products/place-names/}
 }
 \seealso{
 \code{\link{an_read}}, \code{\link{an_gazetteers}}, \code{\link{an_origins}}
