@@ -136,11 +136,15 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
 
     `%eq%` <- function(x,y) !is.na(x) & !is.na(y) & x == y
 
+    ## some ad-hoc fixes
     g$source_institution[tolower(g$source_institution) %eq% "aad"] <- "Australian Antarctic Division"
     g$source_institution[tolower(g$source_institution) %eq% "australian antarctic diviison"] <- "Australian Antarctic Division"
     g$source_institution[tolower(g$source_institution) %eq% "australian antarctic fdivision"] <- "Australian Antarctic Division"
     g$source_institution[tolower(g$source_institution) %eq% "australian antartic division"] <- "Australian Antarctic Division"
     g$source_institution[tolower(g$source_institution) %eq% "usgs"] <- "United States Geological Survey"
+
+    g$cga_source_gazetteer[is.na(g$cga_source_gazetteer) & grepl("United States", g$country_name)] <- "USA"
+    g$cga_source_gazetteer[is.na(g$cga_source_gazetteer) & grepl("Bulgaria", g$country_name)] <- "BGR"
 
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL", ] ## informal names shouldn't be part of the CGA
     g <- g[, gaz_cols_to_show(g,simplified=simplified)]
