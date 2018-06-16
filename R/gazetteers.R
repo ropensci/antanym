@@ -1,6 +1,6 @@
 #' The place name gazetteers available
 #'
-#' Return a character vector that lists all of the gazetteers present in the \code{gaz} data, or (if \code{gaz} was not provided) all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica.
+#' Return a character vector that lists all of the gazetteers present in the \code{gaz} data, or (if \code{gaz} was not provided) all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica.
 #'
 #' @param gaz data.frame or SpatialPointsDataFrame: (optional) as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #'

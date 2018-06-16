@@ -13,7 +13,7 @@ an_get_url(gaz)
 character vector, where each component is a URL to a web page giving more information about the associated gazetteer entry
 }
 \description{
-Each entry in the SCAR Composite Gazetteer of Antarctica has its own web page. The \code{an_url} function will return the URL of the page associated with a given gazetteer entry.
+Each entry in the Composite Gazetteer of Antarctica has its own web page. The \code{an_url} function will return the URL of the page associated with a given gazetteer entry.
 }
 \examples{
 \dontrun{

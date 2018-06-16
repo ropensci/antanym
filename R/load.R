@@ -3,7 +3,7 @@
 #' Place name data will be downloaded and optionally cached locally. If you wish to be able to use \code{antanym} offline, consider using \code{cache = "persistent"} so that the cached data will persist from one R session to the next. See \code{\link{an_cache_directory}} to get the path to the cache directory.
 #'
 #' @references \url{http://www.scar.org/data-products/cga} \url{http://data.aad.gov.au/aadc/gaz/}
-#' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers = "all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica
+#' @param gazetteers character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers = "all"} to load all available gazetteers. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica
 #' @param sp logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame
 #' @param cache string: the gazetteer data can be cached locally, so that it can be used offline later. Valid values are \code{"session"}, \code{"persistent"}, or a directory name. Specifying \code{cache = "session"} will use a temporary directory that persists only for the current session. \code{cache = "persistent"} will use \code{rappdirs::user_cache_dir()} to determine the appropriate directory to use. Otherwise, if a string is provided it will be assumed to be the path to the directory to use. In this case, an attempt will be made to create the cache directory if it does not exist. A warning will be given if a cached copy of the data exists and is more than 30 days old
 #' @param refresh_cache logical: if TRUE, and a data file already exists in the cache, it will be refreshed. If FALSE, the cached copy will be used
@@ -13,7 +13,7 @@
 #' @return a data.frame or SpatialPointsDataFrame, with the following columns (note that not all information is populated for all place names):
 #' \itemize{
 #'   \item gaz_id - the unique identifier of each gazetteer entry. Note that the same feature (e.g. "Browns Glacier") might have multiple gazetteer entries, each with their own \code{gaz_id}, because the feature has been named multiple times by different naming authorities. The \code{scar_common_id} for these entries will be identical, because \code{scar_common_id} identifies the feature itself
-#'   \item scar_common_id - the unique identifier (in the SCAR CGA) of the feature. A single feature may have multiple names, given by different naming authorities
+#'   \item scar_common_id - the unique identifier (in the Composite Gazetteer of Antarctica) of the feature. A single feature may have multiple names, given by different naming authorities
 #'   \item place_name - the name of the feature
 #'   \item place_name_transliterated - the name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)
 #'   \item longitude and latitude - the longitude and latitude of the feature (negative values indicate degrees west or south). Note that many features are not point features (e.g. mountains, lakes), in which case the \code{longitude} and \code{latitude} values are indicative only, generally of the centroid of the feature
@@ -33,7 +33,7 @@
 #'   \item remote_sensor_info - text describing the remote sensing information (e.g. satellite platform name and image details) used to define the feature, if applicable
 #'   \item coordinate_accuracy - an indicator of the accuracy of the coordinates, in metres
 #'   \item altitude_accuracy - an indicator of the accuracy of the altitude value, in metres
-#'   \item cga_source_gazetteer - for the SCAR CGA, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
+#'   \item cga_source_gazetteer - for the Composite Gazetteer, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
 #'   \item country_name - the full name of the country where \code{cga_source_gazetteer} is a country
 #'   \item source_name - the cartographic/GIS/remote sensing source from which the coordinates were derived
 #'   \item source_publisher - where coordinates were derived from a map, the publisher of that map

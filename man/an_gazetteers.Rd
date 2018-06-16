@@ -13,7 +13,7 @@ an_gazetteers(gaz)
 character vector. If \code{gaz} was provided, this will be a list of all gazetteers present in \code{gaz}. Otherwise, it will be a list of all gazetteers available through the antanym package
 }
 \description{
-Return a character vector that lists all of the gazetteers present in the \code{gaz} data, or (if \code{gaz} was not provided) all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica.
+Return a character vector that lists all of the gazetteers present in the \code{gaz} data, or (if \code{gaz} was not provided) all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica.
 }
 \examples{
 

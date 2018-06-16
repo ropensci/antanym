@@ -8,7 +8,7 @@ Authors@R: c(person("Ben", "Raymond", email = "ben.raymond@aad.gov.au", role = c
 	     person("Andrew", "Cowie", role = "ctb"),
 	     person("Fraser", "Morgan", role = "ctb")
 	    )
-Description: Antarctic geographic names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.
+Description: Antarctic geographic names from the Composite Gazetteer of Antarctica, and functions for working with those place names.
 URL: https://github.com/SCAR/antanym
 BugReports: https://github.com/SCAR/antanym/issues
 Depends:

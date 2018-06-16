@@ -1,6 +1,6 @@
 #' \pkg{antanym}
 #'
-#' Antarctic geographic place names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.
+#' Antarctic geographic place names from the Composite Gazetteer of Antarctica, and functions for working with those place names.
 #'
 #' @name antanym
 #' @aliases antanym-package

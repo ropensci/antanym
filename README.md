@@ -10,7 +10,7 @@ Overview
 
 This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.
 
-The authoritative source of place names in Antarctica is the SCAR Composite Gazetteer of Antarctica (CGA), which consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 °S, including terrestrial and undersea or under-ice.
+The authoritative source of place names in Antarctica is the Composite Gazetteer of Antarctica (CGA), which is produced by the Scientific Committee on Antarctic Research (SCAR). The CGA consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 &deg;S, including terrestrial and undersea or under-ice.
 
 There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.
 

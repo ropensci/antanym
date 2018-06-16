@@ -2,7 +2,7 @@
 % Please edit documentation in R/cga_preferred_names.R
 \name{an_preferred}
 \alias{an_preferred}
-\title{Find one name per feature in the SCAR Composite Gazetteer}
+\title{Find one name per feature in the Composite Gazetteer}
 \usage{
 an_preferred(gaz, origin, unmatched = "random")
 }
@@ -17,7 +17,7 @@ an_preferred(gaz, origin, unmatched = "random")
 data.frame of results
 }
 \description{
-The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by different countries and organisations. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature. Provide one or more \code{origin} entries and the input \code{gaz} will be filtered to a single name per feature. For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified \code{origin} bodies where possible.
+The Composite Gazetteer of Antarctica is a compilation of place names provided by different countries and organisations. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature. Provide one or more \code{origin} entries and the input \code{gaz} will be filtered to a single name per feature. For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified \code{origin} bodies where possible.
 }
 \examples{
 \dontrun{

@@ -189,7 +189,7 @@ an_filter <- function(gaz, query, feature_ids, extent, feature_type, origin, ori
 
 #' List the origins of place names present in gazetteer data
 #'
-#' The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by different countries and organisations. This function lists the originating bodies that provided the names in a given data frame.
+#' The Composite Gazetteer of Antarctica is a compilation of place names provided by different countries and organisations. This function lists the originating bodies that provided the names in a given data frame.
 #'
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #'

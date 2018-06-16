@@ -13,7 +13,7 @@ an_origins(gaz)
 character vector of origin names (countries or organisations)
 }
 \description{
-The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by different countries and organisations. This function lists the originating bodies that provided the names in a given data frame.
+The Composite Gazetteer of Antarctica is a compilation of place names provided by different countries and organisations. This function lists the originating bodies that provided the names in a given data frame.
 }
 \examples{
 \dontrun{

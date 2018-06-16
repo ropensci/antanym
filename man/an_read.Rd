@@ -8,7 +8,7 @@ an_read(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE,
   simplified = TRUE, verbose = FALSE)
 }
 \arguments{
-\item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers = "all"} to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica}
+\item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers = "all"} to load all available gazetteers. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica}
 
 \item{sp}{logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame}
 
@@ -24,7 +24,7 @@ an_read(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE,
 a data.frame or SpatialPointsDataFrame, with the following columns (note that not all information is populated for all place names):
 \itemize{
   \item gaz_id - the unique identifier of each gazetteer entry. Note that the same feature (e.g. "Browns Glacier") might have multiple gazetteer entries, each with their own \code{gaz_id}, because the feature has been named multiple times by different naming authorities. The \code{scar_common_id} for these entries will be identical, because \code{scar_common_id} identifies the feature itself
-  \item scar_common_id - the unique identifier (in the SCAR CGA) of the feature. A single feature may have multiple names, given by different naming authorities
+  \item scar_common_id - the unique identifier (in the Composite Gazetteer of Antarctica) of the feature. A single feature may have multiple names, given by different naming authorities
   \item place_name - the name of the feature
   \item place_name_transliterated - the name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)
   \item longitude and latitude - the longitude and latitude of the feature (negative values indicate degrees west or south). Note that many features are not point features (e.g. mountains, lakes), in which case the \code{longitude} and \code{latitude} values are indicative only, generally of the centroid of the feature
@@ -44,7 +44,7 @@ If \code{simplified} is FALSE, these additional columns will also be included:
   \item remote_sensor_info - text describing the remote sensing information (e.g. satellite platform name and image details) used to define the feature, if applicable
   \item coordinate_accuracy - an indicator of the accuracy of the coordinates, in metres
   \item altitude_accuracy - an indicator of the accuracy of the altitude value, in metres
-  \item cga_source_gazetteer - for the SCAR CGA, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
+  \item cga_source_gazetteer - for the Composite Gazetteer, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)
   \item country_name - the full name of the country where \code{cga_source_gazetteer} is a country
   \item source_name - the cartographic/GIS/remote sensing source from which the coordinates were derived
   \item source_publisher - where coordinates were derived from a map, the publisher of that map

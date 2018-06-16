@@ -7,7 +7,7 @@
 \alias{antanym-package}
 \title{\pkg{antanym}}
 \description{
-Antarctic geographic place names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.
+Antarctic geographic place names from the Composite Gazetteer of Antarctica, and functions for working with those place names.
 }
 \references{
 \url{http://data.aad.gov.au/aadc/gaz/scar}

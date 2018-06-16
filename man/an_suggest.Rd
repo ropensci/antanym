@@ -16,7 +16,7 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions)
 \item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided}
 }
 \value{
-data.frame of names with a "score" column added. The data.frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
+data.frame of names with a "score" column added. Score values range from 0 to 1. The data frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
 }
 \description{
 Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
@@ -28,7 +28,7 @@ This is an experimental function and currently only implemented for \code{map_sc
 
  ## get a single name per feature, preferring the
  ##  Australian name where there is one
- g <- an_preferred(g, "Australia")
+ g <- an_preferred(g, origin = "Australia")
 
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)

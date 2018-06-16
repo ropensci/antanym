@@ -4,18 +4,23 @@
 \alias{an_thin}
 \title{Thin names to give approximately uniform spatial coverage}
 \usage{
-an_thin(gaz, n, score_col = "score", score_weighting = 5)
+an_thin(gaz, n, score_col = "score", score_weighting = 5,
+  row_limit = 2000)
 }
 \arguments{
-\item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}}
+\item{gaz}{data.frame or SpatialPointsDataFrame: typically as returned by \code{\link{an_suggest}}}
 
 \item{n}{numeric: number of names to return}
 
-\item{score_col}{string: the name of the column that gives the relative score of each name (e.g. as returned by \code{an_suggest}). Names with higher scores will be preferred by the thinning process}
+\item{score_col}{string: the name of the column that gives the relative score of each name (e.g. as returned by \code{an_suggest}). Names with higher scores will be
+preferred by the thinning process. If the specified \code{score_col} column is not present in \code{gaz}, or if all values within that column are equal, then the
+thinning will be based entirely on the spatial distribution of the features}
 
 \item{score_weighting}{numeric: weighting of scores relative to spatial distribution. A lower \code{score_weighting} value will tend to choose lower-scored names
 in order to achieve better spatial uniformity. A higher \code{score_weighting} value will trade spatial uniformity in favour of selecting
 higher-scored names}
+
+\item{row_limit}{integer: the maximum number of rows allowed in \code{gaz}; see Details. Data frames larger than this will not be processed (with an error).}
 }
 \value{
 data.frame
@@ -23,24 +28,29 @@ data.frame
 \description{
 The provided data.frame of names will be thinned down to a smaller number of names. The thinning process attempts to select a subset of names that are uniformly spatially distributed, while simultaneously choosing the most important names (according to their relative score in the \code{score_col} column.
 }
+\details{
+Note that the algorithm calculates all pairwise distances between the rows of \code{gaz}. This is memory-intensive, and so if \code{gaz} has many rows the algorithm will fail or on some platforms might crash. Input \code{gaz} data.frames with more than \code{row_limit} rows will not be processed for this reason. You can try increasing \code{row_limit} from its default value if necessary.
+}
 \examples{
 \dontrun{
  g <- an_read(cache = "session")
 
  ## get a single name per feature, preferring the
- ##  Australian name where there is one
-
- g <- an_preferred(g, "Australia")
+ ##  Japanese name where there is one
+ g <- an_preferred(g, origin = "Japan")
 
  ## suggested names for a 100x100 mm map covering 60-90E, 70-60S
  ##  (this is about a 1:12M scale map)
-
  suggested <- an_suggest(g, map_extent = c(60, 90, -70, -60), map_dimensions = c(100, 100))
- head(suggested, 20) ## top 20 names by score
- an_thin(suggested, 20) ## 20 names chosen for spatial coverage and score
+
+ ## find the top 20 names by score
+ head(suggested, 20)
+
+ ## find the top 20 names chosen for spatial coverage and score
+ an_thin(suggested, 20)
 }
 
 }
 \seealso{
-\code{\link{an_read}} \code{\link{an_suggest}}
+\code{\link{an_read}}, \code{\link{an_suggest}}
 }
