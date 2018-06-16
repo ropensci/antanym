@@ -30,7 +30,7 @@ an_filter(gaz, query, feature_ids, extent, feature_type, origin,
 data.frame of results
 }
 \description{
-A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are by default treated as regular expressions and are case-insensitive: you can change this behaviour via the \code{ignore_case} and \code{as_regex} parameters.
+A data frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are by default treated as regular expressions and are case-insensitive: you can change this behaviour via the \code{ignore_case} and \code{as_regex} parameters.
 }
 \examples{
 \dontrun{
@@ -39,14 +39,17 @@ A data.frame of place names can be filtered according to name, geographic locati
  ## simple search for any place name containing the word 'William'
  an_filter(g, query = "William")
 
- ## only those names originating from Australia or USA
+ ## which bodies (countries or organisations) provided the names in our data?
+ an_origins(g)
+
+ ## find names containing "William" and originating from Australia or the USA
  an_filter(g, query = "William", origin = "Australia|United States of America")
 
  ## this search will return no matches
  ## because the actual place name is 'William Scoresby Archipelago'
  an_filter(g, query = "William Archipelago")
 
- ## you can split the search terms so that each is matched separately:
+ ## we can split the search terms so that each is matched separately
  an_filter(g, query = c("William", "Archipelago"))
 
  ## or use a regular expression
@@ -55,14 +58,17 @@ A data.frame of place names can be filtered according to name, geographic locati
  ## or refine the search using feature type
  an_filter(g, query = "William", feature_type = "Archipelago")
 
+ ## what feature types do we have in our data?
+ an_feature_types(g)
+
  ## for more complex text searching, use regular expressions
  ## e.g. names matching "West" or "East"
  an_filter(g, query = "West|East")
 
- ## e.g. names starting with "West" or "East"
+ ## names starting with "West" or "East"
  an_filter(g, query = "^(West|East)")
 
- ## e.g. names with "West" or "East" appearing as complete words in the name
+ ## names with "West" or "East" appearing as complete words in the name
  ## ["\\\\b" matches a word boundary: see help("regex") ]
  an_filter(g, query = "\\\\b(West|East)\\\\b")
 

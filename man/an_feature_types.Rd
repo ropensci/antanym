@@ -18,6 +18,8 @@ The gazetteer place names are associated with different feature types (e.g. "Hil
 \examples{
 \dontrun{
  g <- an_read(cache = "session")
+
+ ## what feature types do we have in our data?
  an_feature_types(g)
 }
 }

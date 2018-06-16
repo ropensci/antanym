@@ -18,6 +18,8 @@ The Composite Gazetteer of Antarctica is a compilation of place names provided b
 \examples{
 \dontrun{
  g <- an_read(cache = "session")
+
+ ## which bodies (countries or organisations) provided the names in our data?
  an_origins(g)
 }
 }
