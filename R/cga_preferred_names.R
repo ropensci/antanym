@@ -45,18 +45,18 @@ an_preferred <- function(gaz, origin, unmatched = "random") {
     ## tack these onto the tail end of our preferred list
     origin <- c(origin, setdiff(not_pref_origins, origin))
     in_ids <- unique(gaz$scar_common_id[gaz$origin %in% origin])
-    in_coi <- gaz[gaz$scar_common_id %in% in_ids, ]
+    preferred_gaz_rows <- gaz[gaz$scar_common_id %in% in_ids, ]
 
     ## order scar_common_id by origin
     ## (with ordering as per appearance in the origin vector)
-    ord <- order(in_coi$scar_common_id, factor(in_coi$origin, levels = origin))
-    in_coi <- in_coi[ord, ]
-    in_coi <- in_coi[!duplicated(in_coi$scar_common_id), ] ## take first entry for each scar_common_id
+    ord <- order(preferred_gaz_rows$scar_common_id, factor(preferred_gaz_rows$origin, levels = origin))
+    preferred_gaz_rows <- preferred_gaz_rows[ord, ]
+    preferred_gaz_rows <- preferred_gaz_rows[!duplicated(preferred_gaz_rows$scar_common_id), ] ## take first entry for each scar_common_id
     ## now add any features that did not have an entry from our preferred origins
     ## this should not ever happen, but do it here just in case e.g. there are NA entries in origin
-    not_in_coi <- gaz[!gaz$scar_common_id %in% in_ids, ]
-    not_in_coi <- not_in_coi[!duplicated(not_in_coi$scar_common_id), ] ## take first entry for each scar_common_id
-    out <- rbind(in_coi, not_in_coi)
+    not_preferred_gaz_rows <- gaz[!gaz$scar_common_id %in% in_ids, ]
+    not_preferred_gaz_rows <- not_preferred_gaz_rows[!duplicated(not_preferred_gaz_rows$scar_common_id), ] ## take first entry for each scar_common_id
+    out <- rbind(preferred_gaz_rows, not_preferred_gaz_rows)
     if (is_sp) {
         ## return the subset of gaz_sp corresponding to the rows we just selected
         gaz_sp[gaz_sp$gaz_id %in% out$gaz_id, ]
