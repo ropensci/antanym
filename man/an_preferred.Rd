@@ -19,7 +19,7 @@ an_preferred(gaz, origin_country, cga_source, unmatched = "random")
 data.frame of results
 }
 \description{
-The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature.
+The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The \code{an_preferred} function can be used to resolve a single name per feature. Specify one or more \code{cga_source} entries and the input \code{gaz} will be filtered to a single name per feature. For features that have multiple names (i.e. appear in multiple source gazetteers), a single name will be chosen, preferring names from the specified \code{cga_source} entries where possible.
 }
 \examples{
 \dontrun{
