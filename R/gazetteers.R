@@ -12,6 +12,11 @@
 #'
 #' an_gazetteers()
 #'
+#' \dontrun{
+#'  g <- an_read(cache = "session")
+#'  an_gazetteers(g)
+#' }
+#'
 #' @export
 an_gazetteers <- function(gaz) {
     if (!missing(gaz)) {

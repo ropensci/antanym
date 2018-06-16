@@ -19,6 +19,11 @@ Return a character vector that lists all of the gazetteers present in the \code{
 
 an_gazetteers()
 
+\dontrun{
+ g <- an_read(cache = "session")
+ an_gazetteers(g)
+}
+
 }
 \seealso{
 \code{\link{an_read}}, \code{\link{an_filter}}

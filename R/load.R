@@ -54,6 +54,9 @@
 #'
 #'  ## refresh the cached copy
 #'  g <- an_read(cache = "persistent", refresh_cache = TRUE)
+#'
+#'  ## download to session cache, in sp format
+#'  g <- an_read(cache = "session", sp = TRUE)
 #' }
 #'
 #' @seealso \code{\link{an_cache_directory}}, \code{\link{an_gazetteers}}

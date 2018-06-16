@@ -154,7 +154,7 @@ an_suggest <- function(gaz, map_scale, map_extent, map_dimensions) {
 #'
 #' @examples
 #' ## an A3-sized map of the Southern Ocean (1:20M)
-#' an_mapscale(c(400, 570), c(-180, 180, -90, -40))
+#' an_mapscale(map_dimensions = c(400, 570), map_extent = c(-180, 180, -90, -40))
 #'
 #' @export
 an_mapscale <- function(map_dimensions, map_extent) {
@@ -180,7 +180,7 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache = "session")
-#'  my_url <- an_get_url(an_filter(g, "Ufs Island")[1, ])
+#'  my_url <- an_get_url(an_filter(g, query = "Ufs Island")[1, ])
 #'  browseURL(my_url)
 #' }
 #' @export

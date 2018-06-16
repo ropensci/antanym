@@ -24,16 +24,16 @@ Find placenames near a given location
  g <- an_read(cache = "session")
 
  ## named features within 10km of 110E, 66S
- an_near(g, c(110, -66), 10)
+ an_near(g, loc = c(110, -66), max_distance = 10)
 
  ## using pipe operator
- g \%>\% an_near(c(100, -66), 10)
+ g \%>\% an_near(loc = c(100, -66), max_distance = 10)
 
  ## with sp objects
  gsp <- an_read(cache = "session", sp = TRUE)
  loc <- SpatialPoints(matrix(c(110, -66), nrow = 1),
-   proj4string=CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
- an_near(gsp, loc, 10)
+   proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
+ an_near(gsp, loc = loc, max_distance = 10)
 }
 
 }

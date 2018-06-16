@@ -18,7 +18,7 @@ Each entry in the Composite Gazetteer of Antarctica has its own web page. The \c
 \examples{
 \dontrun{
  g <- an_read(cache = "session")
- my_url <- an_get_url(an_filter(g, "Ufs Island")[1, ])
+ my_url <- an_get_url(an_filter(g, query = "Ufs Island")[1, ])
  browseURL(my_url)
 }
 }

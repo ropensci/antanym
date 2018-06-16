@@ -19,6 +19,6 @@ Calculate approximate map scale
 }
 \examples{
 ## an A3-sized map of the Southern Ocean (1:20M)
-an_mapscale(c(400, 570), c(-180, 180, -90, -40))
+an_mapscale(map_dimensions = c(400, 570), map_extent = c(-180, 180, -90, -40))
 
 }

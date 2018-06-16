@@ -37,33 +37,34 @@ A data.frame of place names can be filtered according to name, geographic locati
  g <- an_read(cache = "session")
 
  ## simple search for any place name containing the word 'William'
- an_filter(g, "William")
+ an_filter(g, query = "William")
 
  ## only those names originating from Australia or USA
- an_filter(g, "William", origin = "Australia|United States of America")
+ an_filter(g, query = "William", origin = "Australia|United States of America")
 
  ## this search will return no matches
  ## because the actual place name is 'William Scoresby Archipelago'
- an_filter(g, "William Archipelago")
+ an_filter(g, query = "William Archipelago")
 
  ## you can split the search terms so that each is matched separately:
- an_filter(g, c("William", "Archipelago"))
+ an_filter(g, query = c("William", "Archipelago"))
 
  ## or use a regular expression
- an_filter(g, "William .* Archipelago")
+ an_filter(g, query = "William .* Archipelago")
 
- ## or search by feature type
- an_filter(g, "William", feature_type = "Archipelago")
+ ## or refine the search using feature type
+ an_filter(g, query = "William", feature_type = "Archipelago")
 
  ## for more complex text searching, use regular expressions
  ## e.g. names matching "West" or "East"
- an_filter(g, "West|East")
+ an_filter(g, query = "West|East")
 
  ## e.g. names starting with "West" or "East"
- an_filter(g, "^(West|East)")
+ an_filter(g, query = "^(West|East)")
 
  ## e.g. names with "West" or "East" appearing as complete words in the name
- an_filter(g, "\\\\b(West|East)\\\\b")
+ ## ["\\\\b" matches a word boundary: see help("regex") ]
+ an_filter(g, query = "\\\\b(West|East)\\\\b")
 
  ## filtering by spatial extent
  nms <- an_filter(g, extent = c(100, 120, -70, -65), origin = "Australia")
@@ -78,14 +79,14 @@ A data.frame of place names can be filtered according to name, geographic locati
  an_filter(g, extent = bbox(my_sp))
 
  ## or using the sp form of the gazetteer data
- gsp <- an_read(cache = "session", sp=TRUE)
+ gsp <- an_read(cache = "session", sp = TRUE)
  an_filter(gsp, extent = my_sp)
 
  ## using pipe operator
- g \%>\% an_filter("Ross", feature_type = "Ice shelf|Mountain")
- g \%>\% an_near(c(100, -66), 20) \%>\% an_filter(feature_type = "Island")
+ g \%>\% an_filter(query = "Ross", feature_type = "Ice shelf|Mountain")
+ g \%>\% an_near(loc = c(100, -66), max_distance = 20) \%>\% an_filter(feature_type = "Island")
 
- ## all names for feature 1589 and the country that issued the name
+ ## find all names for feature 1589 and the issuer of each name
  an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 }
 }

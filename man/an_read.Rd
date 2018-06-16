@@ -69,6 +69,9 @@ Place name data will be downloaded and optionally cached locally. If you wish to
 
  ## refresh the cached copy
  g <- an_read(cache = "persistent", refresh_cache = TRUE)
+
+ ## download to session cache, in sp format
+ g <- an_read(cache = "session", sp = TRUE)
 }
 
 }
