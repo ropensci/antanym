@@ -146,6 +146,12 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     g$cga_source_gazetteer[is.na(g$cga_source_gazetteer) & grepl("United States", g$country_name)] <- "USA"
     g$cga_source_gazetteer[is.na(g$cga_source_gazetteer) & grepl("Bulgaria", g$country_name)] <- "BGR"
 
+    ## Amundsen Peak is somehow missing its lon/lat
+    chk <- g$gaz_id==137886 & is.na(g$longitude)
+    if (sum(chk)==1) g$longitude[chk] <- -61.7017
+    chk <- g$gaz_id==137886 & is.na(g$latitude)
+    if (sum(chk)==1) g$latitude[chk] <- -64.1294
+
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer!="INFORMAL", ] ## informal names shouldn't be part of the CGA
     g <- g[, gaz_cols_to_show(g,simplified=simplified)]
     if (sp) {
