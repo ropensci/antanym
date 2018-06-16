@@ -38,7 +38,7 @@ Find placenames near a given location
 
 }
 \references{
-\url{http://www.scar.org/data-products/cga}
+\url{https://www.scar.org/data-products/place-names/}
 }
 \seealso{
 \code{\link{an_read}}
