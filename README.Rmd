@@ -77,17 +77,17 @@ nrow(g)
 
 Find islands within 20km of 100E, 66S:
 ```{r message = FALSE, warning = FALSE}
-nms <- an_near(an_filter(g, feature_type = "Island"), c(100, -66), 20)
+nms <- an_near(an_filter(g, feature_type = "Island"), loc = c(100, -66), max_distance = 20)
 
 ## or equivalently, using the pipe operator
-nms <- g %>% an_filter(feature_type = "Island") %>% an_near(c(100, -66), 20)
+nms <- g %>% an_filter(feature_type = "Island") %>% an_near(loc = c(100, -66), max_distance = 20)
 
 nms[, c("place_name", "longitude", "latitude")]
 ```
 
 Find names starting with "Slom":
 ```{r message = FALSE, warning = FALSE}
-an_filter(g, "^Slom")[, c("place_name", "longitude", "latitude")]
+an_filter(g, query = "^Slom")[, c("place_name", "longitude", "latitude")]
 ```
 
 ### Name suggestions
@@ -122,8 +122,6 @@ Plot the top ten names purely by score:
 ```{r map1, message = FALSE, warning = FALSE, dpi = 72, fig.width = 9, fig.height = 6, fig.align = "center"}
 this_names <- head(suggested, 10)
 
-library(rworldmap)
-map <- getMap(resolution = "low")
 plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
 points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
 pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
@@ -134,7 +132,7 @@ text(this_names$longitude, this_names$latitude, labels = this_names$place_name, 
 Or the ten best names considering both score and spatial coverage:
 
 ```{r map2, message = FALSE, warning = FALSE, dpi = 72, fig.width = 9, fig.height = 6, fig.align = "center"}
-this_names <- an_thin(suggested, 10)
+this_names <- an_thin(suggested, n = 10)
 plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
 points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
 pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
