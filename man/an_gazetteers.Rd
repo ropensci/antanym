@@ -4,13 +4,16 @@
 \alias{an_gazetteers}
 \title{The place name gazetteers available}
 \usage{
-an_gazetteers()
+an_gazetteers(gaz)
+}
+\arguments{
+\item{gaz}{data.frame or SpatialPointsDataFrame: (optional) as returned by \code{\link{an_read}}}
 }
 \value{
-character vector
+character vector. If \code{gaz} was provided, this will be a list of all gazetteers present in \code{gaz}. Otherwise, it will be a list of all gazetteers available through the antanym package
 }
 \description{
-Return a character vector that lists all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica.
+Return a character vector that lists all of the gazetteers present in the \code{gaz} data, or (if \code{gaz} was not provided) all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica.
 }
 \examples{
 
