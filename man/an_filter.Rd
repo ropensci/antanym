@@ -8,7 +8,7 @@
 \title{Filter a collection of place names by various criteria}
 \usage{
 an_filter(gaz, query, feature_ids, extent, feature_type, origin_country,
-  origin_gazetteer, cga_source)
+  origin_gazetteer, cga_source, ignore_case = TRUE, as_regex = TRUE)
 
 an_countries(gaz)
 
@@ -19,33 +19,64 @@ an_cga_sources(gaz)
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}}
 
-\item{query}{string: return only place names matching this pattern (regular expression)}
+\item{query}{character: vector of place name terms to search for. Returned place names will be those that match all entries in \code{query}}
 
 \item{feature_ids}{numeric: return only place names associated with the features identified by these identifiers. Currently these values can only be \code{scar_common_id} values}
 
 \item{extent}{vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box. \code{extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})}
 
-\item{feature_type}{string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see \code{\link{an_feature_types}}}
+\item{feature_type}{string: return only place names corresponding to feature types matching this pattern. For valid feature type names see \code{\link{an_feature_types}}}
 
-\item{origin_country}{string: return only names originating from countries matching this pattern (regular expression). For valid country names see \code{\link{an_countries}}}
+\item{origin_country}{string: return only names originating from countries matching this pattern. For valid country names see \code{\link{an_countries}}}
 
-\item{origin_gazetteer}{string: return only place names originating from gazetteers matching this pattern (regular expression). For valid gazetteer names see \code{\link{an_gazetteers}}}
+\item{origin_gazetteer}{string: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see \code{\link{an_gazetteers}}}
 
-\item{cga_source}{string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern (regular expression). For valid CGA source gazetteer names see \code{\link{an_cga_sources}}}
+\item{cga_source}{string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern. For valid CGA source gazetteer names see \code{\link{an_cga_sources}}}
+
+\item{ignore_case}{logical: if \code{TRUE}, use case-insensitive text matching}
+
+\item{as_regex}{logical: if \code{TRUE}, treat \code{query} and other string input parameters as regular expressions. If \code{FALSE}, they will be treated as fixed strings to match against}
 }
 \value{
 data.frame of results
 }
 \description{
-A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are treated as regular expressions and are case-insensitive.
+A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are by default treated as regular expressions and are case-insensitive: you can change this behaviour via the \code{ignore_case} and \code{as_regex} parameters.
 }
 \examples{
 \dontrun{
  g <- an_read(cache = "session")
- an_filter(g, "Ufs")
- an_filter(g, "Ufs", feature_type = "Island")
- an_filter(g, "Ufs", feature_type = "Island", origin_country = "Australia|United States of America")
 
+ ## simple search for any place name containing the word 'William'
+ an_filter(g, "William")
+
+ ## only those names originating from Australia or USA
+ an_filter(g, "William", origin_country = "Australia|United States of America")
+
+ ## this search will return no matches
+ ## because the actual place name is 'William Scoresby Archipelago'
+ an_filter(g, "William Archipelago")
+
+ ## you can split the search terms so that each is matched separately:
+ an_filter(g, c("William", "Archipelago"))
+
+ ## or use a regular expression
+ an_filter(g, "William .* Archipelago")
+
+ ## or search by feature type
+ an_filter(g, "William", feature_type = "Archipelago")
+
+ ## for more complex text searching, use regular expressions
+ ## e.g. names matching "West" or "East"
+ an_filter(g, "West|East")
+
+ ## e.g. names starting with "West" or "East"
+ an_filter(g, "^(West|East)")
+
+ ## e.g. names with "West" or "East" appearing as complete words in the name
+ an_filter(g, "\\\\b(West|East)\\\\b")
+
+ ## filtering by spatial extent
  nms <- an_filter(g, extent = c(100, 120, -70, -65),
     origin_country = "Australia")
  with(nms, plot(longitude, latitude))
