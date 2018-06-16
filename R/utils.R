@@ -171,11 +171,11 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #' @examples
 #' \dontrun{
 #'  g <- an_read(cache = "session")
-#'  my_url <- an_url(an_filter(g, "Ufs Island")[1, ])
+#'  my_url <- an_get_url(an_filter(g, "Ufs Island")[1, ])
 #'  browseURL(my_url)
 #' }
 #' @export
-an_url <- function(gaz) {
+an_get_url <- function(gaz) {
     assert_that(inherits(gaz, c("data.frame", "SpatialPointsDataFrame")))
     ## only CGA entries dealt with: needs modification once other gazetteers are added
     out <- rep(NA_character_, nrow(gaz))

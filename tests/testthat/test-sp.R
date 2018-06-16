@@ -27,7 +27,7 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
     expect_identical(namelist(an_preferred(g, origin=c("Australia", "Poland"), unmatched="count")),
                      namelist(an_preferred(gsp, origin=c("Australia", "Poland"), unmatched="count")))
 
-    expect_identical(an_url(g[1:10, ]), an_url(gsp[1:10, ]))
+    expect_identical(an_get_url(g[1:10, ]), an_get_url(gsp[1:10, ]))
 
     ext <- c(60, 90, -70, -60)
     suggested <- an_suggest(g, map_extent = ext, map_dimensions = c(100, 100))
@@ -63,7 +63,7 @@ test_that("sp versions of functions match non-sp for projected data", {
     expect_identical(namelist(an_preferred(g, origin=c("Australia", "Poland"), unmatched="count")),
                      namelist(an_preferred(gsp, origin=c("Australia", "Poland"), unmatched="count")))
 
-    expect_identical(an_url(g[1:10, ]), an_url(gxy[1:10, ]))
+    expect_identical(an_get_url(g[1:10, ]), an_get_url(gxy[1:10, ]))
 })
 
 test_that("an_near works with projected/unprojected data", {
