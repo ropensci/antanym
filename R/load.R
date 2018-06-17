@@ -74,7 +74,7 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     need_to_fetch_data <- FALSE
     local_file_name <- "gaz_data.csv"
     download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES&outputFormat=csv"
-    if (!missing(cache) || nzchar(cache)) {
+    if (!missing(cache)) {
         cache_directory <- an_cache_directory(cache)
         ## create cache directory if necessary
         if (tolower(cache) == "session") {
