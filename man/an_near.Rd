@@ -31,7 +31,7 @@ Find placenames near a given location
 
  ## with sp objects
  gsp <- an_read(cache = "session", sp = TRUE)
- loc <- SpatialPoints(matrix(c(110, -66), nrow = 1),
+ loc <- sp::SpatialPoints(matrix(c(110, -66), nrow = 1),
    proj4string = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84"))
  an_near(gsp, loc = loc, max_distance = 10)
 }

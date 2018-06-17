@@ -78,7 +78,7 @@ A data frame of place names can be filtered according to name, geographic locati
  with(nms, text(longitude, latitude, place_name))
 
  ## searching within the extent of an sp object
- my_sp <- SpatialPoints(cbind(c(100, 120), c(-70, -65)))
+ my_sp <- sp::SpatialPoints(cbind(c(100, 120), c(-70, -65)))
  an_filter(g, extent = my_sp)
 
  ## or equivalently
@@ -88,11 +88,14 @@ A data frame of place names can be filtered according to name, geographic locati
  gsp <- an_read(cache = "session", sp = TRUE)
  an_filter(gsp, extent = my_sp)
 
- ## using pipe operator
+ ## using the pipe operator
  g \%>\% an_filter(query = "Ross", feature_type = "Ice shelf|Mountain")
- g \%>\% an_near(loc = c(100, -66), max_distance = 20) \%>\% an_filter(feature_type = "Island")
 
- ## find all names for feature 1589 and the issuer of each name
+ g \%>\% an_near(loc = c(100, -66), max_distance = 20) \%>\%
+       an_filter(feature_type = "Island")
+
+ ## find all names for feature 1589 and the naming
+ ##  authority for each name
  an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 }
 }
