@@ -33,13 +33,13 @@ a data.frame or SpatialPointsDataFrame, with the following columns (note that no
   \item date_named - the date on which the feature was named
   \item narrative - a text description of the feature; may include a synopsis of the history of its name
   \item named_for - the person after whom the feature was named, or other reason for its naming. For historical reasons the distinction between "narrative" and "named for" is not always obvious
-  \item origin - the originating body of the name - either a country name, or organisation name for names that did not come from a national source
+  \item origin - the naming authority that provided the name. This is a country name, or organisation name for names that did not come from a national source
   \item relic - if \code{TRUE}, this name is associated with a feature that no longer exists (e.g. an ice shelf feature that has disappeared)
   \item gazetteer - the gazetteer from which this information came (currently only "CGA")
 }
 If \code{simplified} is FALSE, these additional columns will also be included:
 \itemize{
-  \item meeting_date - the date on which the name was formally approved by the associated national names committee. This is not available for many names: see the \code{date_named} column
+  \item meeting_date - the date on which the name was formally approved by the associated naming authority. This is not available for many names: see the \code{date_named} column
   \item meeting_paper - references to papers or documents associated with the naming of the feature
   \item remote_sensor_info - text describing the remote sensing information (e.g. satellite platform name and image details) used to define the feature, if applicable
   \item coordinate_accuracy - an indicator of the accuracy of the coordinates, in metres
@@ -51,8 +51,8 @@ If \code{simplified} is FALSE, these additional columns will also be included:
   \item source_scale - the scale of the map from which the coordinates were derived
   \item source_institution - the institution from which the coordinate information came
   \item source_person - the contact person at the source institution, if applicable
-  \item source_country_code - th country from which the coordinate information came
-  \item source_identifier - where a coordinate or elevation was derived from a map, the unique identifier of that map
+  \item source_country_code - the country from which the coordinate information came
+  \item source_identifier - where a coordinate or elevation was derived from a map, the identifier of that map
   \item comments - comments about the name or naming process
 }
 }
@@ -64,14 +64,17 @@ Place name data will be downloaded and optionally cached locally. If you wish to
  ## download without caching
  g <- an_read()
 
+ ## download to session cache, in sp format
+ g <- an_read(cache = "session", sp = TRUE)
+
  ## download and cache to a persistent directory for later, offline use
  g <- an_read(cache = "persistent")
 
  ## refresh the cached copy
  g <- an_read(cache = "persistent", refresh_cache = TRUE)
 
- ## download to session cache, in sp format
- g <- an_read(cache = "session", sp = TRUE)
+ ## download and cache to a persistent directory of our choice
+ g <- an_read(cache = "c:/my/cache/directory")
 }
 
 }
@@ -79,5 +82,5 @@ Place name data will be downloaded and optionally cached locally. If you wish to
 \url{https://www.scar.org/data-products/place-names/}
 }
 \seealso{
-\code{\link{an_cache_directory}}, \code{\link{an_gazetteers}}
+\code{\link{an_cache_directory}}, \code{\link{an_gazetteers}}, \code{\link{an_cga_metadata}}
 }
