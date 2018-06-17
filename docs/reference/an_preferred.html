@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Find one name per feature — an_preferred â€¢ antanym</title>
+<title>Find one name per feature in the Composite Gazetteer — an_preferred â€¢ antanym</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,9 +27,9 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Find one name per feature — an_preferred" />
+<meta property="og:title" content="Find one name per feature in the Composite Gazetteer — an_preferred" />
 
-<meta property="og:description" content="The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The an_preferred function can be used to resolve a single name per feature." />
+<meta property="og:description" content="The Composite Gazetteer of Antarctica is a compilation of place names provided by different countries and organisations. The composite nature of the CGA means that there may be multiple names associated with a single feature. The an_preferred function can be used to resolve a single name per feature. Provide one or more origin entries and the input gaz will be filtered to a single name per feature. For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified origin bodies where possible." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -69,6 +69,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -89,25 +92,29 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Find one name per feature</h1>
+    <h1>Find one name per feature in the Composite Gazetteer</h1>
     </div>
 
     
-    <p>The SCAR Composite Gazetteer of Antarctic is a compilation of place names provided by many different countries. The composite nature of the CGA means that there may be multiple names associated with a single feature. The <code>an_preferred</code> function can be used to resolve a single name per feature.</p>
+    <p>The Composite Gazetteer of Antarctica is a compilation of place names provided by different countries and organisations. The composite nature of the CGA means that there may be multiple names associated with a single feature. The <code>an_preferred</code> function can be used to resolve a single name per feature. Provide one or more <code>origin</code> entries and the input <code>gaz</code> will be filtered to a single name per feature. For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified <code>origin</code> bodies where possible.</p>
     
 
-    <pre class="usage"><span class='fu'>an_preferred</span>(<span class='no'>gaz</span>, <span class='no'>origin_country</span>)</pre>
+    <pre class="usage"><span class='fu'>an_preferred</span>(<span class='no'>gaz</span>, <span class='no'>origin</span>, <span class='kw'>unmatched</span> <span class='kw'>=</span> <span class='st'>"random"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gaz</th>
-      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code></p></td>
+      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code> or <code><a href='an_filter.html'>an_filter</a></code></p></td>
     </tr>
     <tr>
-      <th>origin_country</th>
-      <td><p>character: vector of country names, in order of preference. If a given feature has been named by one of these countries, this place name will be chosen. If the feature in question has not been given a name by one of these countries, a place name given by another country will be chosen. For valid <code>origin_country</code> values, see <code><a href='an_filter.html'>an_countries</a></code></p></td>
+      <th>origin</th>
+      <td><p>character: vector of preferred name origins (countries or organisations), in order of preference. If a given feature has been named by one of these bodies, this place name will be chosen. If the feature in question has not been given a name by any of these bodies, a place name given by another body will be chosen, with preference according to the <code>unmatched</code> parameter. For valid <code>origin</code> values, see <code><a href='an_origins.html'>an_origins</a></code></p></td>
+    </tr>
+    <tr>
+      <th>unmatched</th>
+      <td><p>string: how should names be chosen for features that have not been been named by one of the preferred <code>origin</code> bodies? Valid values are "random" (the non-preferred originating bodies will be randomly ordered) or "count" (the non-preferred originating bodies will be ordered by their number of entries, with the largest first)</p></td>
     </tr>
     </table>
     
@@ -117,27 +124,25 @@
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='http://www.scar.org/data-products/cga'>http://www.scar.org/data-products/cga</a></p>
+    <p><a href='https://www.scar.org/data-products/place-names/'>https://www.scar.org/data-products/place-names/</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='an_read.html'>an_read</a></code>, <code><a href='an_filter.html'>an_countries</a></code></p>
+    <p><code><a href='an_read.html'>an_read</a></code>, <code><a href='an_origins.html'>an_origins</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache_directory</span> <span class='kw'>=</span> <span class='st'>"c:/temp/gaz"</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>)
 
  <span class='co'>## get a single name per feature, preferring the</span>
  <span class='co'>##  Polish name where there is one</span>
-
- <span class='no'>pnames</span> <span class='kw'>&lt;-</span> <span class='fu'>an_preferred</span>(<span class='no'>g</span>, <span class='st'>"Poland"</span>)
+ <span class='no'>pnames</span> <span class='kw'>&lt;-</span> <span class='fu'>an_preferred</span>(<span class='no'>g</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>"Poland"</span>)
 
  <span class='co'>## names starting with "Sm", preferring US names then</span>
  <span class='co'>##  Australian ones if available</span>
-
  <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='an_filter.html'>an_filter</a></span>(<span class='st'>"^Sm"</span>) <span class='kw'>%&gt;%</span>
-   <span class='fu'>an_preferred</span>(<span class='kw'>origin_country</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"United States of America"</span>, <span class='st'>"Australia"</span>))
+       <span class='fu'>an_preferred</span>(<span class='kw'>origin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"United States of America"</span>, <span class='st'>"Australia"</span>))
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

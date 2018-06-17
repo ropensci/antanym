@@ -43,6 +43,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -66,7 +69,7 @@
       <h1>Antarctic geographic placenames</h1>
                         <h4 class="author">Ben Raymond, Michael Sumner</h4>
             
-            <h4 class="date">2018-02-26</h4>
+            <h4 class="date">2018-06-17</h4>
           </div>
 
     
@@ -76,7 +79,7 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.</p>
-<p>The authoritative source of place names in Antarctica is the SCAR Composite Gazetteer of Antarctica (CGA), which consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 °S, including terrestrial and undersea or under-ice.</p>
+<p>The authoritative source of place names in Antarctica is the Composite Gazetteer of Antarctica (CGA), which is produced by the Scientific Committee on Antarctic Research (SCAR). The CGA consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 °S, including terrestrial and undersea or under-ice features.</p>
 <p>There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.</p>
 <p>The composite nature of the CGA means that there may be multiple names associated with a given feature. Consider using the <code><a href="../reference/an_preferred.html">an_preferred()</a></code> function for resolving a single name per feature.</p>
 <p>For more information, see the <a href="http://data.aad.gov.au/aadc/gaz/scar/">CGA home page</a>. The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR <a href="http://www.scar.org/data-products/scagi">Standing Committee on Antarctic Geographic Information (SCAGI)</a> coordinates the project. This R package is a product of the SCAR <a href="http://www.scar.org/ssg/life-sciences/eg-abi">Expert Group on Antarctic Biodiversity Informatics</a> and SCAGI.</p>
@@ -93,27 +96,319 @@
 <h2 class="hasAnchor">
 <a href="#installing" class="anchor"></a>Installing</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">"SCAR/antanym"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"SCAR/antanym"</span>)</code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p>Start by fetching the names data from its host server. Here we cache it to a temporary directory so that we can access it later in the session without needing to re-download it:</p>
+<p>Start by fetching the names data from the host server. Here we use a temporary cache so that we can re-load it later in the session without needing to re-download it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(antanym)
-cache_dir &lt;-<span class="st"> </span><span class="kw">tempdir</span>()
-g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">cache_dir =</span> cache_dir)</code></pre></div>
+g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">cache =</span> <span class="st">"session"</span>)</code></pre></div>
+<p>If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">cache =</span> <span class="st">"persistent"</span>)</code></pre></div>
 <p>If you prefer working with <code>sp</code> objects, then this will return a <code>SpatialPointsDataFrame</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gsp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">sp =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gsp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">sp =</span> <span class="ot">TRUE</span>, <span class="dt">cache =</span> <span class="st">"session"</span>)</code></pre></div>
+<div id="data-summary" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-summary" class="anchor"></a>Data summary</h3>
 <p>How many names do we have in total?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(g)</code></pre></div>
 <pre><code>## [1] 37629</code></pre>
 <p>Corresponding to how many distinct features?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(g$scar_common_id))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(g<span class="op">$</span>scar_common_id))</code></pre></div>
 <pre><code>## [1] 19569</code></pre>
-<p>Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_ids =</span> <span class="dv">1589</span>)[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"country_name"</span>)]</code></pre></div>
+<p>We can get a list of the feature types in the data:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/an_feature_types.html">an_feature_types</a></span>(g), <span class="dv">10</span>)</code></pre></div>
+<pre><code>##  [1] "Aiguilles"           "Anchorage"           "Archipelago"        
+##  [4] "Arm"                 "AWS"                 "Bank"               
+##  [7] "Basin"               "Bay"                 "Beach"              
+## [10] "Bedrock break point"</code></pre>
+</div>
+<div id="data-structure" class="section level3">
+<h3 class="hasAnchor">
+<a href="#data-structure" class="anchor"></a>Data structure</h3>
+<p>A description of the data structure can be found in the <code>an_load</code> function help, (the same information is available via <code>an_cga_metadata</code>). By default, the gazetteer data consists of these columns:</p>
+<table class="table">
+<thead><tr class="header">
+<th align="left">field</th>
+<th align="left">description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">gaz_id</td>
+<td align="left">The unique identifier of each gazetteer entry. Note that the same feature (e.g. ‘Browns Glacier’) might have multiple gazetteer entries, each with their own gaz_id, because the feature has been named multiple times by different naming authorities. The scar_common_id value for these entries will be identical, because scar_common_id identifies the feature itself</td>
+</tr>
+<tr class="even">
+<td align="left">scar_common_id</td>
+<td align="left">The unique identifier (in the Composite Gazetteer of Antarctica) of the feature. A single feature may have multiple names, given by different naming authorities</td>
+</tr>
+<tr class="odd">
+<td align="left">place_name</td>
+<td align="left">The name of the feature</td>
+</tr>
+<tr class="even">
+<td align="left">place_name_transliterated</td>
+<td align="left">The name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)</td>
+</tr>
+<tr class="odd">
+<td align="left">longitude</td>
+<td align="left">The longitude of the feature (negative values indicate degrees west). Note that many features are not point features (e.g. mountains, lakes), in which case the longitude and latitude values are indicative only, generally of the centroid of the feature</td>
+</tr>
+<tr class="even">
+<td align="left">latitude</td>
+<td align="left">The latitude of the feature (negative values indicate degrees south). Note that many features are not point features (e.g. mountains, lakes), in which case the longitude and latitude values are indicative only, generally of the centroid of the feature</td>
+</tr>
+<tr class="odd">
+<td align="left">altitude</td>
+<td align="left">The altitude of the feature, in metres relative to sea level. Negative values indicate features below sea level</td>
+</tr>
+<tr class="even">
+<td align="left">feature_type_name</td>
+<td align="left">The feature type (e.g. ‘Archipelago’, ‘Channel’, ‘Mountain’). See an_feature_types for a full list</td>
+</tr>
+<tr class="odd">
+<td align="left">date_named</td>
+<td align="left">The date on which the feature was named</td>
+</tr>
+<tr class="even">
+<td align="left">narrative</td>
+<td align="left">A text description of the feature; may include a synopsis of the history of its name</td>
+</tr>
+<tr class="odd">
+<td align="left">named_for</td>
+<td align="left">The person after whom the feature was named, or other reason for its naming. For historical reasons the distinction between ‘narrative’ and ‘named for’ is not always obvious</td>
+</tr>
+<tr class="even">
+<td align="left">origin</td>
+<td align="left">The naming authority that provided the name. This is a country name, or organisation name for names that did not come from a national source</td>
+</tr>
+<tr class="odd">
+<td align="left">relic</td>
+<td align="left">If TRUE, this name is associated with a feature that no longer exists (e.g. an ice shelf feature that has disappeared)</td>
+</tr>
+<tr class="even">
+<td align="left">gazetteer</td>
+<td align="left">The gazetteer from which this information came (currently only ‘CGA’)</td>
+</tr>
+</tbody>
+</table>
+<p>A few additional (but probably less useful) columns can be included by calling <code><a href="../reference/an_read.html">an_read(..., simplified = FALSE)</a></code>. Consult the <code>an_read</code> documentation for more information.</p>
+</div>
+<div id="finding-names" class="section level3">
+<h3 class="hasAnchor">
+<a href="#finding-names" class="anchor"></a>Finding names</h3>
+<p>The <code>an_filter</code> function provides a range of options to find the names you are interested in.</p>
+<div id="basic-searching" class="section level4">
+<h4 class="hasAnchor">
+<a href="#basic-searching" class="anchor"></a>Basic searching</h4>
+<p>A simple search for any place name containing the word ‘William’:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"William"</span>)</code></pre></div>
+<pre><code>## # A tibble: 74 x 14
+##    gaz_id scar_common_id place_name   place_name_trans~ longitude latitude
+##     &lt;int&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+##  1      8          16073 William Sco~ William Scoresby~      59.8    -67.3
+##  2     75          16074 William Sco~ William Scoresby~      59.6    -67.4
+##  3    559          16090 Williamson ~ Williamson Glaci~     114      -66.6
+##  4    643          16092 Williamson ~ Williamson Head       158      -69.2
+##  5   1240          16083 Williams La~ Williams Lake          78.2    -68.5
+##  6   1428          16096 Mount Willi~ Mount Williams         50.8    -66.8
+##  7   1825          16084 Williams Nu~ Williams Nunatak      111      -66.4
+##  8   2189          16097 Point Willi~ Point Williams         67.6    -67.8
+##  9   2430          16088 Williams Ro~ Williams Rocks         62.8    -67.4
+## 10 100917           2288 Fort Willia~ Fort William, pu~    - 59.6    -62.4
+## # ... with 64 more rows, and 8 more variables: altitude &lt;dbl&gt;,
+## #   feature_type_name &lt;chr&gt;, date_named &lt;date&gt;, narrative &lt;chr&gt;,
+## #   named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>We can filter according to the country or organisation that issued the name. Which bodies (countries or organisations) provided the names in our data?</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_origins.html">an_origins</a></span>(g)</code></pre></div>
+<pre><code>##  [1] "Argentina"                "Australia"               
+##  [3] "Belgium"                  "Bulgaria"                
+##  [5] "Canada"                   "Chile"                   
+##  [7] "China"                    "Ecuador"                 
+##  [9] "France"                   "GEBCO"                   
+## [11] "Germany"                  "India"                   
+## [13] "Italy"                    "Japan"                   
+## [15] "Korea, Republic of"       "New Zealand"             
+## [17] "Norway"                   "Poland"                  
+## [19] "Russia"                   "South Africa"            
+## [21] "Spain"                    "United Kingdom"          
+## [23] "United States of America" "Uruguay"</code></pre>
+<p>Find names containing “William” and originating from Australia or the USA:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"William"</span>, <span class="dt">origin =</span> <span class="st">"Australia|United States of America"</span>)</code></pre></div>
+<pre><code>## # A tibble: 39 x 14
+##    gaz_id scar_common_id place_name   place_name_trans~ longitude latitude
+##     &lt;int&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+##  1      8          16073 William Sco~ William Scoresby~      59.8    -67.3
+##  2     75          16074 William Sco~ William Scoresby~      59.6    -67.4
+##  3    559          16090 Williamson ~ Williamson Glaci~     114      -66.6
+##  4    643          16092 Williamson ~ Williamson Head       158      -69.2
+##  5   1240          16083 Williams La~ Williams Lake          78.2    -68.5
+##  6   1428          16096 Mount Willi~ Mount Williams         50.8    -66.8
+##  7   1825          16084 Williams Nu~ Williams Nunatak      111      -66.4
+##  8   2189          16097 Point Willi~ Point Williams         67.6    -67.8
+##  9   2430          16088 Williams Ro~ Williams Rocks         62.8    -67.4
+## 10 125297           4839 Fort William Fort William         - 59.7    -62.4
+## # ... with 29 more rows, and 8 more variables: altitude &lt;dbl&gt;,
+## #   feature_type_name &lt;chr&gt;, date_named &lt;date&gt;, narrative &lt;chr&gt;,
+## #   named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>Compound names can be slightly trickier. This search will return no matches, because the actual place name is ‘William Scoresby Archipelago’:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"William Archipelago"</span>)</code></pre></div>
+<pre><code>## # A tibble: 0 x 14
+## # ... with 14 variables: gaz_id &lt;int&gt;, scar_common_id &lt;int&gt;,
+## #   place_name &lt;chr&gt;, place_name_transliterated &lt;chr&gt;, longitude &lt;dbl&gt;,
+## #   latitude &lt;dbl&gt;, altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,
+## #   date_named &lt;date&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
+## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>To get around this, we can split the search terms so that each is matched separately (only names matching both “William” and “Archipelago” will be returned):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="kw">c</span>(<span class="st">"William"</span>, <span class="st">"Archipelago"</span>))</code></pre></div>
+<pre><code>## # A tibble: 2 x 14
+##   gaz_id scar_common_id place_name    place_name_trans~ longitude latitude
+##    &lt;int&gt;          &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+## 1      8          16073 William Scor~ William Scoresby~      59.8    -67.3
+## 2 133723          16073 William Scor~ William Scoresby~      59.8    -67.3
+## # ... with 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,
+## #   date_named &lt;date&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
+## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>Or a simple text query but additionally constrained by feature type:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"William"</span>, <span class="dt">feature_type =</span> <span class="st">"Archipelago"</span>)</code></pre></div>
+<pre><code>## # A tibble: 2 x 14
+##   gaz_id scar_common_id place_name    place_name_trans~ longitude latitude
+##    &lt;int&gt;          &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+## 1      8          16073 William Scor~ William Scoresby~      59.8    -67.3
+## 2 133723          16073 William Scor~ William Scoresby~      59.8    -67.3
+## # ... with 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,
+## #   date_named &lt;date&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
+## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>Or we can use a regular expression:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"William .* Archipelago"</span>)</code></pre></div>
+<pre><code>## # A tibble: 2 x 14
+##   gaz_id scar_common_id place_name    place_name_trans~ longitude latitude
+##    &lt;int&gt;          &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+## 1      8          16073 William Scor~ William Scoresby~      59.8    -67.3
+## 2 133723          16073 William Scor~ William Scoresby~      59.8    -67.3
+## # ... with 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,
+## #   date_named &lt;date&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
+## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="regular-expressions" class="section level3">
+<h3 class="hasAnchor">
+<a href="#regular-expressions" class="anchor"></a>Regular expressions</h3>
+<p>Regular expressions also allow more complex searches. For example, names matching “West” or “East”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"West|East"</span>)</code></pre></div>
+<pre><code>## # A tibble: 127 x 14
+##    gaz_id scar_common_id place_name   place_name_trans~ longitude latitude
+##     &lt;int&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+##  1     12          15899 West Arm     West Arm               62.9    -67.6
+##  2     13           4025 East Arm     East Arm               62.9    -67.6
+##  3    556          14345 Sylwester G~ Sylwester Glacier     160      -84.2
+##  4    738          15908 West Ice Sh~ West Ice Shelf         85.0    -67.0
+##  5    870           4028 East Budd I~ East Budd Island       62.8    -67.6
+##  6    895          15904 West Budd I~ West Budd Island       62.8    -67.6
+##  7    976           4041 Easther Isl~ Easther Island         76.2    -69.4
+##  8   1169           4032 East Lake    East Lake             143      -67.0
+##  9   1337           4030 East Egerton East Egerton          158      -80.8
+## 10   1848          15923 Westhaven N~ Westhaven Nunatak     154      -79.8
+## # ... with 117 more rows, and 8 more variables: altitude &lt;dbl&gt;,
+## #   feature_type_name &lt;chr&gt;, date_named &lt;date&gt;, narrative &lt;chr&gt;,
+## #   named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>Names <strong>starting</strong> with “West” or “East”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"^(West|East)"</span>)</code></pre></div>
+<pre><code>## # A tibble: 88 x 14
+##    gaz_id scar_common_id place_name   place_name_trans~ longitude latitude
+##     &lt;int&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+##  1     12          15899 West Arm     West Arm               62.9    -67.6
+##  2     13           4025 East Arm     East Arm               62.9    -67.6
+##  3    738          15908 West Ice Sh~ West Ice Shelf         85.0    -67.0
+##  4    870           4028 East Budd I~ East Budd Island       62.8    -67.6
+##  5    895          15904 West Budd I~ West Budd Island       62.8    -67.6
+##  6    976           4041 Easther Isl~ Easther Island         76.2    -69.4
+##  7   1169           4032 East Lake    East Lake             143      -67.0
+##  8   1337           4030 East Egerton East Egerton          158      -80.8
+##  9   1848          15923 Westhaven N~ Westhaven Nunatak     154      -79.8
+## 10   2195          15927 Westwood Po~ Westwood Point         77.9    -68.6
+## # ... with 78 more rows, and 8 more variables: altitude &lt;dbl&gt;,
+## #   feature_type_name &lt;chr&gt;, date_named &lt;date&gt;, narrative &lt;chr&gt;,
+## #   named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>Names with “West” or “East” appearing as complete words in the name (“\b” matches a word boundary; see <code>help("regex")</code>):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"</span><span class="ch">\\</span><span class="st">b(West|East)</span><span class="ch">\\</span><span class="st">b"</span>)</code></pre></div>
+<pre><code>## # A tibble: 83 x 14
+##    gaz_id scar_common_id place_name   place_name_trans~ longitude latitude
+##     &lt;int&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+##  1     12          15899 West Arm     West Arm               62.9    -67.6
+##  2     13           4025 East Arm     East Arm               62.9    -67.6
+##  3    738          15908 West Ice Sh~ West Ice Shelf         85.0    -67.0
+##  4    870           4028 East Budd I~ East Budd Island       62.8    -67.6
+##  5    895          15904 West Budd I~ West Budd Island       62.8    -67.6
+##  6   1169           4032 East Lake    East Lake             143      -67.0
+##  7   1337           4030 East Egerton East Egerton          158      -80.8
+##  8   2489          15915 West Stack   West Stack             58.1    -67.0
+##  9   2490           4038 East Stack   East Stack             58.3    -67.1
+## 10 105006           1690 Bowles West~ Bowles West Peak     - 60.2    -62.6
+## # ... with 73 more rows, and 8 more variables: altitude &lt;dbl&gt;,
+## #   feature_type_name &lt;chr&gt;, date_named &lt;date&gt;, narrative &lt;chr&gt;,
+## #   named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<div id="spatial-searching" class="section level4">
+<h4 class="hasAnchor">
+<a href="#spatial-searching" class="anchor"></a>Spatial searching</h4>
+<p>We can filter by spatial extent:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">extent =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">120</span>, <span class="op">-</span><span class="dv">70</span>, <span class="op">-</span><span class="dv">65</span>))</code></pre></div>
+<pre><code>## # A tibble: 747 x 14
+##    gaz_id scar_common_id place_name   place_name_trans~ longitude latitude
+##     &lt;int&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+##  1      7           6373 Highjump Ar~ Highjump Archipe~       101    -66.0
+##  2     15           8581 Loewe Massi~ Loewe Massif Aut~       112    -68.4
+##  3     17           8210 Law Dome Su~ Law Dome Summit         113    -66.7
+##  4     28          11156 Petersen Ba~ Petersen Bank           111    -65.8
+##  5     31           8143 Larsen Bank  Larsen Bank             111    -66.3
+##  6     41           8700 Luchistaja ~ Luchistaja Bay          101    -66.1
+##  7     42           8881 Majachnaja ~ Majachnaja Bay          101    -66.2
+##  8     44           8339 Leonova Bay  Leonova Bay             101    -66.2
+##  9     45          15468 Vetvistaja ~ Vetvistaja Bay          101    -66.1
+## 10     46          10722 Ostrovnaja ~ Ostrovnaja Bay          101    -66.2
+## # ... with 737 more rows, and 8 more variables: altitude &lt;dbl&gt;,
+## #   feature_type_name &lt;chr&gt;, date_named &lt;date&gt;, narrative &lt;chr&gt;,
+## #   named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>The extent can also be passed as Spatial or Raster object, in which case its extent will be used:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_sp &lt;-<span class="st"> </span>sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/SpatialPoints">SpatialPoints</a></span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">120</span>), <span class="kw">c</span>(<span class="op">-</span><span class="dv">70</span>, <span class="op">-</span><span class="dv">65</span>)))
+<span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">extent =</span> my_sp)</code></pre></div>
+<pre><code>## # A tibble: 747 x 14
+##    gaz_id scar_common_id place_name   place_name_trans~ longitude latitude
+##     &lt;int&gt;          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+##  1      7           6373 Highjump Ar~ Highjump Archipe~       101    -66.0
+##  2     15           8581 Loewe Massi~ Loewe Massif Aut~       112    -68.4
+##  3     17           8210 Law Dome Su~ Law Dome Summit         113    -66.7
+##  4     28          11156 Petersen Ba~ Petersen Bank           111    -65.8
+##  5     31           8143 Larsen Bank  Larsen Bank             111    -66.3
+##  6     41           8700 Luchistaja ~ Luchistaja Bay          101    -66.1
+##  7     42           8881 Majachnaja ~ Majachnaja Bay          101    -66.2
+##  8     44           8339 Leonova Bay  Leonova Bay             101    -66.2
+##  9     45          15468 Vetvistaja ~ Vetvistaja Bay          101    -66.1
+## 10     46          10722 Ostrovnaja ~ Ostrovnaja Bay          101    -66.2
+## # ... with 737 more rows, and 8 more variables: altitude &lt;dbl&gt;,
+## #   feature_type_name &lt;chr&gt;, date_named &lt;date&gt;, narrative &lt;chr&gt;,
+## #   named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<p>Searching by proximity to a given point, for example islands within 20km of 100 °E, 66 °S:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_near.html">an_near</a></span>(<span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_type =</span> <span class="st">"Island"</span>), <span class="dt">loc =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="op">-</span><span class="dv">66</span>), <span class="dt">max_distance =</span> <span class="dv">20</span>)</code></pre></div>
+<pre><code>## # A tibble: 3 x 14
+##   gaz_id scar_common_id place_name  place_name_transli~ longitude latitude
+##    &lt;int&gt;          &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;                   &lt;dbl&gt;    &lt;dbl&gt;
+## 1   1027           4856 Foster Isl~ Foster Island             100    -66.1
+## 2 120508           4856 Severnyj h~ Severnyj holm             100    -66.1
+## 3 125310           4856 Foster Isl~ Foster Island             100    -66.1
+## # ... with 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,
+## #   date_named &lt;date&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
+## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="resolving-multiple-names" class="section level3">
+<h3 class="hasAnchor">
+<a href="#resolving-multiple-names" class="anchor"></a>Resolving multiple names</h3>
+<p>As noted above, the CGA is a composite gazetteer and so there may be multiple names associated with a given feature.</p>
+<p>Find all names associated with feature 1589 (Booth Island) and show the country of origin of each name:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_ids =</span> <span class="dv">1589</span>)[, <span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"origin"</span>)]</code></pre></div>
 <pre><code>## # A tibble: 7 x 2
-##   place_name   country_name            
+##   place_name   origin                  
 ##   &lt;chr&gt;        &lt;chr&gt;                   
 ## 1 Booth, isla  Argentina               
 ## 2 Wandel, Ile  Belgium                 
@@ -122,66 +417,91 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.h
 ## 5 Booth Island United Kingdom          
 ## 6 Booth Island Russia                  
 ## 7 Booth Island United States of America</code></pre>
-<p>Choose one name per feature, preferring the Polish name where there is one:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_preferred.html">an_preferred</a></span>(g, <span class="dt">origin_country =</span> <span class="st">"Poland"</span>)
-<span class="kw">nrow</span>(g)</code></pre></div>
-<pre><code>## [1] 19569</code></pre>
-<p>Find islands within 20km of 100E, 66S:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nms &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_near.html">an_near</a></span>(<span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_type =</span> <span class="st">"Island"</span>), <span class="kw">c</span>(<span class="dv">100</span>, -<span class="dv">66</span>), <span class="dv">20</span>)
-
-## or equivalently, using the pipe operator
-nms &lt;-<span class="st"> </span>g %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(<span class="dt">feature_type =</span> <span class="st">"Island"</span>) %&gt;%<span class="st"> </span><span class="kw"><a href="../reference/an_near.html">an_near</a></span>(<span class="kw">c</span>(<span class="dv">100</span>, -<span class="dv">66</span>), <span class="dv">20</span>)
-
-nms[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span>)]</code></pre></div>
+<p>The <code>an_preferred</code> function can help with finding one name per feature. It takes an <code>origin</code> parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified  naming authorities where possible.</p>
+<p>We start with 37629 names in the full CGA, corresponding to 19569 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_preferred.html">an_preferred</a></span>(g, <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">"Poland"</span>, <span class="st">"Germany"</span>))</code></pre></div>
+<p>Now we have 19569 names in our data frame, corresponding to the same 19569 distinct features.</p>
+<p>Features that have not been named by either of our preferred countries will have a name chosen from another country, with those countries in random order of preference.</p>
+</div>
+<div id="using-the-pipe-operator" class="section level3">
+<h3 class="hasAnchor">
+<a href="#using-the-pipe-operator" class="anchor"></a>Using the pipe operator</h3>
+<p>All of the above functionality can be achieved in a piped workflow, if that’s your preference, e.g.:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nms &lt;-<span class="st"> </span>g <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(<span class="dt">feature_type =</span> <span class="st">"Island"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/an_near.html">an_near</a></span>(<span class="dt">loc =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="op">-</span><span class="dv">66</span>), <span class="dt">max_distance =</span> <span class="dv">20</span>)
+nms[, <span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span>)]</code></pre></div>
 <pre><code>## # A tibble: 1 x 3
 ##   place_name    longitude latitude
 ##   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 Foster Island       100    -66.1</code></pre>
-<p>Find names starting with “Slom”:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="st">"^Slom"</span>)[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span>)]</code></pre></div>
-<pre><code>## # A tibble: 2 x 3
-##   place_name     longitude latitude
-##   &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Sloman Glacier     -68.6    -67.7
-## 2 Slomer Cove        -59.4    -63.8</code></pre>
-<div id="name-suggestions" class="section level3">
+</div>
+<div id="working-with-sp" class="section level3">
 <h3 class="hasAnchor">
-<a href="#name-suggestions" class="anchor"></a>Name suggestions</h3>
-<p>Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.</p>
-<p>Let’s say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let’s plot all of the place names in this region:</p>
+<a href="#working-with-sp" class="anchor"></a>Working with sp</h3>
+<p>If you prefer to work with Spatial objects, the gazetteer data can be converted to a SpatialPointsDataFrame when loaded:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gsp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">cache =</span> <span class="st">"session"</span>, <span class="dt">sp =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<p>And the above functions work in the same way, for example:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_sp &lt;-<span class="st"> </span>sp<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/sp/topics/SpatialPoints">SpatialPoints</a></span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">120</span>), <span class="kw">c</span>(<span class="op">-</span><span class="dv">70</span>, <span class="op">-</span><span class="dv">65</span>)))
+<span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(gsp, <span class="dt">extent =</span> my_sp)</code></pre></div>
+<pre><code>## class       : SpatialPointsDataFrame 
+## features    : 747 
+## extent      : 100, 120, -69, -65  (xmin, xmax, ymin, ymax)
+## coord. ref. : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 
+## variables   : 12
+## names       : gaz_id, scar_common_id,       place_name, place_name_transliterated, altitude, feature_type_name, date_named,                                                                                                                                                                        narrative,                                                                                                                                                                                                                                                                                                                                                                                                                                                                   named_for,                   origin, relic, gazetteer 
+## min values  :      7,             54,    Adams Glacier,             Adams Glacier,      0.0,       Archipelago, 1946-12-30,                                                                                                                                      "Bunger Hills.  Charted by the SAE in 1956.,                                                                                                                                                                                                                                                                                                      Delineated from air photographs taken by USN Operation Highjump (1946-47) and named by USACAN after code word Highjump by which USN Task Force 68 (1946-47) was known.,                Australia, FALSE,       CGA 
+## max values  : 138190,          19810, Zimmerman Island,          Zimmerman Island,   1395.0,       Watercourse, 2016-06-05, Valley near Polish Antarctic A. B. Dobrowolski Station, with a small lake, Burger Hills area. Named in honour of Professor Stefan Manczarski (1899-1979) - see Manczarski Point., Winning name recommended by Dr Andie Smithies, Convenor, Advisory Committee on Names Competition in September 2004.This was a public competition for the naming of a new runway in August 2004. The reason given by Joe Weiley (12 years), of Broken Head NSW, student at St Finbars School in Byron Bay and the winner of the competition was:  "It would have to be named after Sir Hubert Wilkins, the amazing Australian adventurer and pioneer of Antarctic aviation!", United States of America, FALSE,       CGA</code></pre>
+</div>
+<div id="selecting-names-for-plotting" class="section level3">
+<h3 class="hasAnchor">
+<a href="#selecting-names-for-plotting" class="anchor"></a>Selecting names for plotting</h3>
+<p>Let’s say we are preparing a figure of the greater Prydz Bay region (60-90 °E, 65-70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let’s plot all of the place names in this region:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_longitude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">60</span>, <span class="dv">90</span>)
-my_latitude &lt;-<span class="st"> </span><span class="kw">c</span>(-<span class="dv">70</span>, -<span class="dv">65</span>)
+my_latitude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">70</span>, <span class="op">-</span><span class="dv">65</span>)
 
 this_names &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_filter.html">an_filter</a></span>(g, <span class="dt">extent =</span> <span class="kw">c</span>(my_longitude, my_latitude))
 
-<span class="kw">library</span>(rworldmap)
-map &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">"low"</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>) ## extra xlim space for labels
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>)) ## alternate positions of labels to reduce overlap
-pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
-<span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
+<span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">"rworldmap"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) {
+  <span class="kw">message</span>(<span class="st">"Skipping map figure - install the rworldmap package to see it."</span>)
+} <span class="cf">else</span> {
+  <span class="kw">library</span>(rworldmap)
+  map &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">"low"</span>)
+  <span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
+  ## allow extra xlim space for labels
+  <span class="kw">points</span>(this_names<span class="op">$</span>longitude, this_names<span class="op">$</span>latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+  ## alternate the positions of labels to reduce overlap
+  pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)<span class="op">/</span><span class="dv">4</span>))
+  pos[<span class="kw">order</span>(this_names<span class="op">$</span>longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(this_names)]
+  <span class="kw">text</span>(this_names<span class="op">$</span>longitude, this_names<span class="op">$</span>latitude, <span class="dt">labels =</span> this_names<span class="op">$</span>place_name, <span class="dt">pos =</span> pos)
+}</code></pre></div>
 <p><img src="antanym_files/figure-html/map0-1.png" width="648" style="display: block; margin: auto;"></p>
-<p>Oooooo-kay. That’s not ideal. We can ask for suggested names to show on this map:</p>
+<p>Oooooo-kay. That’s not ideal.</p>
+<p>Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps. We can ask for suggested names to show on our example map:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">suggested &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_suggest.html">an_suggest</a></span>(g, <span class="dt">map_extent =</span> <span class="kw">c</span>(my_longitude, my_latitude), <span class="dt">map_dimensions =</span> <span class="kw">c</span>(<span class="dv">80</span>, <span class="dv">80</span>))</code></pre></div>
-<p>Plot the top ten names purely by score:</p>
+<p>Plot the top ten suggested names purely by score:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">this_names &lt;-<span class="st"> </span><span class="kw">head</span>(suggested, <span class="dv">10</span>)
 
-<span class="kw">library</span>(rworldmap)
-map &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">"low"</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>))
-pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
-<span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
+<span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">"rworldmap"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) {
+  <span class="kw">message</span>(<span class="st">"Skipping map figure - install the rworldmap package to see it."</span>)
+} <span class="cf">else</span> {
+  <span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
+  <span class="kw">points</span>(this_names<span class="op">$</span>longitude, this_names<span class="op">$</span>latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+  pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)<span class="op">/</span><span class="dv">4</span>))
+  pos[<span class="kw">order</span>(this_names<span class="op">$</span>longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(this_names)]
+  <span class="kw">text</span>(this_names<span class="op">$</span>longitude, this_names<span class="op">$</span>latitude, <span class="dt">labels =</span> this_names<span class="op">$</span>place_name, <span class="dt">pos =</span> pos)
+}</code></pre></div>
 <p><img src="antanym_files/figure-html/map1-1.png" width="648" style="display: block; margin: auto;"></p>
-<p>Or the ten best names considering both score and spatial coverage:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">this_names &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_thin.html">an_thin</a></span>(suggested, <span class="dv">10</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>))
-pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
-<span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
+<p>Or the ten best suggested names considering both score and spatial coverage:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">this_names &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_thin.html">an_thin</a></span>(suggested, <span class="dt">n =</span> <span class="dv">10</span>)
+
+<span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">"rworldmap"</span>, <span class="dt">quietly =</span> <span class="ot">TRUE</span>)) {
+  <span class="kw">message</span>(<span class="st">"Skipping map figure - install the rworldmap package to see it."</span>)
+} <span class="cf">else</span> {
+  <span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude <span class="op">+</span><span class="st"> </span><span class="kw">c</span>(<span class="op">-</span><span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
+  <span class="kw">points</span>(this_names<span class="op">$</span>longitude, this_names<span class="op">$</span>latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
+  pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)<span class="op">/</span><span class="dv">4</span>))
+  pos[<span class="kw">order</span>(this_names<span class="op">$</span>longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span><span class="op">:</span><span class="kw">nrow</span>(this_names)]
+  <span class="kw">text</span>(this_names<span class="op">$</span>longitude, this_names<span class="op">$</span>latitude, <span class="dt">labels =</span> this_names<span class="op">$</span>place_name, <span class="dt">pos =</span> pos)
+}</code></pre></div>
 <p><img src="antanym_files/figure-html/map2-1.png" width="648" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -197,7 +517,12 @@ pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> 
 <div id="future-directions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#future-directions" class="anchor"></a>Future directions</h2>
-<p>Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.</p>
+<p>Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetteers containing such information, at a later date.</p>
+</div>
+<div id="other-packages" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-packages" class="anchor"></a>Other packages</h2>
+<p>The <a href="https://cran.r-project.org/package=geonames">geonames package</a> also provides access to geographic place names, including from the SCAR Composite Gazetteer. If you need <em>global</em> place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn’t easily used while offline.</p>
 </div>
 </div>
   </div>
@@ -212,6 +537,7 @@ pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> 
       <li><a href="#usage">Usage</a></li>
       <li><a href="#other-map-examples">Other map examples</a></li>
       <li><a href="#future-directions">Future directions</a></li>
+      <li><a href="#other-packages">Other packages</a></li>
       </ul>
 </div>
       </div>

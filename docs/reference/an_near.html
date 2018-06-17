@@ -69,6 +69,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -103,7 +106,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gaz</th>
-      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code></p></td>
+      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code>, <code><a href='an_preferred.html'>an_preferred</a></code>, or <code><a href='an_filter.html'>an_filter</a></code></p></td>
     </tr>
     <tr>
       <th>loc</th>
@@ -121,7 +124,7 @@
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='http://www.scar.org/data-products/cga'>http://www.scar.org/data-products/cga</a></p>
+    <p><a href='https://www.scar.org/data-products/place-names/'>https://www.scar.org/data-products/place-names/</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -130,19 +133,19 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache_directory</span><span class='kw'>=</span><span class='st'>"c:/temp/gaz"</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>)
 
  <span class='co'>## named features within 10km of 110E, 66S</span>
- <span class='fu'>an_near</span>(<span class='no'>g</span>, <span class='fu'>c</span>(<span class='fl'>110</span>, -<span class='fl'>66</span>), <span class='fl'>10</span>)
+ <span class='fu'>an_near</span>(<span class='no'>g</span>, <span class='kw'>loc</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>110</span>, -<span class='fl'>66</span>), <span class='kw'>max_distance</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
  <span class='co'>## using pipe operator</span>
- <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'>an_near</span>(<span class='fu'>c</span>(<span class='fl'>100</span>, -<span class='fl'>66</span>), <span class='fl'>10</span>)
+ <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'>an_near</span>(<span class='kw'>loc</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, -<span class='fl'>66</span>), <span class='kw'>max_distance</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
  <span class='co'>## with sp objects</span>
- <span class='no'>gsp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache_directory</span> <span class='kw'>=</span> <span class='st'>"c:/temp/gaz"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
- <span class='no'>loc</span> <span class='kw'>&lt;-</span> <span class='fu'>SpatialPoints</span>(<span class='fu'>matrix</span>(<span class='fu'>c</span>(<span class='fl'>110</span>, -<span class='fl'>66</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>),
-   <span class='kw'>proj4string</span><span class='kw'>=</span><span class='fu'>CRS</span>(<span class='st'>"+proj=longlat +datum=WGS84 +ellps=WGS84"</span>))
- <span class='fu'>an_near</span>(<span class='no'>gsp</span>, <span class='no'>loc</span>, <span class='fl'>10</span>)
+ <span class='no'>gsp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+ <span class='no'>loc</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sp</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPoints</a></span>(<span class='fu'>matrix</span>(<span class='fu'>c</span>(<span class='fl'>110</span>, -<span class='fl'>66</span>), <span class='kw'>nrow</span> <span class='kw'>=</span> <span class='fl'>1</span>),
+   <span class='kw'>proj4string</span> <span class='kw'>=</span> <span class='fu'>CRS</span>(<span class='st'>"+proj=longlat +datum=WGS84 +ellps=WGS84"</span>))
+ <span class='fu'>an_near</span>(<span class='no'>gsp</span>, <span class='kw'>loc</span> <span class='kw'>=</span> <span class='no'>loc</span>, <span class='kw'>max_distance</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

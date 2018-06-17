@@ -29,8 +29,7 @@
   
 <meta property="og:title" content="Suggest names for a map (experimental) — an_suggest" />
 
-<meta property="og:description" content="Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-This is an experimental function and currently only implemented for map_scale values of 10 million or larger." />
+<meta property="og:description" content="Features are given a suitability score based on maps prepared by expert cartographers. Data were tabulated from a collection of such maps, indicating for each feature whether it was named on a given map, along with details (such as scale) of the map. These data are used as the basis of a recommendation algorithm, which suggests the best features to name on a map given its properties (extent and scale). This is an experimental function and currently only implemented for map_scale values of 10 million or larger." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -70,6 +69,9 @@ This is an experimental function and currently only implemented for map_scale va
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -94,8 +96,7 @@ This is an experimental function and currently only implemented for map_scale va
     </div>
 
     
-    <p>Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-This is an experimental function and currently only implemented for <code>map_scale</code> values of 10 million or larger.</p>
+    <p>Features are given a suitability score based on maps prepared by expert cartographers. Data were tabulated from a collection of such maps, indicating for each feature whether it was named on a given map, along with details (such as scale) of the map. These data are used as the basis of a recommendation algorithm, which suggests the best features to name on a map given its properties (extent and scale). This is an experimental function and currently only implemented for <code>map_scale</code> values of 10 million or larger.</p>
     
 
     <pre class="usage"><span class='fu'>an_suggest</span>(<span class='no'>gaz</span>, <span class='no'>map_scale</span>, <span class='no'>map_extent</span>, <span class='no'>map_dimensions</span>)</pre>
@@ -105,7 +106,7 @@ This is an experimental function and currently only implemented for <code>map_sc
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gaz</th>
-      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code></p></td>
+      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code>, <code><a href='an_preferred.html'>an_preferred</a></code>, or <code><a href='an_filter.html'>an_filter</a></code></p></td>
     </tr>
     <tr>
       <th>map_scale</th>
@@ -113,7 +114,7 @@ This is an experimental function and currently only implemented for <code>map_sc
     </tr>
     <tr>
       <th>map_extent</th>
-      <td><p>raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. Not required if <code>map_scale</code> is provided</p></td>
+      <td><p>vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. This is required if <code>map_scale</code> is not provided, and optional if <code>map_scale</code> is provided (if <code>map_extent</code> is provided in this situation then the <code>gaz</code> data frame will be filtered to this extent before the suggestion algorithm is applied; otherwise all names in <code>gaz</code> will be considered). <code>map_extent</code> can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of <code><a href='http://www.rdocumentation.org/packages/sp/topics/bbox'>sp::bbox</a></code>)</p></td>
     </tr>
     <tr>
       <th>map_dimensions</th>
@@ -123,7 +124,7 @@ This is an experimental function and currently only implemented for <code>map_sc
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>data.frame of names with a "score" column added. The data.frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.</p>
+    <p>data.frame of names with a "score" column added. Score values range from 0 to 1. The data frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -132,17 +133,19 @@ This is an experimental function and currently only implemented for <code>map_sc
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache_directory</span> <span class='kw'>=</span> <span class='st'>"c:/temp/gaz"</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>)
 
  <span class='co'>## get a single name per feature, preferring the</span>
  <span class='co'>##  Australian name where there is one</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_preferred.html'>an_preferred</a></span>(<span class='no'>g</span>, <span class='st'>"Australia"</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_preferred.html'>an_preferred</a></span>(<span class='no'>g</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>"Australia"</span>)
 
  <span class='co'>## suggested names for a 100x100 mm map covering 60-90E, 70-60S</span>
  <span class='co'>##  (this is about a 1:12M scale map)</span>
-
  <span class='no'>suggested</span> <span class='kw'>&lt;-</span> <span class='fu'>an_suggest</span>(<span class='no'>g</span>, <span class='kw'>map_extent</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>60</span>, <span class='fl'>90</span>, -<span class='fl'>70</span>, -<span class='fl'>60</span>), <span class='kw'>map_dimensions</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>100</span>))
  <span class='fu'>head</span>(<span class='no'>suggested</span>, <span class='fl'>20</span>) <span class='co'>## top 20 names</span>
+
+ <span class='co'>## an equivalent result can be achieved by supplying map scale and extent</span>
+ <span class='no'>suggested</span> <span class='kw'>&lt;-</span> <span class='fu'>an_suggest</span>(<span class='no'>g</span>, <span class='kw'>map_scale</span> <span class='kw'>=</span> <span class='fl'>12e6</span>, <span class='kw'>map_extent</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>60</span>, <span class='fl'>90</span>, -<span class='fl'>70</span>, -<span class='fl'>60</span>))
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

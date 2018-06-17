@@ -29,7 +29,7 @@
   
 <meta property="og:title" content="Load Antarctic place name data — an_read" />
 
-<meta property="og:description" content="Place name data will be downloaded and optionally cached to a local file. If you wish to be able to use antanym offline, consider using a cache directory that will persist from one R session to the next." />
+<meta property="og:description" content="Place name data will be downloaded and optionally cached locally. If you wish to be able to use antanym offline, consider using cache = "persistent" so that the cached data will persist from one R session to the next. See an_cache_directory to get the path to the cache directory." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -69,6 +69,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -93,32 +96,30 @@
     </div>
 
     
-    <p>Place name data will be downloaded and optionally cached to a local file. If you wish to be able to use <code>antanym</code> offline, consider using a cache directory that will persist from one R session to the next.</p>
+    <p>Place name data will be downloaded and optionally cached locally. If you wish to be able to use <code>antanym</code> offline, consider using <code>cache = "persistent"</code> so that the cached data will persist from one R session to the next. See <code><a href='an_cache_directory.html'>an_cache_directory</a></code> to get the path to the cache directory.</p>
     
 
-    <pre class="usage"><span class='fu'>an_read</span>(<span class='kw'>gazetteers</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>cache_directory</span>,
-  <span class='kw'>refresh_cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>simplified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-<span class='fu'>an_gazetteers</span>()</pre>
+    <pre class="usage"><span class='fu'>an_read</span>(<span class='kw'>gazetteers</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>cache</span>, <span class='kw'>refresh_cache</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>simplified</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gazetteers</th>
-      <td><p>character: vector of gazetteers to load. For the list of available gazetteers, see <code>an_gazetteers</code>. Use <code>gazetteers="all"</code> to load all available gazetteers. Currently only one gazetteer is available: the SCAR Composite Gazetteer of Antarctica</p></td>
+      <td><p>character: vector of gazetteers to load. For the list of available gazetteers, see <code><a href='an_gazetteers.html'>an_gazetteers</a></code>. Use <code>gazetteers = "all"</code> to load all available gazetteers. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica</p></td>
     </tr>
     <tr>
       <th>sp</th>
       <td><p>logical: if FALSE return a data.frame; if TRUE return a SpatialPointsDataFrame</p></td>
     </tr>
     <tr>
-      <th>cache_directory</th>
-      <td><p>string: (optional) cache the gazetteer data file locally in this directory, so that it can be used offline later. The cache directory will be created if it does not exist. A warning will be given if a cached copy exists and is more than 30 days old</p></td>
+      <th>cache</th>
+      <td><p>string: the gazetteer data can be cached locally, so that it can be used offline later. Valid values are <code>"session"</code>, <code>"persistent"</code>, or a directory name. Specifying <code>cache = "session"</code> will use a temporary directory that persists only for the current session. <code>cache = "persistent"</code> will use <code><a href='http://www.rdocumentation.org/packages/rappdirs/topics/user_cache_dir'>rappdirs::user_cache_dir()</a></code> to determine the appropriate directory to use. Otherwise, if a string is provided it will be assumed to be the path to the directory to use. In this case, an attempt will be made to create the cache directory if it does not exist. A warning will be given if a cached copy of the data exists and is more than 30 days old</p></td>
     </tr>
     <tr>
       <th>refresh_cache</th>
-      <td><p>logical: if TRUE, and a data file already exists in the cache_directory, it will be refreshed. If FALSE, the cached copy will be used</p></td>
+      <td><p>logical: if TRUE, and a data file already exists in the cache, it will be refreshed. If FALSE, the cached copy will be used</p></td>
     </tr>
     <tr>
       <th>simplified</th>
@@ -134,39 +135,44 @@
 
     <p>a data.frame or SpatialPointsDataFrame, with the following columns (note that not all information is populated for all place names):</p><ul>
 <li><p>gaz_id - the unique identifier of each gazetteer entry. Note that the same feature (e.g. "Browns Glacier") might have multiple gazetteer entries, each with their own <code>gaz_id</code>, because the feature has been named multiple times by different naming authorities. The <code>scar_common_id</code> for these entries will be identical, because <code>scar_common_id</code> identifies the feature itself</p></li>
-<li><p>scar_common_id - the unique identifier (in the SCAR CGA) of the feature. A single feature may have multiple names, given by different naming authorities</p></li>
+<li><p>scar_common_id - the unique identifier (in the Composite Gazetteer of Antarctica) of the feature. A single feature may have multiple names, given by different naming authorities</p></li>
 <li><p>place_name - the name of the feature</p></li>
 <li><p>place_name_transliterated - the name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)</p></li>
 <li><p>longitude and latitude - the longitude and latitude of the feature (negative values indicate degrees west or south). Note that many features are not point features (e.g. mountains, lakes), in which case the <code>longitude</code> and <code>latitude</code> values are indicative only, generally of the centroid of the feature</p></li>
-<li><p>altitude - the altitude (above sea level) of the feature</p></li>
+<li><p>altitude - the altitude of the feature, in metres relative to sea level. Negative values indicate features below sea level</p></li>
 <li><p>feature_type_name - the feature type (e.g. "Archipelago", "Channel", "Mountain")</p></li>
 <li><p>date_named - the date on which the feature was named</p></li>
-<li><p>narrative - a text description of the feature, usually including a synopsis of the history of its name</p></li>
-<li><p>named_for - the person after whom the feature was named, or other reason for its naming</p></li>
-<li><p>cga_source_gazetteer - for the SCAR CGA, this entry gives the source gazetteer from which this entry was taken. This is currently either a country abbreviation (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)</p></li>
-<li><p>country_name - the full name of the country where <code>cga_source_gazetteer</code> is a country</p></li>
+<li><p>narrative - a text description of the feature; may include a synopsis of the history of its name</p></li>
+<li><p>named_for - the person after whom the feature was named, or other reason for its naming. For historical reasons the distinction between "narrative" and "named for" is not always obvious</p></li>
+<li><p>origin - the naming authority that provided the name. This is a country name, or organisation name for names that did not come from a national source</p></li>
+<li><p>relic - if <code>TRUE</code>, this name is associated with a feature that no longer exists (e.g. an ice shelf feature that has disappeared)</p></li>
 <li><p>gazetteer - the gazetteer from which this information came (currently only "CGA")</p></li>
 </ul><p>If <code>simplified</code> is FALSE, these additional columns will also be included:</p><ul>
-<li><p>meeting_date - the date on which the name was approved</p></li>
-<li><p>meeting_paper - the paper or document associated with the approval</p></li>
-<li><p>date_revised - the last date on which this gazetteer entry was revised</p></li>
-<li><p>is_complete_flag - <code>TRUE</code> if the entry is complete</p></li>
+<li><p>meeting_date - the date on which the name was formally approved by the associated naming authority. This is not available for many names: see the <code>date_named</code> column</p></li>
+<li><p>meeting_paper - references to papers or documents associated with the naming of the feature</p></li>
 <li><p>remote_sensor_info - text describing the remote sensing information (e.g. satellite platform name and image details) used to define the feature, if applicable</p></li>
 <li><p>coordinate_accuracy - an indicator of the accuracy of the coordinates, in metres</p></li>
 <li><p>altitude_accuracy - an indicator of the accuracy of the altitude value, in metres</p></li>
-<li><p>source_institution - the institution from which the name information came</p></li>
-<li><p>source_person - the person from whom the name information came</p></li>
-<li><p>source_country_code - th country from which the name information came</p></li>
-<li><p>source_name - the cartographic/GIS/remote sensing source from which the name came</p></li>
-<li><p>source_publisher - the publisher of the source</p></li>
-<li><p>source_identifier - further identifying information about the source of the name</p></li>
+<li><p>cga_source_gazetteer - for the Composite Gazetteer, this entry gives the source gazetteer from which this entry was taken. This is currently either a three-letter country code (e.g. "ESP", "USA") or "GEBCO" (for the GEBCO gazetteer of undersea features)</p></li>
+<li><p>country_name - the full name of the country where <code>cga_source_gazetteer</code> is a country</p></li>
+<li><p>source_name - the cartographic/GIS/remote sensing source from which the coordinates were derived</p></li>
+<li><p>source_publisher - where coordinates were derived from a map, the publisher of that map</p></li>
+<li><p>source_scale - the scale of the map from which the coordinates were derived</p></li>
+<li><p>source_institution - the institution from which the coordinate information came</p></li>
+<li><p>source_person - the contact person at the source institution, if applicable</p></li>
+<li><p>source_country_code - the country from which the coordinate information came</p></li>
+<li><p>source_identifier - where a coordinate or elevation was derived from a map, the identifier of that map</p></li>
 <li><p>comments - comments about the name or naming process</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='http://www.scar.org/data-products/cga'>http://www.scar.org/data-products/cga</a> <a href='http://data.aad.gov.au/aadc/gaz/'>http://data.aad.gov.au/aadc/gaz/</a></p>
+    <p><a href='https://www.scar.org/data-products/place-names/'>https://www.scar.org/data-products/place-names/</a></p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='an_cache_directory.html'>an_cache_directory</a></code>, <code><a href='an_gazetteers.html'>an_gazetteers</a></code>, <code><a href='an_cga_metadata.html'>an_cga_metadata</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -174,11 +180,17 @@
  <span class='co'>## download without caching</span>
  <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>an_read</span>()
 
+ <span class='co'>## download to session cache, in sp format</span>
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>an_read</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
  <span class='co'>## download and cache to a persistent directory for later, offline use</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>an_read</span>(<span class='kw'>cache_directory</span><span class='kw'>=</span><span class='st'>"c:/temp/gaz"</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>an_read</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"persistent"</span>)
 
  <span class='co'>## refresh the cached copy</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>an_read</span>(<span class='kw'>cache_directory</span><span class='kw'>=</span><span class='st'>"c:/temp/gaz"</span>,<span class='kw'>refresh_cache</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>an_read</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"persistent"</span>, <span class='kw'>refresh_cache</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+ <span class='co'>## download and cache to a persistent directory of our choice</span>
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'>an_read</span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"c:/my/cache/directory"</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
@@ -190,6 +202,8 @@
       <li><a href="#value">Value</a></li>
 
       <li><a href="#references">References</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

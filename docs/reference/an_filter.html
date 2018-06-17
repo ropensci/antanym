@@ -29,7 +29,7 @@
   
 <meta property="og:title" content="Filter a collection of place names by various criteria — an_filter" />
 
-<meta property="og:description" content="A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are treated as regular expressions and are case-insensitive." />
+<meta property="og:description" content="A data frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are by default treated as regular expressions and are case-insensitive: you can change this behaviour via the ignore_case and as_regex parameters." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -69,6 +69,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -93,28 +96,22 @@
     </div>
 
     
-    <p>A data.frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are treated as regular expressions and are case-insensitive.</p>
+    <p>A data frame of place names can be filtered according to name, geographic location, feature type, or other criteria. All text-related matches are by default treated as regular expressions and are case-insensitive: you can change this behaviour via the <code>ignore_case</code> and <code>as_regex</code> parameters.</p>
     
 
-    <pre class="usage"><span class='fu'>an_filter</span>(<span class='no'>gaz</span>, <span class='no'>query</span>, <span class='no'>feature_ids</span>, <span class='no'>extent</span>, <span class='no'>feature_type</span>, <span class='no'>origin_country</span>,
-  <span class='no'>origin_gazetteer</span>, <span class='no'>cga_source</span>)
-
-<span class='fu'>an_countries</span>(<span class='no'>gaz</span>)
-
-<span class='fu'>an_feature_types</span>(<span class='no'>gaz</span>)
-
-<span class='fu'>an_cga_sources</span>(<span class='no'>gaz</span>)</pre>
+    <pre class="usage"><span class='fu'>an_filter</span>(<span class='no'>gaz</span>, <span class='no'>query</span>, <span class='no'>feature_ids</span>, <span class='no'>extent</span>, <span class='no'>feature_type</span>, <span class='no'>origin</span>,
+  <span class='no'>origin_gazetteer</span>, <span class='kw'>ignore_case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>as_regex</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>gaz</th>
-      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code></p></td>
+      <td><p>data.frame or SpatialPointsDataFrame: as returned by <code><a href='an_read.html'>an_read</a></code> or <code><a href='an_preferred.html'>an_preferred</a></code></p></td>
     </tr>
     <tr>
       <th>query</th>
-      <td><p>string: return only place names matching this pattern (regular expression)</p></td>
+      <td><p>character: vector of place name terms to search for. Returned place names will be those that match all entries in <code>query</code></p></td>
     </tr>
     <tr>
       <th>feature_ids</th>
@@ -122,23 +119,27 @@
     </tr>
     <tr>
       <th>extent</th>
-      <td><p>raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box</p></td>
+      <td><p>vector of c(longitude_min, longitude_max, latitude_min, latitude_max): if provided, search only for names within this bounding box. <code>extent</code> can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of <code><a href='http://www.rdocumentation.org/packages/sp/topics/bbox'>sp::bbox</a></code>)</p></td>
     </tr>
     <tr>
       <th>feature_type</th>
-      <td><p>string: return only place names corresponding to feature types matching this pattern (regular expression). For valid feature type names see <code>an_feature_types</code></p></td>
+      <td><p>string: return only place names corresponding to feature types matching this pattern. For valid feature type names see <code><a href='an_feature_types.html'>an_feature_types</a></code></p></td>
     </tr>
     <tr>
-      <th>origin_country</th>
-      <td><p>string: return only names originating from countries matching this pattern (regular expression). For valid country names see <code>an_countries</code></p></td>
+      <th>origin</th>
+      <td><p>string: return only place names originating from bodies (countries or organisations) matching this pattern. For valid <code>origin</code> values see <code>link{an_origins}</code></p></td>
     </tr>
     <tr>
       <th>origin_gazetteer</th>
-      <td><p>string: return only place names originating from gazetteers matching this pattern (regular expression). For valid gazetteer names see <code><a href='an_read.html'>an_gazetteers</a></code></p></td>
+      <td><p>string: return only place names originating from gazetteers matching this pattern. For valid gazetteer names see <code><a href='an_gazetteers.html'>an_gazetteers</a></code></p></td>
     </tr>
     <tr>
-      <th>cga_source</th>
-      <td><p>string: return only place names in the SCAR Composite Gazetteer originating from contributing gazetteers matching this pattern (regular expression). For valid CGA source gazetteer names see <code>an_cga_sources</code></p></td>
+      <th>ignore_case</th>
+      <td><p>logical: if <code>TRUE</code>, use case-insensitive text matching</p></td>
+    </tr>
+    <tr>
+      <th>as_regex</th>
+      <td><p>logical: if <code>TRUE</code>, treat <code>query</code> and other string input parameters as regular expressions. If <code>FALSE</code>, they will be treated as fixed strings to match against</p></td>
     </tr>
     </table>
     
@@ -148,31 +149,78 @@
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='http://www.scar.org/data-products/cga'>http://www.scar.org/data-products/cga</a></p>
+    <p><a href='https://www.scar.org/data-products/place-names/'>https://www.scar.org/data-products/place-names/</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='an_read.html'>an_read</a></code>, <code><a href='an_read.html'>an_gazetteers</a></code></p>
+    <p><code><a href='an_read.html'>an_read</a></code>, <code><a href='an_gazetteers.html'>an_gazetteers</a></code>, <code><a href='an_origins.html'>an_origins</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
- <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache_directory</span><span class='kw'>=</span><span class='st'>"c:/temp/gaz"</span>)
- <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='st'>"Ufs"</span>)
- <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='st'>"Ufs"</span>, <span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Island"</span>)
- <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='st'>"Ufs"</span>, <span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Island"</span>, <span class='kw'>origin_country</span> <span class='kw'>=</span> <span class='st'>"Australia|United States of America"</span>)
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>)
 
- <span class='no'>nms</span> <span class='kw'>&lt;-</span> <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>extent</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>120</span>, -<span class='fl'>70</span>, -<span class='fl'>65</span>),
-    <span class='kw'>origin_country</span> <span class='kw'>=</span> <span class='st'>"Australia"</span>)
+ <span class='co'>## simple search for any place name containing the word 'William'</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"William"</span>)
+
+ <span class='co'>## which bodies (countries or organisations) provided the names in our data?</span>
+ <span class='fu'><a href='an_origins.html'>an_origins</a></span>(<span class='no'>g</span>)
+
+ <span class='co'>## find names containing "William" and originating from Australia or the USA</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"William"</span>, <span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>"Australia|United States of America"</span>)
+
+ <span class='co'>## this search will return no matches</span>
+ <span class='co'>## because the actual place name is 'William Scoresby Archipelago'</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"William Archipelago"</span>)
+
+ <span class='co'>## we can split the search terms so that each is matched separately</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"William"</span>, <span class='st'>"Archipelago"</span>))
+
+ <span class='co'>## or use a regular expression</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"William .* Archipelago"</span>)
+
+ <span class='co'>## or refine the search using feature type</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"William"</span>, <span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Archipelago"</span>)
+
+ <span class='co'>## what feature types do we have in our data?</span>
+ <span class='fu'><a href='an_feature_types.html'>an_feature_types</a></span>(<span class='no'>g</span>)
+
+ <span class='co'>## for more complex text searching, use regular expressions</span>
+ <span class='co'>## e.g. names matching "West" or "East"</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"West|East"</span>)
+
+ <span class='co'>## names starting with "West" or "East"</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"^(West|East)"</span>)
+
+ <span class='co'>## names with "West" or "East" appearing as complete words in the name</span>
+ <span class='co'>## ["\\b" matches a word boundary: see help("regex") ]</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"\\b(West|East)\\b"</span>)
+
+ <span class='co'>## filtering by spatial extent</span>
+ <span class='no'>nms</span> <span class='kw'>&lt;-</span> <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>extent</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>120</span>, -<span class='fl'>70</span>, -<span class='fl'>65</span>), <span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>"Australia"</span>)
  <span class='fu'>with</span>(<span class='no'>nms</span>, <span class='fu'>plot</span>(<span class='no'>longitude</span>, <span class='no'>latitude</span>))
  <span class='fu'>with</span>(<span class='no'>nms</span>, <span class='fu'>text</span>(<span class='no'>longitude</span>, <span class='no'>latitude</span>, <span class='no'>place_name</span>))
 
- <span class='co'>## using pipe operator</span>
- <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'>an_filter</span>(<span class='st'>"Ross"</span>, <span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Ice shelf|Mountain"</span>)
- <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='an_near.html'>an_near</a></span>(<span class='fu'>c</span>(<span class='fl'>100</span>, -<span class='fl'>66</span>), <span class='fl'>20</span>) <span class='kw'>%&gt;%</span> <span class='fu'>an_filter</span>(<span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Island"</span>)
+ <span class='co'>## searching within the extent of an sp object</span>
+ <span class='no'>my_sp</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>sp</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/sp/topics/SpatialPoints'>SpatialPoints</a></span>(<span class='fu'>cbind</span>(<span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>120</span>), <span class='fu'>c</span>(-<span class='fl'>70</span>, -<span class='fl'>65</span>)))
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>extent</span> <span class='kw'>=</span> <span class='no'>my_sp</span>)
 
- <span class='co'>## all names for feature 1589 and the country that issued the name</span>
- <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>feature_ids</span> <span class='kw'>=</span> <span class='fl'>1589</span>)[,<span class='fu'>c</span>(<span class='st'>"place_name"</span>, <span class='st'>"country_name"</span>)]
+ <span class='co'>## or equivalently</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>extent</span> <span class='kw'>=</span> <span class='fu'>bbox</span>(<span class='no'>my_sp</span>))
+
+ <span class='co'>## or using the sp form of the gazetteer data</span>
+ <span class='no'>gsp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>, <span class='kw'>sp</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+ <span class='fu'>an_filter</span>(<span class='no'>gsp</span>, <span class='kw'>extent</span> <span class='kw'>=</span> <span class='no'>my_sp</span>)
+
+ <span class='co'>## using the pipe operator</span>
+ <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'>an_filter</span>(<span class='kw'>query</span> <span class='kw'>=</span> <span class='st'>"Ross"</span>, <span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Ice shelf|Mountain"</span>)
+
+ <span class='no'>g</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='an_near.html'>an_near</a></span>(<span class='kw'>loc</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, -<span class='fl'>66</span>), <span class='kw'>max_distance</span> <span class='kw'>=</span> <span class='fl'>20</span>) <span class='kw'>%&gt;%</span>
+       <span class='fu'>an_filter</span>(<span class='kw'>feature_type</span> <span class='kw'>=</span> <span class='st'>"Island"</span>)
+
+ <span class='co'>## find all names for feature 1589 and the naming</span>
+ <span class='co'>##  authority for each name</span>
+ <span class='fu'>an_filter</span>(<span class='no'>g</span>, <span class='kw'>feature_ids</span> <span class='kw'>=</span> <span class='fl'>1589</span>)[, <span class='fu'>c</span>(<span class='st'>"place_name"</span>, <span class='st'>"origin"</span>)]
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

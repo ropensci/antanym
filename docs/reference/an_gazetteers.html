@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate approximate map scale — an_mapscale â€¢ antanym</title>
+<title>The place name gazetteers available — an_gazetteers â€¢ antanym</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,9 +27,9 @@
 <script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Calculate approximate map scale — an_mapscale" />
+<meta property="og:title" content="The place name gazetteers available — an_gazetteers" />
 
-<meta property="og:description" content="Calculate approximate map scale" />
+<meta property="og:description" content="Return a character vector that lists all of the gazetteers present in the gaz data, or (if gaz was not provided) all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica." />
 <meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
@@ -92,36 +92,40 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate approximate map scale</h1>
+    <h1>The place name gazetteers available</h1>
     </div>
 
     
-    <p>Calculate approximate map scale</p>
+    <p>Return a character vector that lists all of the gazetteers present in the <code>gaz</code> data, or (if <code>gaz</code> was not provided) all of the gazetteers available through the antanym package. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica.</p>
     
 
-    <pre class="usage"><span class='fu'>an_mapscale</span>(<span class='no'>map_dimensions</span>, <span class='no'>map_extent</span>)</pre>
+    <pre class="usage"><span class='fu'>an_gazetteers</span>(<span class='no'>gaz</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>map_dimensions</th>
-      <td><p>numeric: 2-element numeric giving width and height of the map, in mm</p></td>
-    </tr>
-    <tr>
-      <th>map_extent</th>
-      <td><p>vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the geographic extent of the map. <code>map_extent</code> can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of <code><a href='http://www.rdocumentation.org/packages/sp/topics/bbox'>sp::bbox</a></code>)</p></td>
+      <th>gaz</th>
+      <td><p>data.frame or SpatialPointsDataFrame: (optional) as returned by <code><a href='an_read.html'>an_read</a></code>, <code><a href='an_preferred.html'>an_preferred</a></code>, or <code><a href='an_filter.html'>an_filter</a></code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>numeric</p>
+    <p>character vector. If <code>gaz</code> was provided, this will be a list of all gazetteers present in <code>gaz</code>. Otherwise, it will be a list of all gazetteers available through the antanym package</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p><code><a href='an_read.html'>an_read</a></code>, <code><a href='an_filter.html'>an_filter</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## an A3-sized map of the Southern Ocean (1:20M)</span>
-<span class='fu'>an_mapscale</span>(<span class='kw'>map_dimensions</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>400</span>, <span class='fl'>570</span>), <span class='kw'>map_extent</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>180</span>, <span class='fl'>180</span>, -<span class='fl'>90</span>, -<span class='fl'>40</span>))</div><div class='output co'>#&gt; [1] 19967274</div><div class='input'>
+    <pre class="examples"><div class='input'>
+<span class='fu'>an_gazetteers</span>()</div><div class='output co'>#&gt; [1] "CGA"</div><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+ <span class='no'>g</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='an_read.html'>an_read</a></span>(<span class='kw'>cache</span> <span class='kw'>=</span> <span class='st'>"session"</span>)
+ <span class='fu'>an_gazetteers</span>(<span class='no'>g</span>)
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -130,6 +134,8 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

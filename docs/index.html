@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Antarctic geographic place names â€¢ antanym</title>
+<title>Antarctic Geographic Place Names â€¢ antanym</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Antarctic geographic place names">
-<meta property="og:description" content="Antarctic geographic names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.">
+<script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="Antarctic Geographic Place Names">
+<meta property="og:description" content="Antarctic geographic names from the Composite Gazetteer of Antarctica, and functions for working with those place names.">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -42,6 +42,9 @@
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li>
+  <a href="news/index.html">News</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -76,9 +79,9 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.</p>
-<p>The authoritative source of place names in Antarctica is the SCAR Composite Gazetteer of Antarctica (CGA), which consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 °S, including terrestrial and undersea or under-ice.</p>
+<p>The authoritative source of place names in Antarctica is the Composite Gazetteer of Antarctica (CGA), which is produced by the Scientific Committee on Antarctic Research (SCAR). The CGA consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 °S, including terrestrial and undersea or under-ice.</p>
 <p>There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.</p>
-<p>The composite nature of the CGA means that there may be multiple names associated with a given feature. Consider using the <code><a href="reference/an_preferred.html">an_preferred()</a></code> function for resolving a single name per feature.</p>
+<p>The composite nature of the CGA means that there are often multiple names associated with a given feature. Consider using the <code><a href="reference/an_preferred.html">an_preferred()</a></code> function for resolving a single name per feature.</p>
 <p>For more information, see the <a href="http://data.aad.gov.au/aadc/gaz/scar/">CGA home page</a>. The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR <a href="http://www.scar.org/data-products/scagi">Standing Committee on Antarctic Geographic Information (SCAGI)</a> coordinates the project. This R package is a product of the SCAR <a href="http://www.scar.org/ssg/life-sciences/eg-abi">Expert Group on Antarctic Biodiversity Informatics</a> and SCAGI.</p>
 <div id="citing" class="section level3">
 <h3 class="hasAnchor">
@@ -93,27 +96,49 @@
 <h2 class="hasAnchor">
 <a href="#installing" class="anchor"></a>Installing</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools::<span class="kw">install_github</span>(<span class="st">"SCAR/antanym"</span>)</code></pre></div>
+devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"SCAR/antanym"</span>)</code></pre></div>
 </div>
-<div id="usage" class="section level2">
+<div id="example-usage" class="section level2">
 <h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>Start by fetching the names data from its host server. Here we cache it to a temporary directory so that we can access it later in the session without needing to re-download it:</p>
+<a href="#example-usage" class="anchor"></a>Example usage</h2>
+<p>Start by fetching the names data from the host server. Here we use a temporary cache so that we can re-load it later in the session without needing to re-download it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(antanym)
-cache_dir &lt;-<span class="st"> </span><span class="kw">tempdir</span>()
-g &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_read.html">an_read</a></span>(<span class="dt">cache_dir =</span> cache_dir)</code></pre></div>
-<p>If you prefer working with <code>sp</code> objects, then this will return a <code>SpatialPointsDataFrame</code>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gsp &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_read.html">an_read</a></span>(<span class="dt">sp =</span> <span class="ot">TRUE</span>)</code></pre></div>
+g &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_read.html">an_read</a></span>(<span class="dt">cache =</span> <span class="st">"session"</span>)</code></pre></div>
 <p>How many names do we have in total?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(g)
 <span class="co">#&gt; [1] 37629</span></code></pre></div>
 <p>Corresponding to how many distinct features?</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(g$scar_common_id))
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(g<span class="op">$</span>scar_common_id))
 <span class="co">#&gt; [1] 19569</span></code></pre></div>
-<p>Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_ids =</span> <span class="dv">1589</span>)[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"country_name"</span>)]
+<p>Find names starting with “Slom”:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">query =</span> <span class="st">"^Slom"</span>)[, <span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span>)]
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   place_name     longitude latitude</span>
+<span class="co">#&gt;   &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Sloman Glacier     -68.6    -67.7</span>
+<span class="co">#&gt; 2 Sloman Glacier     -68.6    -67.7</span>
+<span class="co">#&gt; 3 Slomer Cove        -59.4    -63.8</span></code></pre></div>
+<p>Find islands within 20km of 100 °E, 66 °S:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nms &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_near.html">an_near</a></span>(<span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_type =</span> <span class="st">"Island"</span>), <span class="dt">loc =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="op">-</span><span class="dv">66</span>), <span class="dt">max_distance =</span> <span class="dv">20</span>)
+
+## or equivalently, using the pipe operator
+nms &lt;-<span class="st"> </span>g <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(<span class="dt">feature_type =</span> <span class="st">"Island"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/an_near.html">an_near</a></span>(<span class="dt">loc =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="op">-</span><span class="dv">66</span>), <span class="dt">max_distance =</span> <span class="dv">20</span>)
+
+nms[, <span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span>)]
+<span class="co">#&gt; # A tibble: 3 x 3</span>
+<span class="co">#&gt;   place_name    longitude latitude</span>
+<span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 Foster Island       100    -66.1</span>
+<span class="co">#&gt; 2 Severnyj holm       100    -66.1</span>
+<span class="co">#&gt; 3 Foster Island       100    -66.1</span></code></pre></div>
+</div>
+<div id="resolving-multiple-names-per-feature" class="section level2">
+<h2 class="hasAnchor">
+<a href="#resolving-multiple-names-per-feature" class="anchor"></a>Resolving multiple names per feature</h2>
+<p>As noted above, the CGA is a composite gazetteer and so there are often multiple names associated with a given feature. For example, we can see all names associated with feature 1589 (Booth Island) and the country of origin of each name:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_ids =</span> <span class="dv">1589</span>)[, <span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"origin"</span>)]
 <span class="co">#&gt; # A tibble: 7 x 2</span>
-<span class="co">#&gt;   place_name   country_name            </span>
+<span class="co">#&gt;   place_name   origin                  </span>
 <span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                   </span>
 <span class="co">#&gt; 1 Booth, isla  Argentina               </span>
 <span class="co">#&gt; 2 Wandel, Ile  Belgium                 </span>
@@ -122,68 +147,16 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_read.html
 <span class="co">#&gt; 5 Booth Island United Kingdom          </span>
 <span class="co">#&gt; 6 Booth Island Russia                  </span>
 <span class="co">#&gt; 7 Booth Island United States of America</span></code></pre></div>
-<p>Choose one name per feature, preferring the Polish name where there is one:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_preferred.html">an_preferred</a></span>(g, <span class="dt">origin_country =</span> <span class="st">"Poland"</span>)
-<span class="kw">nrow</span>(g)
-<span class="co">#&gt; [1] 19569</span></code></pre></div>
-<p>Find islands within 20km of 100E, 66S:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nms &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_near.html">an_near</a></span>(<span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">feature_type =</span> <span class="st">"Island"</span>), <span class="kw">c</span>(<span class="dv">100</span>, -<span class="dv">66</span>), <span class="dv">20</span>)
-
-## or equivalently, using the pipe operator
-nms &lt;-<span class="st"> </span>g %&gt;%<span class="st"> </span><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(<span class="dt">feature_type =</span> <span class="st">"Island"</span>) %&gt;%<span class="st"> </span><span class="kw"><a href="reference/an_near.html">an_near</a></span>(<span class="kw">c</span>(<span class="dv">100</span>, -<span class="dv">66</span>), <span class="dv">20</span>)
-
-nms[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span>)]
-<span class="co">#&gt; # A tibble: 1 x 3</span>
-<span class="co">#&gt;   place_name    longitude latitude</span>
-<span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Foster Island       100    -66.1</span></code></pre></div>
-<p>Find names starting with “Slom”:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="st">"^Slom"</span>)[,<span class="kw">c</span>(<span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span>)]
-<span class="co">#&gt; # A tibble: 2 x 3</span>
-<span class="co">#&gt;   place_name     longitude latitude</span>
-<span class="co">#&gt;   &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Sloman Glacier     -68.6    -67.7</span>
-<span class="co">#&gt; 2 Slomer Cove        -59.4    -63.8</span></code></pre></div>
-<div id="name-suggestions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#name-suggestions" class="anchor"></a>Name suggestions</h3>
-<p>Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.</p>
-<p>Let’s say we are preparing a figure of the greater Prydz Bay region (60–90 °E, 65–70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let’s plot all of the place names in this region:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">my_longitude &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">60</span>, <span class="dv">90</span>)
-my_latitude &lt;-<span class="st"> </span><span class="kw">c</span>(-<span class="dv">70</span>, -<span class="dv">65</span>)
-
-this_names &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_filter.html">an_filter</a></span>(g, <span class="dt">extent =</span> <span class="kw">c</span>(my_longitude, my_latitude))
-
-<span class="kw">library</span>(rworldmap)
-map &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">"low"</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>) ## extra xlim space for labels
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>)) ## alternate positions of labels to reduce overlap
-pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
-<span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
-<p><img src="articles/README-map0-1.png" width="648" style="display: block; margin: auto;"></p>
-<p>Oooooo-kay. That’s not ideal. We can ask for suggested names to show on this map:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">suggested &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_suggest.html">an_suggest</a></span>(g, <span class="dt">map_extent =</span> <span class="kw">c</span>(my_longitude, my_latitude), <span class="dt">map_dimensions =</span> <span class="kw">c</span>(<span class="dv">80</span>, <span class="dv">80</span>))</code></pre></div>
-<p>Plot the top ten names purely by score:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">this_names &lt;-<span class="st"> </span><span class="kw">head</span>(suggested, <span class="dv">10</span>)
-
-<span class="kw">library</span>(rworldmap)
-map &lt;-<span class="st"> </span><span class="kw">getMap</span>(<span class="dt">resolution =</span> <span class="st">"low"</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>))
-pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
-<span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
-<p><img src="articles/README-map1-1.png" width="648" style="display: block; margin: auto;"></p>
-<p>Or the ten best names considering both score and spatial coverage:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">this_names &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_thin.html">an_thin</a></span>(suggested, <span class="dv">10</span>)
-<span class="kw">plot</span>(map, <span class="dt">xlim =</span> my_longitude +<span class="st"> </span><span class="kw">c</span>(-<span class="dv">7</span>, <span class="dv">4</span>), <span class="dt">ylim =</span> my_latitude, <span class="dt">col =</span> <span class="st">"grey50"</span>)
-<span class="kw">points</span>(this_names$longitude, this_names$latitude, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="st">"green"</span>, <span class="dt">cex =</span> <span class="dv">2</span>)
-pos &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), <span class="kw">ceiling</span>(<span class="kw">nrow</span>(this_names)/<span class="dv">4</span>))
-pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> </span>pos[<span class="dv">1</span>:<span class="kw">nrow</span>(this_names)]
-<span class="kw">text</span>(this_names$longitude, this_names$latitude, <span class="dt">labels =</span> this_names$place_name, <span class="dt">pos =</span> pos)</code></pre></div>
-<p><img src="articles/README-map2-1.png" width="648" style="display: block; margin: auto;"></p>
+<p>The <code>an_preferred</code> function can help with finding one name per feature. It takes an <code>origin</code> parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified  naming authorities where possible.</p>
+<p>We start with 37629 names in the full CGA, corresponding to 19569 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="reference/an_preferred.html">an_preferred</a></span>(g, <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">"Poland"</span>, <span class="st">"Germany"</span>))</code></pre></div>
+<p>Now we have 19569 names in our data frame, corresponding to the same 19569 distinct features.</p>
 </div>
+<div id="name-suggestions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#name-suggestions" class="anchor"></a>Name suggestions</h2>
+<p>Antanym includes an experimental function that will suggest which features might be best to to name on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.</p>
+<p>See the package vignette and the <code>an_suggest</code> function for more information.</p>
 </div>
 <div id="other-map-examples" class="section level2">
 <h2 class="hasAnchor">
@@ -194,10 +167,10 @@ pos[<span class="kw">order</span>(this_names$longitude)] &lt;-<span class="st"> 
 <p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="articles/README-leafletps.png" width="40%"></a></p>
 <p>See the <a href="https://github.com/AustralianAntarcticDataCentre/antanym-demo">antanym-demo</a> repository for the source code of these examples.</p>
 </div>
-<div id="future-directions" class="section level2">
+<div id="other-packages" class="section level2">
 <h2 class="hasAnchor">
-<a href="#future-directions" class="anchor"></a>Future directions</h2>
-<p>Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetters containing such information, at a later date.</p>
+<a href="#other-packages" class="anchor"></a>Other packages</h2>
+<p>The <a href="https://cran.r-project.org/package=geonames">geonames package</a> also provides access to geographic place names, including from the SCAR Composite Gazetteer. If you need <em>global</em> place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn’t easily used while offline.</p>
 </div>
 </div>
 </div>
