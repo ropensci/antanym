@@ -34,7 +34,8 @@ an_mapscale <- function(map_dimensions, map_extent) {
 #'
 #' Each entry in the Composite Gazetteer of Antarctica has its own web page. The \code{an_url} function will return the URL of the page associated with a given gazetteer entry.
 #'
-#' @references \url{https://www.scar.org/data-products/place-names/}
+#' @references \url{https://data.aad.gov.au/aadc/gaz/scar/}, \url{https://www.scar.org/data-products/place-names/}
+#'
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #'
 #' @return character vector, where each component is a URL to a web page giving more information about the associated gazetteer entry

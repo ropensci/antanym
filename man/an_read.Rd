@@ -79,7 +79,7 @@ Place name data will be downloaded and optionally cached locally. If you wish to
 
 }
 \references{
-\url{https://www.scar.org/data-products/place-names/}
+\url{https://data.aad.gov.au/aadc/gaz/scar/}, \url{https://www.scar.org/data-products/place-names/}
 }
 \seealso{
 \code{\link{an_cache_directory}}, \code{\link{an_gazetteers}}, \code{\link{an_cga_metadata}}

@@ -21,7 +21,7 @@ an_cga_metadata()
 
 }
 \references{
-\url{https://www.scar.org/data-products/place-names/}
+\url{https://data.aad.gov.au/aadc/gaz/scar/}, \url{https://www.scar.org/data-products/place-names/}
 }
 \seealso{
 \code{\link{an_read}}

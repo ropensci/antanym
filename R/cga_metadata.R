@@ -2,7 +2,7 @@
 #'
 #' The Composite Gazetteer of Antarctica data structure (as returned by \code{\link{an_read}}):
 #'
-#' @references \url{https://www.scar.org/data-products/place-names/}
+#' @references \url{https://data.aad.gov.au/aadc/gaz/scar/}, \url{https://www.scar.org/data-products/place-names/}
 #'
 #' @param simplified logical: if TRUE, only describe the simplified set of columns (see the equivalent parameter in \code{\link{an_read}})
 #'

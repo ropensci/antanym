@@ -100,7 +100,7 @@ A data frame of place names can be filtered according to name, geographic locati
 }
 }
 \references{
-\url{https://www.scar.org/data-products/place-names/}
+\url{https://data.aad.gov.au/aadc/gaz/scar/}, \url{https://www.scar.org/data-products/place-names/}
 }
 \seealso{
 \code{\link{an_read}}, \code{\link{an_gazetteers}}, \code{\link{an_origins}}
