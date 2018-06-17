@@ -15,7 +15,7 @@
 #' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster
 #' @importFrom readr read_csv
 #' @importFrom sp bbox coordinates coordinates<- CRS is.projected spTransform SpatialPoints
-#' @importFrom stats dist na.omit predict
+#' @importFrom stats dist na.omit predict setNames
 #' @importFrom stringi stri_trans_general
 #' @importFrom utils download.file write.csv
 NULL
