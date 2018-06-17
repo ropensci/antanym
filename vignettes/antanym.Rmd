@@ -9,11 +9,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r chunkopts, eval=TRUE, echo=FALSE}
+knitr::opts_chunk$set(eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE, tidy=FALSE, cache=FALSE, include=TRUE, dpi=72, fig.width=9, fig.height=6, fig.align="center", results="markup")
+```
+
 ## Overview
 
 This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.
 
-The authoritative source of place names in Antarctica is the Composite Gazetteer of Antarctica (CGA), which is produced by the Scientific Committee on Antarctic Research (SCAR). The CGA consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 &deg;S, including terrestrial and undersea or under-ice.
+The authoritative source of place names in Antarctica is the Composite Gazetteer of Antarctica (CGA), which is produced by the Scientific Committee on Antarctic Research (SCAR). The CGA consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 &deg;S, including terrestrial and undersea or under-ice features.
 
 There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.
 
@@ -31,7 +35,7 @@ The SCAR Composite Gazetteer of Antarctica is made available under a CC-BY licen
 ## Installing
 
 
-```{r, eval = FALSE}
+```{r eval = FALSE}
 install.packages("devtools")
 devtools::install_github("SCAR/antanym")
 ```
@@ -40,7 +44,7 @@ devtools::install_github("SCAR/antanym")
 
 Start by fetching the names data from the host server. Here we use a temporary cache so that we can re-load it later in the session without needing to re-download it:
 
-```{r message = FALSE, warning = FALSE}
+```{r}
 library(antanym)
 g <- an_read(cache = "session")
 ```
@@ -51,102 +55,219 @@ If you want to be able to work offline, you can cache the data to a directory th
 g <- an_read(cache = "persistent")
 ```
 
-Or for complete control over the persistent cache, specify the directory:
-
-```{r eval = FALSE}
-g <- an_read(cache = "c:/temp/gaz")
-```
-
 If you prefer working with `sp` objects, then this will return a `SpatialPointsDataFrame`:
 ```{r as_sp, eval = FALSE}
 gsp <- an_read(sp = TRUE, cache = "session")
 ```
 
+### Data summary
+
 How many names do we have in total?
-```{r message = FALSE, warning = FALSE}
+```{r}
 nrow(g)
 ```
 
 Corresponding to how many distinct features?
-```{r message = FALSE, warning = FALSE}
+```{r}
 length(unique(g$scar_common_id))
 ```
 
-Find all names associated with feature 1589 (Booth Island) and the country of origin of each name:
-```{r message = FALSE, warning = FALSE}
+We can get a list of the feature types in the data:
+```{r}
+head(an_feature_types(g), 10)
+```
+
+### Data structure
+
+A description of the data structure can be found in the `an_load` function help, (the same information is available via `an_cga_metadata`):
+```{r echo = FALSE}
+knitr::kable(an_cga_metadata())
+```
+
+### Finding names
+
+The `an_filter` function provides a range of options to find the names you are interested in.
+
+
+#### Basic searching
+
+A simple search for any place name containing the word 'William':
+```{r}
+an_filter(g, query = "William")
+```
+
+We can filter according to the country or organisation that issued the name. Which bodies (countries or organisations) provided the names in our data?
+```{r}
+an_origins(g)
+```
+
+Find names containing "William" and originating from Australia or the USA:
+```{r}
+an_filter(g, query = "William", origin = "Australia|United States of America")
+```
+
+Compound names can be slightly trickier. This search will return no matches, because the actual place name is 'William Scoresby Archipelago':
+```{r}
+an_filter(g, query = "William Archipelago")
+```
+
+To get around this, we can split the search terms so that each is matched separately (only names matching both "William" and "Archipelago" will be returned):
+```{r}
+an_filter(g, query = c("William", "Archipelago"))
+```
+
+Or a simple text query but additionally constrained by feature type:
+```{r}
+an_filter(g, query = "William", feature_type = "Archipelago")
+```
+
+Or we can use a regular expression:
+```{r}
+an_filter(g, query = "William .* Archipelago")
+```
+
+### Regular expressions
+
+Regular expressions also allow more complex searches. For example, names matching "West" or "East":
+```{r}
+an_filter(g, query = "West|East")
+```
+
+Names **starting** with "West" or "East":
+```{r}
+an_filter(g, query = "^(West|East)")
+```
+
+Names with "West" or "East" appearing as complete words in the name ("\\b" matches a word boundary; see `help("regex")`):
+```{r}
+an_filter(g, query = "\\b(West|East)\\b")
+```
+
+#### Spatial searching
+
+We can filter by spatial extent:
+```{r}
+an_filter(g, extent = c(100, 120, -70, -65))
+```
+
+The extent can also be passed as Spatial or Raster object, in which case its extent will be used:
+```{r}
+my_sp <- SpatialPoints(cbind(c(100, 120), c(-70, -65)))
+an_filter(g, extent = my_sp)
+```
+
+Searching by proximity to a given point, for example islands within 20km of 100 &deg;E, 66 &deg;S:
+```{r}
+an_near(an_filter(g, feature_type = "Island"), loc = c(100, -66), max_distance = 20)
+```
+
+### Resolving multiple names
+
+As noted above, the CGA is a composite gazetteer and so there may be multiple names associated with a given feature. 
+
+Find all names associated with feature 1589 (Booth Island) and show the country of origin of each name:
+```{r}
 an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 ```
 
-Choose one name per feature, preferring the Polish name where there is one:
-```{r message = FALSE, warning = FALSE}
-g <- an_preferred(g, origin = "Poland")
-nrow(g)
+The `an_preferred` function can help with finding one name per feature. It takes an `origin` parameter that specifies one or more preferred name issuers (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified \code{origin} bodies where possible.
+
+We start with `r nrow(g)` names in the full CGA, corresponding to `r length(unique(g$scar_common_id))` distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:
+```{r}
+g <- an_preferred(g, origin = c("Poland", "Germany"))
 ```
 
-Find islands within 20km of 100E, 66S:
-```{r message = FALSE, warning = FALSE}
-nms <- an_near(an_filter(g, feature_type = "Island"), loc = c(100, -66), max_distance = 20)
+Now we have `r nrow(g)` names in our data frame, corresponding to the same `r length(unique(g$scar_common_id))` distinct features.
 
-## or equivalently, using the pipe operator
+Features that have not been named by either of our preferred countries will have a name chosen from another country, with those countries in random order of preference.
+
+
+### Using the pipe operator
+
+All of the above functionality can be achieved in a piped workflow, if that's your preference, e.g.:
+
+```{r}
 nms <- g %>% an_filter(feature_type = "Island") %>% an_near(loc = c(100, -66), max_distance = 20)
-
 nms[, c("place_name", "longitude", "latitude")]
 ```
 
-Find names starting with "Slom":
-```{r message = FALSE, warning = FALSE}
-an_filter(g, query = "^Slom")[, c("place_name", "longitude", "latitude")]
+### Working with sp
+
+If you prefer to work with Spatial objects, the gazetteer data can be converted to a SpatialPointsDataFrame when loaded:
+
+```{r}
+gsp <- an_read(cache = "session", sp = TRUE)
 ```
 
+And the above functions work in the same way, for example:
+```{r}
+my_sp <- SpatialPoints(cbind(c(100, 120), c(-70, -65)))
+an_filter(gsp, extent = my_sp)
+```
 
-### Name suggestions
+### Selecting names for plotting
 
-Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
+Let's say we are preparing a figure of the greater Prydz Bay region (60-90 &deg;E, 65-70 &deg;S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let's plot all of the place names in this region:
 
-Let's say we are preparing a figure of the greater Prydz Bay region (60&ndash;90 &deg;E, 65&ndash;70 &deg;S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let's plot all of the place names in this region:
-
-```{r map0, message = FALSE, warning = FALSE, dpi = 72, fig.width = 9, fig.height = 6, fig.align = "center"}
+```{r map0}
 my_longitude <- c(60, 90)
 my_latitude <- c(-70, -65)
 
 this_names <- an_filter(g, extent = c(my_longitude, my_latitude))
 
-library(rworldmap)
-map <- getMap(resolution = "low")
-plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50") ## extra xlim space for labels
-points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
-pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4)) ## alternate positions of labels to reduce overlap
-pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
-text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
+if (!requireNamespace("rworldmap", quietly = TRUE)) {
+  message("Skipping map figure - install the rworldmap package to see it.")
+} else {
+  library(rworldmap)
+  map <- getMap(resolution = "low")
+  plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
+  ## allow extra xlim space for labels
+  points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
+  ## alternate the positions of labels to reduce overlap
+  pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
+  pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
+  text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
+}
 ```
 
-Oooooo-kay. That's not ideal. We can ask for suggested names to show on this map:
+Oooooo-kay. That's not ideal.
 
-```{r message = FALSE, warning = FALSE}
+Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps. We can ask for suggested names to show on our example map:
+
+```{r}
 suggested <- an_suggest(g, map_extent = c(my_longitude, my_latitude), map_dimensions = c(80, 80))
 ```
 
-Plot the top ten names purely by score:
+Plot the top ten suggested names purely by score:
 
-```{r map1, message = FALSE, warning = FALSE, dpi = 72, fig.width = 9, fig.height = 6, fig.align = "center"}
+```{r map1}
 this_names <- head(suggested, 10)
 
-plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
-points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
-pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
-pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
-text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
+if (!requireNamespace("rworldmap", quietly = TRUE)) {
+  message("Skipping map figure - install the rworldmap package to see it.")
+} else {
+  plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
+  points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
+  pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
+  pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
+  text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
+}
 ```
 
-Or the ten best names considering both score and spatial coverage:
+Or the ten best suggested names considering both score and spatial coverage:
 
-```{r map2, message = FALSE, warning = FALSE, dpi = 72, fig.width = 9, fig.height = 6, fig.align = "center"}
+```{r map2}
 this_names <- an_thin(suggested, n = 10)
-plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
-points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
-pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
-pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
-text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
+
+if (!requireNamespace("rworldmap", quietly = TRUE)) {
+  message("Skipping map figure - install the rworldmap package to see it.")
+} else {
+  plot(map, xlim = my_longitude + c(-7, 4), ylim = my_latitude, col = "grey50")
+  points(this_names$longitude, this_names$latitude, pch = 21, bg = "green", cex = 2)
+  pos <- rep(c(1, 2, 3, 4), ceiling(nrow(this_names)/4))
+  pos[order(this_names$longitude)] <- pos[1:nrow(this_names)]
+  text(this_names$longitude, this_names$latitude, labels = this_names$place_name, pos = pos)
+}
 ```
 
 ## Other map examples
@@ -166,3 +287,6 @@ See the [antanym-demo](https://github.com/AustralianAntarcticDataCentre/antanym-
 
 Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetteers containing such information, at a later date.
 
+## Other packages
+
+The [geonames package](https://cran.r-project.org/package=geonames) also provides access to geographic place names, including from the SCAR Composite Gazetteer. If you need *global* place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn't easily used while offline.
