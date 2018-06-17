@@ -1,6 +1,6 @@
 # antanym 0.4.0
 
-* General revisions following rOpenSci review. Note several breaking changes:
+General revisions following rOpenSci review. Note several breaking changes:
 
   - `an_read` now takes a `cache` parameter instead of `cache_directory` (and now can have special values "session" and "persistent")
   - `an_filter` and `an_suggest` now take an `origin` parameter that replaces the previous `origin_country` and `cga_source` parameters
