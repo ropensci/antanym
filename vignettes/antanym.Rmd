@@ -152,7 +152,7 @@ an_filter(g, extent = c(100, 120, -70, -65))
 
 The extent can also be passed as Spatial or Raster object, in which case its extent will be used:
 ```{r}
-my_sp <- SpatialPoints(cbind(c(100, 120), c(-70, -65)))
+my_sp <- sp::SpatialPoints(cbind(c(100, 120), c(-70, -65)))
 an_filter(g, extent = my_sp)
 ```
 
@@ -201,7 +201,7 @@ gsp <- an_read(cache = "session", sp = TRUE)
 
 And the above functions work in the same way, for example:
 ```{r}
-my_sp <- SpatialPoints(cbind(c(100, 120), c(-70, -65)))
+my_sp <- sp::SpatialPoints(cbind(c(100, 120), c(-70, -65)))
 an_filter(gsp, extent = my_sp)
 ```
 
