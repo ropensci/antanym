@@ -79,10 +79,12 @@ head(an_feature_types(g), 10)
 
 ### Data structure
 
-A description of the data structure can be found in the `an_load` function help, (the same information is available via `an_cga_metadata`):
+A description of the data structure can be found in the `an_load` function help, (the same information is available via `an_cga_metadata`). By default, the gazetteer data consists of these columns:
 ```{r echo = FALSE}
 knitr::kable(an_cga_metadata())
 ```
+
+A few additional (but probably less useful) columns can be included by calling `an_read(..., simplified = FALSE)`. Consult the `an_read` documentation for more information.
 
 ### Finding names
 
