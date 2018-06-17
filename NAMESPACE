@@ -2,6 +2,7 @@
 
 export("%>%")
 export(an_cache_directory)
+export(an_cga_metadata)
 export(an_feature_types)
 export(an_filter)
 export(an_gazetteers)
