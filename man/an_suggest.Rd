@@ -19,8 +19,7 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions)
 data.frame of names with a "score" column added. Score values range from 0 to 1. The data frame will be sorted in descending score order. Names with higher scores are those that are suggested as the most suitable for display.
 }
 \description{
-Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-This is an experimental function and currently only implemented for \code{map_scale} values of 10 million or larger.
+Features are given a suitability score based on maps prepared by expert cartographers. Data were tabulated from a collection of such maps, indicating for each feature whether it was named on a given map, along with details (such as scale) of the map. These data are used as the basis of a recommendation algorithm, which suggests the best features to name on a map given its properties (extent and scale). This is an experimental function and currently only implemented for \code{map_scale} values of 10 million or larger.
 }
 \examples{
 \dontrun{

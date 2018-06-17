@@ -1,7 +1,6 @@
 #' Suggest names for a map (experimental)
 #'
-#' Features are given a suitability score based on how often (and at what map scales) they have been named on maps prepared by expert cartographers.
-#' This is an experimental function and currently only implemented for \code{map_scale} values of 10 million or larger.
+#' Features are given a suitability score based on maps prepared by expert cartographers. Data were tabulated from a collection of such maps, indicating for each feature whether it was named on a given map, along with details (such as scale) of the map. These data are used as the basis of a recommendation algorithm, which suggests the best features to name on a map given its properties (extent and scale). This is an experimental function and currently only implemented for \code{map_scale} values of 10 million or larger.
 #'
 #' @param gaz data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}}, \code{\link{an_preferred}}, or \code{\link{an_filter}}
 #' @param map_scale numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{map_extent} and \code{map_dimensions}
