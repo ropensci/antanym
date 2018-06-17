@@ -1,7 +1,7 @@
 #' Calculate approximate map scale
 #'
 #' @param map_dimensions numeric: 2-element numeric giving width and height of the map, in mm
-#' @param map_extent raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the geographic extent of the map
+#' @param map_extent vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the geographic extent of the map. \code{map_extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})
 #'
 #' @return numeric
 #'
@@ -11,8 +11,17 @@
 #'
 #' @export
 an_mapscale <- function(map_dimensions, map_extent) {
-    assert_that((is.numeric(map_extent) && length(map_extent) == 4) || inherits(map_extent, "Extent"))
-    if (!inherits(map_extent, "Extent")) map_extent <- extent(as.numeric(map_extent))
+    assert_that((is.numeric(map_extent) && length(map_extent) == 4) || inherits(map_extent, "Extent") || inherits(map_extent, "Raster") || inherits(map_extent, "Spatial"))
+    ## make sure map_extent is an Extent object
+    if (inherits(map_extent, "Raster")) map_extent <- raster::extent(map_extent)
+    if (inherits(map_extent, "Spatial")) map_extent <- sp::bbox(map_extent)
+    if (inherits(map_extent, "matrix")) {
+        ## if matrix, assume is an sp::bbox object
+        map_extent <- as.numeric(map_extent)
+        ## this is ordered c(xmin, ymin, xmax, ymax)
+        map_extent <- map_extent[c(1, 3, 2, 4)]
+    }
+    if (!inherits(map_extent, "Extent")) map_extent <- raster::extent(as.numeric(map_extent))
     mapext <- raster()
     extent(mapext) <- map_extent
 

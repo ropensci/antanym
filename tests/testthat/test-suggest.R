@@ -24,4 +24,21 @@ test_that("an_suggest works as expected", {
     ## should give same result as extent and dims
     suggested2 <- an_suggest(g[1:100, ], map_extent = ext, map_dimensions = dims)
     expect_identical(suggested, suggested2)
+
+    ## extent can be passed in various formats
+    ## as a raster object
+    raster_ext <- raster()
+    extent(raster_ext) <- ext
+    suggested2 <- an_suggest(g[1:100, ], map_scale = ms, map_extent = raster_ext)
+    expect_identical(suggested, suggested2)
+    ## as a raster extent object
+    suggested2 <- an_suggest(g[1:100, ], map_scale = ms, map_extent = extent(raster_ext))
+    expect_identical(suggested, suggested2)
+    ## Spatial object
+    my_sp <- sp::SpatialPoints(cbind(c(60, 90), c(-70, -60)))
+    suggested2 <- an_suggest(g[1:100, ], map_scale = ms, map_extent = my_sp)
+    expect_identical(suggested, suggested2)
+    ## Spatial bbox object
+    suggested2 <- an_suggest(g[1:100, ], map_scale = ms, map_extent = sp::bbox(my_sp))
+    expect_identical(suggested, suggested2)
 })

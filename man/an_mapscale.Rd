@@ -9,7 +9,7 @@ an_mapscale(map_dimensions, map_extent)
 \arguments{
 \item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm}
 
-\item{map_extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the geographic extent of the map}
+\item{map_extent}{vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the geographic extent of the map. \code{map_extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})}
 }
 \value{
 numeric

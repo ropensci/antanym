@@ -11,7 +11,7 @@ an_suggest(gaz, map_scale, map_extent, map_dimensions)
 
 \item{map_scale}{numeric: the scale of the map (e.g. 20e6 for a 1:20M map). If \code{map_scale} is not provided, it will be estimated from \code{map_extent} and \code{map_dimensions}}
 
-\item{map_extent}{raster Extent object or vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. This is required if \code{map_scale} is not provided, and optional if \code{map_scale} is provided (if \code{map_extent} is provided in this situation then the \code{gaz} data frame will be filtered to this extent before the suggestion algorithm is applied; otherwise all names in \code{gaz} will be considered)}
+\item{map_extent}{vector of c(longitude_min, longitude_max, latitude_min, latitude_max): the extent of the area for which name suggestions are sought. This is required if \code{map_scale} is not provided, and optional if \code{map_scale} is provided (if \code{map_extent} is provided in this situation then the \code{gaz} data frame will be filtered to this extent before the suggestion algorithm is applied; otherwise all names in \code{gaz} will be considered). \code{map_extent} can also be passed as a raster Extent object, a Raster object (in which case its extent will be used), a Spatial object (in which case the bounding box of the object will be used as the extent), or a matrix (in which case it will be assumed to be the output of \code{sp::bbox})}
 
 \item{map_dimensions}{numeric: 2-element numeric giving width and height of the map, in mm. Not required if \code{map_scale} is provided}
 }

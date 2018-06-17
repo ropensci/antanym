@@ -12,4 +12,20 @@ test_that("map scale estimation works", {
 
     ## 50M map
     expect_lte(abs(round(an_mapscale(c(150, 150), c(-180, 180, -90, -50))/1e6)-50), 1)
+
+    ## check that an_mapscale copes with all map_extent input formats
+    ext <- c(60, 90, -70, -60)
+    dims <- c(100, 100)
+    ms0 <- an_mapscale(map_dimensions = dims, map_extent = ext)
+    ## as a raster object
+    raster_ext <- raster()
+    extent(raster_ext) <- ext
+    expect_identical(ms0, an_mapscale(map_dimensions = dims, map_extent = raster_ext))
+    ## as a raster extent object
+    expect_identical(ms0, an_mapscale(map_dimensions = dims, map_extent = extent(raster_ext)))
+    ## Spatial object
+    my_sp <- sp::SpatialPoints(cbind(c(60, 90), c(-70, -60)))
+    expect_identical(ms0, an_mapscale(map_dimensions = dims, map_extent = my_sp))
+    ## Spatial bbox object
+    expect_identical(ms0, an_mapscale(map_dimensions = dims, map_extent = sp::bbox(my_sp)))
 })
