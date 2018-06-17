@@ -14,7 +14,7 @@ The authoritative source of place names in Antarctica is the Composite Gazetteer
 
 There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.
 
-The composite nature of the CGA means that there may be multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
+The composite nature of the CGA means that there are often multiple names associated with a given feature. Consider using the `an_preferred()` function for resolving a single name per feature.
 
 For more information, see the [CGA home page](http://data.aad.gov.au/aadc/gaz/scar/). The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR [Standing Committee on Antarctic Geographic Information (SCAGI)](http://www.scar.org/data-products/scagi) coordinates the project. This R package is a product of the SCAR [Expert Group on Antarctic Biodiversity Informatics](http://www.scar.org/ssg/life-sciences/eg-abi) and SCAGI.
 
@@ -68,7 +68,7 @@ an_filter(g, query = "^Slom")[, c("place_name", "longitude", "latitude")]
 #> 3 Slomer Cove        -59.4    -63.8
 ```
 
-Find islands within 20km of 100E, 66S:
+Find islands within 20km of 100 °E, 66 °S:
 
 ``` r
 nms <- an_near(an_filter(g, feature_type = "Island"), loc = c(100, -66), max_distance = 20)
@@ -88,7 +88,7 @@ nms[, c("place_name", "longitude", "latitude")]
 Resolving multiple names per feature
 ------------------------------------
 
-As noted above, the CGA is a composite gazetteer and so there may be multiple names associated with a given feature. For example, we can see all names associated with feature 1589 (Booth Island) and the country of origin of each name:
+As noted above, the CGA is a composite gazetteer and so there are often multiple names associated with a given feature. For example, we can see all names associated with feature 1589 (Booth Island) and the country of origin of each name:
 
 ``` r
 an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
@@ -104,7 +104,7 @@ an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 #> 7 Booth Island United States of America
 ```
 
-The `an_preferred` function can help with finding one name per feature. It takes an `origin` parameter that specifies one or more preferred name issuers (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified bodies where possible.
+The `an_preferred` function can help with finding one name per feature. It takes an `origin` parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified naming authorities where possible.
 
 We start with 37629 names in the full CGA, corresponding to 19569 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:
 
@@ -117,7 +117,7 @@ Now we have 19569 names in our data frame, corresponding to the same 19569 disti
 Name suggestions
 ----------------
 
-Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
+Antanym includes an experimental function that will suggest which features might be best to to name on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.
 
 See the package vignette and the `an_suggest` function for more information.
 

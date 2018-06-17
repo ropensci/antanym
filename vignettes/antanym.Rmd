@@ -172,7 +172,7 @@ Find all names associated with feature 1589 (Booth Island) and show the country 
 an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 ```
 
-The `an_preferred` function can help with finding one name per feature. It takes an `origin` parameter that specifies one or more preferred name issuers (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified \code{origin} bodies where possible.
+The `an_preferred` function can help with finding one name per feature. It takes an `origin` parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified \code{origin} naming authorities where possible.
 
 We start with `r nrow(g)` names in the full CGA, corresponding to `r length(unique(g$scar_common_id))` distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:
 ```{r}
