@@ -172,14 +172,16 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
 
 ## internal helper function
 do_fetch_data <- function(download_url, verbose) {
-    temp <- GET(download_url, httr::config(ssl_verifypeer = 0L))
-    if (http_error(temp)) {
-        temp <- RETRY("GET", download_url, httr::config(ssl_verifypeer = 0L),
-                      times = 3,
-                      pause_base = 0.1,
-                      pause_cap = 3,
-                      quiet = !verbose)
-    }
+    tryCatch({
+        temp <- GET(download_url, httr::config(ssl_verifypeer = 0L))
+        if (http_error(temp)) stop(http_status(temp)$message)
+        }, error = function(e) {
+            temp <- RETRY("GET", download_url, httr::config(ssl_verifypeer = 0L),
+                          times = 3,
+                          pause_base = 0.1,
+                          pause_cap = 3,
+                          quiet = !verbose)
+        })
     if (http_error(temp)) stop("error downloading gazetteer data: ", http_status(temp)$message)
     suppressMessages(httr::content(temp, as = "parsed", encoding = "UTF-8"))
 }
