@@ -1,0 +1,27 @@
+context("name suggestions")
+
+g <- an_read(cache = "session")
+
+test_that("an_suggest works as expected", {
+    ext <- c(60, 90, -70, -60)
+    dims <- c(100, 100)
+
+    ## need either map_scale OR map_dimensions and map_extent
+    expect_error(suggested <- an_suggest(g[1:100, ]))
+    expect_error(suggested <- an_suggest(g[1:100, ], map_extent = ext))
+    expect_error(suggested <- an_suggest(g[1:100, ], map_dimensions = dims))
+
+    ## ok
+    suggested <- an_suggest(g[1:100, ], map_scale = 12e6)
+    suggested <- an_suggest(g[1:100, ], map_extent = ext, map_dimensions = dims)
+
+    ## too small a scale
+    expect_error(suggested <- an_suggest(g[1:100, ], map_scale = 1e6), "not yet implemented for map_scale")
+
+    ## map extent and scale
+    ms <- an_mapscale(map_dimensions = dims, map_extent = ext)
+    suggested <- an_suggest(g[1:100, ], map_scale = ms, map_extent = ext)
+    ## should give same result as extent and dims
+    suggested2 <- an_suggest(g[1:100, ], map_extent = ext, map_dimensions = dims)
+    expect_identical(suggested, suggested2)
+})
