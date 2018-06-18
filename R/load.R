@@ -184,10 +184,8 @@ do_fetch_data <- function(download_url, verbose) {
                           quiet = !verbose)
         })
     if (http_error(temp)) stop("error downloading gazetteer data: ", http_status(temp)$message)
-    suppressMessages(httr::content(temp, as = "parsed", encoding = "UTF-8"))
+    suppressMessages(readr::read_csv(httr::content(temp, as = "text", encoding = "UTF-8")))
 }
-
-
 
 #' The cache directory used by antanym
 #'
