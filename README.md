@@ -4,6 +4,7 @@ antanym
 =======
 
 [![Travis-CI Build Status](https://travis-ci.org/SCAR/antanym.svg?branch=master)](https://travis-ci.org/SCAR/antanym) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SCAR/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/SCAR/antanym) [![codecov](https://codecov.io/gh/SCAR/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/SCAR/antanym)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
 Overview
 --------
