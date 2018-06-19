@@ -10,7 +10,7 @@ test_that("session caching works", {
     finfo <- file.info(cfile)
 
     ## re-read using cache
-    g <- an_read(cache = "session")
+    expect_message(g <- an_read(cache = "session", verbose = TRUE), "using cached copy")
     expect_identical(finfo$mtime, file.info(cfile)$mtime)
 
     ## refresh cache
