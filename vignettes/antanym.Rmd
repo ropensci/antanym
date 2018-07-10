@@ -49,7 +49,7 @@ library(antanym)
 g <- an_read(cache = "session")
 ```
 
-If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions:
+If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions. The location of this directory is determined by `rappdirs::user_cache_dir()` (see `an_cache_directory("persistent")` if you want to know what it is):
 
 ```{r eval = FALSE}
 g <- an_read(cache = "persistent")
