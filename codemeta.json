@@ -7,8 +7,8 @@
   "identifier": "antanym",
   "description": "Antarctic geographic names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.",
   "name": "antanym: Antarctic geographic place names",
-  "codeRepository": "https://github.com/SCAR/antanym",
-  "issueTracker": "https://github.com/SCAR/antanym/issues",
+  "codeRepository": "https://github.com/ropensci/antanym",
+  "issueTracker": "https://github.com/ropensci/antanym/issues",
   "license": "https://spdx.org/licenses/MIT",
   "version": "0.2.6",
   "programmingLanguage": {
@@ -266,8 +266,8 @@
   "applicationCategory": "Antarctic/SouthernOcean",
   "isPartOf": "https://scar.org",
   "keywords": ["Antarctic", "SouthernOcean", "placenames", "gazetteer"],
-  "contIntegration": "https://travis-ci.org/SCAR/antanym",
-  "readme": "https://github.com/SCAR/antanym/blob/master/README.md",
+  "contIntegration": "https://travis-ci.org/ropensci/antanym",
+  "readme": "https://github.com/ropensci/antanym/blob/master/README.md",
   "fileSize": "1769.203KB",
   "citation": [
     {
@@ -286,7 +286,7 @@
         }
       ],
       "name": "antanym: An R package for Antarctic geographic placenames",
-      "url": "https://github.com/AustralianAntarcticDataCentre/antanym"
+      "url": "https://github.com/ropensci/antanym"
     }
   ]
 }

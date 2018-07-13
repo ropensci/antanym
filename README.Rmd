@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 
 # antanym
 
-[![Travis-CI Build Status](https://travis-ci.org/SCAR/antanym.svg?branch=master)](https://travis-ci.org/SCAR/antanym)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SCAR/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/SCAR/antanym)
-[![codecov](https://codecov.io/gh/SCAR/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/SCAR/antanym)
+[![Travis-CI Build Status](https://travis-ci.org/ropensci/antanym.svg?branch=master)](https://travis-ci.org/ropensci/antanym)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/antanym)
+[![codecov](https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/antanym)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/antanym)](http://cran.r-project.org/web/packages/antanym) 
 ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/antanym)
@@ -44,8 +44,8 @@ The SCAR Composite Gazetteer of Antarctica is made available under a CC-BY licen
 
 
 ```{r, eval = FALSE}
-install.packages("devtools")
-devtools::install_github("SCAR/antanym")
+install.packages("remotes")
+remotes::install_github("ropensci/antanym")
 ```
 
 ## Example usage
@@ -132,3 +132,5 @@ See the [antanym-demo](https://github.com/AustralianAntarcticDataCentre/antanym-
 ## Other packages
 
 The [geonames package](https://cran.r-project.org/package=geonames) also provides access to geographic place names, including from the SCAR Composite Gazetteer. If you need *global* place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn't easily used while offline.
+
+[![ropensci_footer](https://ropensci.org/public_images/scar_footer.png)](https://ropensci.org)
