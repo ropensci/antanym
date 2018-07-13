@@ -3,10 +3,7 @@
 antanym
 =======
 
-[![Travis-CI Build Status](https://travis-ci.org/ropensci/antanym.svg?branch=master)](https://travis-ci.org/ropensci/antanym) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/antanym) [![codecov](https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/antanym)
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/antanym)](http://cran.r-project.org/web/packages/antanym) 
-![downloads](http://cranlogs.r-pkg.org/badges/grand-total/antanym)
+[![Travis-CI Build Status](https://travis-ci.org/ropensci/antanym.svg?branch=master)](https://travis-ci.org/ropensci/antanym) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/antanym) [![codecov](https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/antanym) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/antanym)](http://cran.r-project.org/web/packages/antanym) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/antanym)
 
 Overview
 --------
@@ -49,14 +46,14 @@ How many names do we have in total?
 
 ``` r
 nrow(g)
-#> [1] 37629
+#> [1] 37661
 ```
 
 Corresponding to how many distinct features?
 
 ``` r
 length(unique(g$scar_common_id))
-#> [1] 19569
+#> [1] 19601
 ```
 
 Find names starting with "Slom":
@@ -109,13 +106,13 @@ an_filter(g, feature_ids = 1589)[, c("place_name", "origin")]
 
 The `an_preferred` function can help with finding one name per feature. It takes an `origin` parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified naming authorities where possible.
 
-We start with 37629 names in the full CGA, corresponding to 19569 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:
+We start with 37661 names in the full CGA, corresponding to 19601 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:
 
 ``` r
 g <- an_preferred(g, origin = c("Poland", "Germany"))
 ```
 
-Now we have 19569 names in our data frame, corresponding to the same 19569 distinct features.
+Now we have 19601 names in our data frame, corresponding to the same 19601 distinct features.
 
 Name suggestions
 ----------------

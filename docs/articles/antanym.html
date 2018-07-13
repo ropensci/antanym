@@ -49,7 +49,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/SCAR/antanym">
+  <a href="https://github.com/ropensci/antanym">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -69,7 +69,7 @@
       <h1>Antarctic geographic placenames</h1>
                         <h4 class="author">Ben Raymond, Michael Sumner</h4>
             
-            <h4 class="date">2018-06-17</h4>
+            <h4 class="date">2018-07-14</h4>
           </div>
 
     
@@ -95,8 +95,8 @@
 <div id="installing" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installing" class="anchor"></a>Installing</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"devtools"</span>)
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"SCAR/antanym"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"remotes"</span>)
+remotes<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"ropensci/antanym"</span>)</code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -104,7 +104,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <p>Start by fetching the names data from the host server. Here we use a temporary cache so that we can re-load it later in the session without needing to re-download it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(antanym)
 g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">cache =</span> <span class="st">"session"</span>)</code></pre></div>
-<p>If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions:</p>
+<p>If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions. The location of this directory is determined by <code><a href="http://www.rdocumentation.org/packages/rappdirs/topics/user_cache_dir">rappdirs::user_cache_dir()</a></code> (see <code><a href="../reference/an_cache_directory.html">an_cache_directory("persistent")</a></code> if you want to know what it is):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">cache =</span> <span class="st">"persistent"</span>)</code></pre></div>
 <p>If you prefer working with <code>sp</code> objects, then this will return a <code>SpatialPointsDataFrame</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">gsp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.html">an_read</a></span>(<span class="dt">sp =</span> <span class="ot">TRUE</span>, <span class="dt">cache =</span> <span class="st">"session"</span>)</code></pre></div>
@@ -113,10 +113,10 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.h
 <a href="#data-summary" class="anchor"></a>Data summary</h3>
 <p>How many names do we have in total?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">nrow</span>(g)</code></pre></div>
-<pre><code>## [1] 37629</code></pre>
+<pre><code>## [1] 37661</code></pre>
 <p>Corresponding to how many distinct features?</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(<span class="kw">unique</span>(g<span class="op">$</span>scar_common_id))</code></pre></div>
-<pre><code>## [1] 19569</code></pre>
+<pre><code>## [1] 19601</code></pre>
 <p>We can get a list of the feature types in the data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/an_feature_types.html">an_feature_types</a></span>(g), <span class="dv">10</span>)</code></pre></div>
 <pre><code>##  [1] "Aiguilles"           "Anchorage"           "Archipelago"        
@@ -418,9 +418,9 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_read.h
 ## 6 Booth Island Russia                  
 ## 7 Booth Island United States of America</code></pre>
 <p>The <code>an_preferred</code> function can help with finding one name per feature. It takes an <code>origin</code> parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified  naming authorities where possible.</p>
-<p>We start with 37629 names in the full CGA, corresponding to 19569 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:</p>
+<p>We start with 37661 names in the full CGA, corresponding to 19601 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/an_preferred.html">an_preferred</a></span>(g, <span class="dt">origin =</span> <span class="kw">c</span>(<span class="st">"Poland"</span>, <span class="st">"Germany"</span>))</code></pre></div>
-<p>Now we have 19569 names in our data frame, corresponding to the same 19569 distinct features.</p>
+<p>Now we have 19601 names in our data frame, corresponding to the same 19601 distinct features.</p>
 <p>Features that have not been named by either of our preferred countries will have a name chosen from another country, with those countries in random order of preference.</p>
 </div>
 <div id="using-the-pipe-operator" class="section level3">
@@ -432,7 +432,7 @@ nms[, <span class="kw">c</span>(<span class="st">"place_name"</span>, <span clas
 <pre><code>## # A tibble: 1 x 3
 ##   place_name    longitude latitude
 ##   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Foster Island       100    -66.1</code></pre>
+## 1 Severnyj holm       100    -66.1</code></pre>
 </div>
 <div id="working-with-sp" class="section level3">
 <h3 class="hasAnchor">
