@@ -1,17 +1,14 @@
-citHeader("To cite antanym in publications use:")
+citHeader("To cite antanym and the SCAR Composite Gazetteer in publications use:")
 
 citEntry(entry = "Manual",
-  title        = "antanym: An R package for Antarctic geographic placenames",
-  author       = personList(as.person("Ben Raymond"),
-                   as.person("Michael Sumner")),
-  year         = "2016",
-  url          = "https://github.com/AustralianAntarcticDataCentre/antanym",
+  title        = "Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. Data obtained via the antanym R package: https://github.com/ropensci/antanym",
+  author       = personList(person("Secretariat SCAR")),
+  year         = paste0("1992, updated ", format(Sys.Date(), "%Y")),
+  url          = "http://gcmd.nasa.gov/records/SCAR_Gazetteer.html",
 
   textVersion  =
-  paste("Raymond B, Sumner MD (2016)",
-        "antanym: An R package for Antarctic geographic placenames.",
-        "https://github.com/AustralianAntarcticDataCentre/antanym",
-        "CGA Names data comes from: Secretariat SCAR (1992, updated 2016). Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)")
+  paste("Secretariat SCAR (1992 updated", format(Sys.Date(), "%Y)"),
+        "Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)",
+        "Data obtained via the antanym R package: ",
+        "https://github.com/ropensci/antanym")
 )
-
-citFooter("CGA names data comes from: Secretariat SCAR (1992, updated 2016). Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (http://gcmd.nasa.gov/records/SCAR_Gazetteer.html)")
