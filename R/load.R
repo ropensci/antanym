@@ -74,9 +74,9 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     ## currently the gazetteers parameter does nothing, since we only have the CGA to load
     need_to_fetch_data <- FALSE
     local_file_name <- "gaz_data.csv"
-    ##download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES&outputFormat=csv"
+    download_url <- "https://data.aad.gov.au/geoserver/aadc/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=aadc:SCAR_CGA_PLACE_NAMES&outputFormat=csv"
     ## use the interim AWS copy, it's much faster
-    download_url <- "https://s3-ap-southeast-2.amazonaws.com/aadc-gaz-scar/export/SCAR_CGA_PLACE_NAMES_all.csv"
+    ##download_url <- "https://s3-ap-southeast-2.amazonaws.com/aadc-gaz-scar/export/SCAR_CGA_PLACE_NAMES_all.csv"
     if (!missing(cache)) {
         cache_directory <- an_cache_directory(cache)
         ## create cache directory if necessary
