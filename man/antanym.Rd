@@ -4,7 +4,6 @@
 \name{antanym}
 \alias{antanym}
 \alias{antanym-package}
-\alias{antanym-package}
 \title{\pkg{antanym}}
 \description{
 Antarctic geographic place names from the Composite Gazetteer of Antarctica, and functions for working with those place names.

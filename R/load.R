@@ -129,6 +129,14 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
     }
     ## rename "gazetteer" to "cga_source_gazetteer"
     names(g)[names(g) == "gazetteer"] <- "cga_source_gazetteer"
+    ## fix some missing entries here
+    idx <- is.na(g$cga_source_gazetteer) & g$source_country_code %in% c("GBR", "NOR")
+    if (any(idx)) g$cga_source_gazetteer[idx] <- g$source_country_code[idx]
+
+    ## strip leading/trailing whitespaces from text columns
+    char_cols <- vapply(seq_len(ncol(g)), function(z) inherits(g[[z]], "character"), FUN.VALUE = TRUE, USE.NAMES = FALSE)
+    for (z in which(char_cols)) g[[z]] <- sub("^[[:space:]]+", "", sub("[[:space:]]+$", "", g[[z]]))
+
     ## add "gazetteer" column (meaning the overall gazetteer name, CGA in this case)
     g$gazetteer <- "CGA"
 
