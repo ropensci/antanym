@@ -36,6 +36,7 @@ Suggests:
   knitr,
   leaflet,
   rgdal,
+  rgeos,
   rmarkdown,
   rworldmap
 RoxygenNote: 6.1.0
