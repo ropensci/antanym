@@ -1,7 +1,7 @@
 Package: antanym
 Type: Package
 Title: Antarctic Geographic Place Names
-Version: 0.4.2
+Version: 0.4.3
 Authors@R: c(person("Ben", "Raymond", email = "ben.raymond@aad.gov.au", role = c("aut", "cre")),
 	     person("Michael", "Sumner", email = "michael.sumner@aad.gov.au", role="aut"),
 	     person("John", "Baumgartner", role = c("ctb", "rev")),
@@ -39,7 +39,7 @@ Suggests:
   rgeos,
   rmarkdown,
   rworldmap
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 X-schema.org-applicationCategory: Antarctic/Southern Ocean
 X-schema.org-keywords: Antarctic, Southern Ocean, place names, gazetteer

@@ -125,7 +125,7 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
         ## fetch using httr::GET, because read_csv chokes on SSL errors
         g <- do_fetch_data(download_url, verbose)
     } else {
-        suppressMessages(g <- readr::read_csv(local_file_name))
+        suppressMessages(g <- read_csv_with_col_spec(local_file_name))
     }
     ## rename "gazetteer" to "cga_source_gazetteer"
     names(g)[names(g) == "gazetteer"] <- "cga_source_gazetteer"
@@ -195,7 +195,7 @@ do_fetch_data <- function(download_url, verbose) {
                           quiet = !verbose)
         })
     if (http_error(temp)) stop("error downloading gazetteer data: ", http_status(temp)$message)
-    suppressMessages(readr::read_csv(httr::content(temp, as = "text", encoding = "UTF-8")))
+    suppressMessages(read_csv_with_col_spec(httr::content(temp, as = "text", encoding = "UTF-8")))
 }
 
 #' The cache directory used by antanym
@@ -234,4 +234,75 @@ gaz_cols_to_show <- function(gaz, simplified) {
     intersect(nms, names(gaz))
 }
 
-
+read_csv_with_col_spec <- function(f) {
+    readr::read_csv(f, col_types = cols(
+                           FID = col_character(),
+                           place_name_mapping = col_character(),
+                           place_name_gazetteer = col_character(),
+                           gaz_id = col_double(),
+                           country_name = col_character(),
+                           latitude = col_double(),
+                           longitude = col_double(),
+                           altitude = col_double(),
+                           feature_type_name = col_character(),
+                           narrative = col_character(),
+                           named_for = col_character(),
+                           meeting_date = col_character(),
+                           meeting_paper = col_character(),
+                           db_date_create = col_datetime(format = ""),
+                           date_revised = col_datetime(format = ""),
+                           gazetteer = col_character(),
+                           scar_feature_class = col_character(),
+                           scar_common_id = col_double(),
+                           is_complete_flag = col_character(),
+                           view_by_public_flag = col_character(),
+                           date_named_old = col_skip(),
+                           aus_display_scale_20M = col_character(),
+                           aus_display_scale_10M = col_character(),
+                           aus_display_scale_5M = col_character(),
+                           aus_display_scale_2M = col_character(),
+                           aus_display_scale_1M = col_character(),
+                           aus_display_scale_500k = col_character(),
+                           aus_display_scale_250k = col_character(),
+                           aus_display_scale_100k = col_character(),
+                           aus_display_scale_50k = col_character(),
+                           aus_display_scale_25k = col_character(),
+                           aus_display_scale_10k = col_character(),
+                           aus_display_scale_5k = col_character(),
+                           aus_display_scale_1k = col_character(),
+                           remote_sensor_info = col_character(),
+                           is_proposed = col_character(),
+                           is_deleted = col_character(),
+                           coordinate_accuracy = col_double(),
+                           altitude_accuracy = col_double(),
+                           source_institution = col_character(),
+                           source_person = col_character(),
+                           accepted_by = col_character(),
+                           verified_by = col_character(),
+                           source_country_code = col_character(),
+                           source_name = col_character(),
+                           source_scale = col_character(),
+                           scar_map_cat_id = col_double(),
+                           comments = col_character(),
+                           source_publisher = col_character(),
+                           source_identifier = col_character(),
+                           status = col_character(),
+                           status_notes = col_character(),
+                           source_type = col_character(),
+                           date_named = col_datetime(format = ""),
+                           updated = col_character(),
+                           inserted = col_character(),
+                           display_name = col_character(),
+                           iconic_image_catalogue_no = col_character(),
+                           max_digital_display_scale = col_double(),
+                           location_method_id = col_double(),
+                           metadata_entry_id = col_character(),
+                           survey_station_code = col_character(),
+                           satellite_image_ref = col_character(),
+                           online_display_scales = col_character(),
+                           geometry = col_character(),
+                           reason = col_character(),
+                           relic_flag = col_character(),
+                           country_id = col_double()
+                       ))
+}

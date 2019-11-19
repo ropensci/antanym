@@ -13,7 +13,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom rappdirs user_cache_dir
 #' @importFrom raster area cellStats crop extent extent<- projectExtent projection<- raster
-#' @importFrom readr read_csv
+#' @importFrom readr read_csv cols col_character col_datetime col_double col_logical col_skip
 #' @importFrom sp bbox coordinates coordinates<- CRS is.projected spTransform SpatialPoints
 #' @importFrom stats dist na.omit predict setNames
 #' @importFrom stringi stri_trans_general
