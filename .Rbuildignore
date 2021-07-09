@@ -8,3 +8,5 @@
 ^docs$
 ^CONDUCT\.md$
 ^CONTRIBUTING\.md$
+^\.github$
+^codecov\.yml$

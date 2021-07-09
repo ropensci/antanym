@@ -3,7 +3,14 @@
 antanym
 =======
 
-[![Travis-CI Build Status](https://travis-ci.org/ropensci/antanym.svg?branch=master)](https://travis-ci.org/ropensci/antanym) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/antanym?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/antanym) [![codecov](https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/antanym) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![](https://badges.ropensci.org/198_status.svg)](https://github.com/ropensci/onboarding/issues/198) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/antanym)](http://cran.r-project.org/web/packages/antanym) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/antanym)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/ropensci/antanym/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/antanym/actions)
+[![Codecov test coverage](https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/antanym?branch=master)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![](https://badges.ropensci.org/198_status.svg)](https://github.com/ropensci/onboarding/issues/198)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/antanym)](http://cran.r-project.org/web/packages/antanym) 
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/antanym)
+<!-- badges: end -->
 
 Overview
 --------
