@@ -1,5 +1,5 @@
 ---
-title: "Antarctic geographic placenames"
+title: "antanym"
 author: "Ben Raymond, Michael Sumner"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
