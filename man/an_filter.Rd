@@ -4,8 +4,17 @@
 \alias{an_filter}
 \title{Filter a collection of place names by various criteria}
 \usage{
-an_filter(gaz, query, feature_ids, extent, feature_type, origin,
-  origin_gazetteer, ignore_case = TRUE, as_regex = TRUE)
+an_filter(
+  gaz,
+  query,
+  feature_ids,
+  extent,
+  feature_type,
+  origin,
+  origin_gazetteer,
+  ignore_case = TRUE,
+  as_regex = TRUE
+)
 }
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: as returned by \code{\link{an_read}} or \code{\link{an_preferred}}}
@@ -69,7 +78,7 @@ A data frame of place names can be filtered according to name, geographic locati
  an_filter(g, query = "^(West|East)")
 
  ## names with "West" or "East" appearing as complete words in the name
- ## ["\\\\b" matches a word boundary: see help("regex") ]
+ ## ["\\b" matches a word boundary: see help("regex") ]
  an_filter(g, query = "\\\\b(West|East)\\\\b")
 
  ## filtering by spatial extent

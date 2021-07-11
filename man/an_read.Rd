@@ -4,8 +4,14 @@
 \alias{an_read}
 \title{Load Antarctic place name data}
 \usage{
-an_read(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE,
-  simplified = TRUE, verbose = FALSE)
+an_read(
+  gazetteers = "all",
+  sp = FALSE,
+  cache,
+  refresh_cache = FALSE,
+  simplified = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{gazetteers}{character: vector of gazetteers to load. For the list of available gazetteers, see \code{\link{an_gazetteers}}. Use \code{gazetteers = "all"} to load all available gazetteers. Currently only one gazetteer is available: the Composite Gazetteer of Antarctica}

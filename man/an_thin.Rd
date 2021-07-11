@@ -4,8 +4,7 @@
 \alias{an_thin}
 \title{Thin names to give approximately uniform spatial coverage}
 \usage{
-an_thin(gaz, n, score_col = "score", score_weighting = 5,
-  row_limit = 2000)
+an_thin(gaz, n, score_col = "score", score_weighting = 5, row_limit = 2000)
 }
 \arguments{
 \item{gaz}{data.frame or SpatialPointsDataFrame: typically as returned by \code{\link{an_suggest}}}
