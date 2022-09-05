@@ -256,7 +256,7 @@ read_csv_with_col_spec <- function(f) {
                            scar_common_id = col_double(),
                            is_complete_flag = col_character(),
                            view_by_public_flag = col_character(),
-                           date_named_old = col_skip(),
+                           ##date_named_old = col_skip(), ## removed
                            aus_display_scale_20M = col_character(),
                            aus_display_scale_10M = col_character(),
                            aus_display_scale_5M = col_character(),
