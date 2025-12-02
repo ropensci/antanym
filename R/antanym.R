@@ -18,4 +18,4 @@
 #' @importFrom stats dist na.omit predict setNames
 #' @importFrom stringi stri_trans_general
 #' @importFrom utils download.file write.csv
-NULL
+"_PACKAGE"

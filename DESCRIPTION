@@ -37,7 +37,7 @@ Suggests:
   leaflet,
   rmarkdown,
   rworldmap
-RoxygenNote: 7.1.1
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 X-schema.org-applicationCategory: Antarctic/Southern Ocean
 X-schema.org-keywords: Antarctic, Southern Ocean, place names, gazetteer

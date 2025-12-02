@@ -11,3 +11,30 @@ Antarctic geographic place names from the Composite Gazetteer of Antarctica, and
 \references{
 \url{http://data.aad.gov.au/aadc/gaz/scar}
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://docs.ropensci.org/antanym}
+  \item \url{https://github.com/ropensci/antanym}
+  \item Report bugs at \url{https://github.com/ropensci/antanym/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Ben Raymond \email{ben.raymond@aad.gov.au}
+
+Authors:
+\itemize{
+  \item Michael Sumner \email{michael.sumner@aad.gov.au}
+}
+
+Other contributors:
+\itemize{
+  \item John Baumgartner [contributor, reviewer]
+  \item Lorenzo Busetto [contributor, reviewer]
+  \item Andrew Cowie [contributor]
+  \item Ursula Harris [contributor]
+  \item Fraser Morgan [contributor]
+}
+
+}
