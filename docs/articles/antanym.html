@@ -6,19 +6,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>antanym • antanym</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="antanym">
-<meta property="og:description" content="antanym">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +32,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">antanym</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/antanym.html">Get started</a>
 </li>
@@ -55,9 +50,9 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/antanym/">
+  <a href="https://github.com/ropensci/antanym/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -68,86 +63,117 @@
 </div>
 <!--/.navbar -->
 
-      
 
-      </header><script src="antanym_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>antanym</h1>
-                        <h4 class="author">Ben Raymond, Michael Sumner</h4>
+                        <h4 data-toc-skip class="author">Ben Raymond,
+Michael Sumner</h4>
             
-            <h4 class="date">2021-07-12</h4>
+            <h4 data-toc-skip class="date">2025-12-03</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ropensci/antanym/blob/master/vignettes/antanym.Rmd"><code>vignettes/antanym.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ropensci/antanym/blob/HEAD/vignettes/antanym.Rmd" class="external-link"><code>vignettes/antanym.Rmd</code></a></small>
       <div class="hidden name"><code>antanym.Rmd</code></div>
 
     </div>
 
     
     
-<div id="antarctic-geographic-placenames" class="section level1">
-<h1 class="hasAnchor">
-<a href="#antarctic-geographic-placenames" class="anchor"></a>Antarctic geographic placenames</h1>
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.</p>
-<p>The authoritative source of place names in Antarctica is the Composite Gazetteer of Antarctica (CGA), which is produced by the Scientific Committee on Antarctic Research (SCAR). The CGA consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 °S, including terrestrial and undersea or under-ice features.</p>
-<p>There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.</p>
-<p>The composite nature of the CGA means that there may be multiple names associated with a given feature. Consider using the <code><a href="../reference/an_preferred.html">an_preferred()</a></code> function for resolving a single name per feature.</p>
-<p>For more information, see the <a href="http://data.aad.gov.au/aadc/gaz/scar/">CGA home page</a>. The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR <a href="http://www.scar.org/data-products/scagi">Standing Committee on Antarctic Geographic Information (SCAGI)</a> coordinates the project. This R package is a product of the SCAR <a href="http://www.scar.org/ssg/life-sciences/eg-abi">Expert Group on Antarctic Biodiversity Informatics</a> and SCAGI.</p>
-<div id="citing" class="section level3">
-<h3 class="hasAnchor">
-<a href="#citing" class="anchor"></a>Citing</h3>
-<p>The SCAR Composite Gazetteer of Antarctica is made available under a CC-BY license. If you use it, please cite it:</p>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
+<p>This R package provides easy access to Antarctic geographic place
+name information, and tools for working with those names.</p>
+<p>The authoritative source of place names in Antarctica is the
+Composite Gazetteer of Antarctica (CGA), which is produced by the
+Scientific Committee on Antarctic Research (SCAR). The CGA consists of
+approximately 37,000 names corresponding to 19,000 distinct features. It
+covers features south of 60 °S, including terrestrial and undersea or
+under-ice features.</p>
+<p>There is no single naming authority responsible for place names in
+Antarctica because it does not fall under the sovereignty of any one
+nation. In general, individual countries have administrative bodies that
+are responsible for their national policy on, and authorisation and use
+of, Antarctic names. The CGA is a compilation of place names that have
+been submitted by representatives of national names committees from 22
+countries.</p>
+<p>The composite nature of the CGA means that there may be multiple
+names associated with a given feature. Consider using the
+<code><a href="../reference/an_preferred.html">an_preferred()</a></code> function for resolving a single name per
+feature.</p>
+<p>For more information, see the <a href="http://data.aad.gov.au/aadc/gaz/scar/" class="external-link">CGA home page</a>. The CGA
+was begun in 1992. Since 2008, Italy and Australia have jointly managed
+the CGA, the former taking care of the editing, the latter maintaining
+the database and website. The SCAR <a href="http://www.scar.org/data-products/scagi" class="external-link">Standing Committee on
+Antarctic Geographic Information (SCAGI)</a> coordinates the project.
+This R package is a product of the SCAR <a href="http://www.scar.org/ssg/life-sciences/eg-abi" class="external-link">Expert Group on
+Antarctic Biodiversity Informatics</a> and SCAGI.</p>
+<div class="section level3">
+<h3 id="citing">Citing<a class="anchor" aria-label="anchor" href="#citing"></a>
+</h3>
+<p>The SCAR Composite Gazetteer of Antarctica is made available under a
+CC-BY license. If you use it, please cite it:</p>
 <blockquote>
-<p>Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (<a href="http://gcmd.nasa.gov/records/SCAR_Gazetteer.html" class="uri">http://gcmd.nasa.gov/records/SCAR_Gazetteer.html</a>)</p>
+<p>Composite Gazetteer of Antarctica, Scientific Committee on Antarctic
+Research. GCMD Metadata (<a href="http://gcmd.nasa.gov/records/SCAR_Gazetteer.html" class="external-link uri">http://gcmd.nasa.gov/records/SCAR_Gazetteer.html</a>)</p>
 </blockquote>
 </div>
 </div>
-<div id="installing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installing" class="anchor"></a>Installing</h2>
+<div class="section level2">
+<h2 id="installing">Installing<a class="anchor" aria-label="anchor" href="#installing"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/antanym"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ropensci/antanym"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<p>Start by fetching the names data from the host server. Here we use a temporary cache so that we can re-load it later in the session without needing to re-download it:</p>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<p>Start by fetching the names data from the host server. Here we use a
+temporary cache so that we can re-load it later in the session without
+needing to re-download it:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/antanym">antanym</a></span><span class="op">)</span>
-<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"session"</span><span class="op">)</span></code></pre></div>
-<p>If you want to be able to work offline, you can cache the data to a directory that will persist between R sessions. The location of this directory is determined by <code><a href="https://rappdirs.r-lib.org/reference/user_cache_dir.html">rappdirs::user_cache_dir()</a></code> (see <code><a href="../reference/an_cache_directory.html">an_cache_directory("persistent")</a></code> if you want to know what it is):</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/antanym" class="external-link">antanym</a></span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"session"</span><span class="op">)</span></span></code></pre></div>
+<p>If you want to be able to work offline, you can cache the data to a
+directory that will persist between R sessions. The location of this
+directory is determined by <code><a href="https://rappdirs.r-lib.org/reference/user_cache_dir.html" class="external-link">rappdirs::user_cache_dir()</a></code> (see
+<code>an_cache_directory("persistent")</code> if you want to know what
+it is):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"persistent"</span><span class="op">)</span></code></pre></div>
-<p>If you prefer working with <code>sp</code> objects, then this will return a <code>SpatialPointsDataFrame</code>:</p>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"persistent"</span><span class="op">)</span></span></code></pre></div>
+<p>If you prefer working with <code>sp</code> objects, then this will
+return a <code>SpatialPointsDataFrame</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gsp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>sp <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="st">"session"</span><span class="op">)</span></code></pre></div>
-<div id="data-summary" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-summary" class="anchor"></a>Data summary</h3>
+<code class="sourceCode R"><span><span class="va">gsp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>sp <span class="op">=</span> <span class="cn">TRUE</span>, cache <span class="op">=</span> <span class="st">"session"</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="data-summary">Data summary<a class="anchor" aria-label="anchor" href="#data-summary"></a>
+</h3>
 <p>How many names do we have in total?</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 38918</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 39162</span></span></code></pre>
 <p>Corresponding to how many distinct features?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">g</span><span class="op">$</span><span class="va">scar_common_id</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] 20035</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">g</span><span class="op">$</span><span class="va">scar_common_id</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 20134</span></span></code></pre>
 <p>We can get a list of the feature types in the data:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/an_feature_types.html">an_feature_types</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "Aiguilles"           "Anchorage"           "Archipelago"        
-##  [4] "Arm"                 "AWS"                 "Bank"               
-##  [7] "Basin"               "Bay"                 "Beach"              
-## [10] "Bedrock break point"</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/an_feature_types.html">an_feature_types</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1] "Aiguilles"           "Anchorage"           "Archipelago"        </span></span>
+<span><span class="co">##  [4] "Arm"                 "AWS"                 "Bank"               </span></span>
+<span><span class="co">##  [7] "Basin"               "Bay"                 "Beach"              </span></span>
+<span><span class="co">## [10] "Bedrock break point"</span></span></code></pre>
 </div>
-<div id="data-structure" class="section level3">
-<h3 class="hasAnchor">
-<a href="#data-structure" class="anchor"></a>Data structure</h3>
-<p>A description of the data structure can be found in the <code>an_load</code> function help, (the same information is available via <code>an_cga_metadata</code>). By default, the gazetteer data consists of these columns:</p>
+<div class="section level3">
+<h3 id="data-structure">Data structure<a class="anchor" aria-label="anchor" href="#data-structure"></a>
+</h3>
+<p>A description of the data structure can be found in the
+<code>an_load</code> function help, (the same information is available
+via <code>an_cga_metadata</code>). By default, the gazetteer data
+consists of these columns:</p>
 <table class="table">
 <colgroup>
 <col width="6%">
@@ -160,11 +186,18 @@
 <tbody>
 <tr class="odd">
 <td align="left">gaz_id</td>
-<td align="left">The unique identifier of each gazetteer entry. Note that the same feature (e.g. ‘Browns Glacier’) might have multiple gazetteer entries, each with their own gaz_id, because the feature has been named multiple times by different naming authorities. The scar_common_id value for these entries will be identical, because scar_common_id identifies the feature itself</td>
+<td align="left">The unique identifier of each gazetteer entry. Note
+that the same feature (e.g. ‘Browns Glacier’) might have multiple
+gazetteer entries, each with their own gaz_id, because the feature has
+been named multiple times by different naming authorities. The
+scar_common_id value for these entries will be identical, because
+scar_common_id identifies the feature itself</td>
 </tr>
 <tr class="even">
 <td align="left">scar_common_id</td>
-<td align="left">The unique identifier (in the Composite Gazetteer of Antarctica) of the feature. A single feature may have multiple names, given by different naming authorities</td>
+<td align="left">The unique identifier (in the Composite Gazetteer of
+Antarctica) of the feature. A single feature may have multiple names,
+given by different naming authorities</td>
 </tr>
 <tr class="odd">
 <td align="left">place_name</td>
@@ -172,23 +205,32 @@
 </tr>
 <tr class="even">
 <td align="left">place_name_transliterated</td>
-<td align="left">The name of the feature transliterated to simple ASCII characters (e.g. with diacritical marks removed)</td>
+<td align="left">The name of the feature transliterated to simple ASCII
+characters (e.g. with diacritical marks removed)</td>
 </tr>
 <tr class="odd">
 <td align="left">longitude</td>
-<td align="left">The longitude of the feature (negative values indicate degrees west). Note that many features are not point features (e.g. mountains, lakes), in which case the longitude and latitude values are indicative only, generally of the centroid of the feature</td>
+<td align="left">The longitude of the feature (negative values indicate
+degrees west). Note that many features are not point features
+(e.g. mountains, lakes), in which case the longitude and latitude values
+are indicative only, generally of the centroid of the feature</td>
 </tr>
 <tr class="even">
 <td align="left">latitude</td>
-<td align="left">The latitude of the feature (negative values indicate degrees south). Note that many features are not point features (e.g. mountains, lakes), in which case the longitude and latitude values are indicative only, generally of the centroid of the feature</td>
+<td align="left">The latitude of the feature (negative values indicate
+degrees south). Note that many features are not point features
+(e.g. mountains, lakes), in which case the longitude and latitude values
+are indicative only, generally of the centroid of the feature</td>
 </tr>
 <tr class="odd">
 <td align="left">altitude</td>
-<td align="left">The altitude of the feature, in metres relative to sea level. Negative values indicate features below sea level</td>
+<td align="left">The altitude of the feature, in metres relative to sea
+level. Negative values indicate features below sea level</td>
 </tr>
 <tr class="even">
 <td align="left">feature_type_name</td>
-<td align="left">The feature type (e.g. ‘Archipelago’, ‘Channel’, ‘Mountain’). See an_feature_types for a full list</td>
+<td align="left">The feature type (e.g. ‘Archipelago’, ‘Channel’,
+‘Mountain’). See an_feature_types for a full list</td>
 </tr>
 <tr class="odd">
 <td align="left">date_named</td>
@@ -196,406 +238,482 @@
 </tr>
 <tr class="even">
 <td align="left">narrative</td>
-<td align="left">A text description of the feature; may include a synopsis of the history of its name</td>
+<td align="left">A text description of the feature; may include a
+synopsis of the history of its name</td>
 </tr>
 <tr class="odd">
 <td align="left">named_for</td>
-<td align="left">The person after whom the feature was named, or other reason for its naming. For historical reasons the distinction between ‘narrative’ and ‘named for’ is not always obvious</td>
+<td align="left">The person after whom the feature was named, or other
+reason for its naming. For historical reasons the distinction between
+‘narrative’ and ‘named for’ is not always obvious</td>
 </tr>
 <tr class="even">
 <td align="left">origin</td>
-<td align="left">The naming authority that provided the name. This is a country name, or organisation name for names that did not come from a national source</td>
+<td align="left">The naming authority that provided the name. This is a
+country name, or organisation name for names that did not come from a
+national source</td>
 </tr>
 <tr class="odd">
 <td align="left">relic</td>
-<td align="left">If TRUE, this name is associated with a feature that no longer exists (e.g. an ice shelf feature that has disappeared)</td>
+<td align="left">If TRUE, this name is associated with a feature that no
+longer exists (e.g. an ice shelf feature that has disappeared)</td>
 </tr>
 <tr class="even">
 <td align="left">gazetteer</td>
-<td align="left">The gazetteer from which this information came (currently only ‘CGA’)</td>
+<td align="left">The gazetteer from which this information came
+(currently only ‘CGA’)</td>
 </tr>
 </tbody>
 </table>
-<p>A few additional (but probably less useful) columns can be included by calling <code><a href="../reference/an_read.html">an_read(..., simplified = FALSE)</a></code>. Consult the <code>an_read</code> documentation for more information.</p>
+<p>A few additional (but probably less useful) columns can be included
+by calling <code>an_read(..., simplified = FALSE)</code>. Consult the
+<code>an_read</code> documentation for more information.</p>
 </div>
-<div id="finding-names" class="section level3">
-<h3 class="hasAnchor">
-<a href="#finding-names" class="anchor"></a>Finding names</h3>
-<p>The <code>an_filter</code> function provides a range of options to find the names you are interested in.</p>
-<div id="basic-searching" class="section level4">
-<h4 class="hasAnchor">
-<a href="#basic-searching" class="anchor"></a>Basic searching</h4>
+<div class="section level3">
+<h3 id="finding-names">Finding names<a class="anchor" aria-label="anchor" href="#finding-names"></a>
+</h3>
+<p>The <code>an_filter</code> function provides a range of options to
+find the names you are interested in.</p>
+<div class="section level4">
+<h4 id="basic-searching">Basic searching<a class="anchor" aria-label="anchor" href="#basic-searching"></a>
+</h4>
 <p>A simple search for any place name containing the word ‘William’:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 75 x 14
-##    gaz_id scar_common_id place_name place_name_tran… longitude latitude altitude
-##     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1      8          16073 William S… William Scoresb…      59.8    -67.3       NA
-##  2     75          16074 William S… William Scoresb…      59.6    -67.4       NA
-##  3    559          16090 Williamso… Williamson Glac…     114.     -66.6       NA
-##  4    643          16092 Williamso… Williamson Head      158.     -69.2       NA
-##  5   1240          16083 Williams … Williams Lake         78.2    -68.5        3
-##  6   1428          16096 Mount Wil… Mount Williams        50.8    -66.8       NA
-##  7   1825          16084 Williams … Williams Nunatak     111.     -66.4       50
-##  8   2189          16097 Point Wil… Point Williams        67.6    -67.8       NA
-##  9   2430          16088 Williams … Williams Rocks        62.8    -67.4        5
-## 10 100917           2288 Fort Will… Fort William, p…     -59.6    -62.4       NA
-## # … with 65 more rows, and 7 more variables: feature_type_name &lt;chr&gt;,
-## #   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
-## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
-<p>We can filter according to the country or organisation that issued the name. Which bodies (countries or organisations) provided the names in our data?</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 75 × 14</span></span></span>
+<span><span class="co">##    gaz_id scar_common_id place_name    place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>      8          <span style="text-decoration: underline;">16</span>073 William Scor… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>     75          <span style="text-decoration: underline;">16</span>074 William Scor… William Scoresby Bay        59.6    -<span style="color: #BB0000;">67.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    559          <span style="text-decoration: underline;">16</span>090 Williamson G… Williamson Glacier         114.     -<span style="color: #BB0000;">66.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    643          <span style="text-decoration: underline;">16</span>092 Williamson H… Williamson Head            158.     -<span style="color: #BB0000;">69.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>   <span style="text-decoration: underline;">1</span>240          <span style="text-decoration: underline;">16</span>083 Williams Lake Williams Lake               78.2    -<span style="color: #BB0000;">68.5</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>   <span style="text-decoration: underline;">1</span>428          <span style="text-decoration: underline;">16</span>096 Mount Willia… Mount Williams              50.8    -<span style="color: #BB0000;">66.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>   <span style="text-decoration: underline;">1</span>825          <span style="text-decoration: underline;">16</span>084 Williams Nun… Williams Nunatak           111.     -<span style="color: #BB0000;">66.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>   <span style="text-decoration: underline;">2</span>189          <span style="text-decoration: underline;">16</span>097 Point Willia… Point Williams              67.6    -<span style="color: #BB0000;">67.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>   <span style="text-decoration: underline;">2</span>430          <span style="text-decoration: underline;">16</span>088 Williams Roc… Williams Rocks              62.8    -<span style="color: #BB0000;">67.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">100</span>917           <span style="text-decoration: underline;">2</span>288 Fort William… Fort William, punta        -<span style="color: #BB0000;">59.6</span>    -<span style="color: #BB0000;">62.4</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 65 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<p>We can filter according to the country or organisation that issued
+the name. Which bodies (countries or organisations) provided the names
+in our data?</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_origins.html">an_origins</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "Argentina"                "Australia"               
-##  [3] "Austria"                  "Belgium"                 
-##  [5] "Bulgaria"                 "Canada"                  
-##  [7] "Chile"                    "China"                   
-##  [9] "Ecuador"                  "France"                  
-## [11] "GEBCO"                    "Germany"                 
-## [13] "India"                    "Italy"                   
-## [15] "Japan"                    "Korea, Republic of"      
-## [17] "New Zealand"              "Norway"                  
-## [19] "Poland"                   "Russia"                  
-## [21] "South Africa"             "Spain"                   
-## [23] "Ukraine"                  "United Kingdom"          
-## [25] "United States of America" "Uruguay"</code></pre>
-<p>Find names containing “William” and originating from Australia or the USA:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_origins.html">an_origins</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##  [1] "Argentina"                "Australia"               </span></span>
+<span><span class="co">##  [3] "Austria"                  "Belgium"                 </span></span>
+<span><span class="co">##  [5] "Bulgaria"                 "Canada"                  </span></span>
+<span><span class="co">##  [7] "Chile"                    "China"                   </span></span>
+<span><span class="co">##  [9] "Ecuador"                  "France"                  </span></span>
+<span><span class="co">## [11] "GEBCO"                    "Germany"                 </span></span>
+<span><span class="co">## [13] "India"                    "Italy"                   </span></span>
+<span><span class="co">## [15] "Japan"                    "Korea, Republic of"      </span></span>
+<span><span class="co">## [17] "New Zealand"              "Norway"                  </span></span>
+<span><span class="co">## [19] "Poland"                   "Russia"                  </span></span>
+<span><span class="co">## [21] "South Africa"             "Spain"                   </span></span>
+<span><span class="co">## [23] "Ukraine"                  "United Kingdom"          </span></span>
+<span><span class="co">## [25] "United States of America" "Uruguay"</span></span></code></pre>
+<p>Find names containing “William” and originating from Australia or the
+USA:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William"</span>, origin <span class="op">=</span> <span class="st">"Australia|United States of America"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 39 x 14
-##    gaz_id scar_common_id place_name place_name_tran… longitude latitude altitude
-##     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1      8          16073 William S… William Scoresb…      59.8    -67.3       NA
-##  2     75          16074 William S… William Scoresb…      59.6    -67.4       NA
-##  3    559          16090 Williamso… Williamson Glac…     114.     -66.6       NA
-##  4    643          16092 Williamso… Williamson Head      158.     -69.2       NA
-##  5   1240          16083 Williams … Williams Lake         78.2    -68.5        3
-##  6   1428          16096 Mount Wil… Mount Williams        50.8    -66.8       NA
-##  7   1825          16084 Williams … Williams Nunatak     111.     -66.4       50
-##  8   2189          16097 Point Wil… Point Williams        67.6    -67.8       NA
-##  9   2430          16088 Williams … Williams Rocks        62.8    -67.4        5
-## 10 125297           4839 Fort Will… Fort William         -59.7    -62.4      100
-## # … with 29 more rows, and 7 more variables: feature_type_name &lt;chr&gt;,
-## #   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
-## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
-<p>Compound names can be slightly trickier. This search will return no matches, because the actual place name is ‘William Scoresby Archipelago’:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William"</span>, origin <span class="op">=</span> <span class="st">"Australia|United States of America"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 39 × 14</span></span></span>
+<span><span class="co">##    gaz_id scar_common_id place_name    place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>      8          <span style="text-decoration: underline;">16</span>073 William Scor… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>     75          <span style="text-decoration: underline;">16</span>074 William Scor… William Scoresby Bay        59.6    -<span style="color: #BB0000;">67.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    559          <span style="text-decoration: underline;">16</span>090 Williamson G… Williamson Glacier         114.     -<span style="color: #BB0000;">66.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    643          <span style="text-decoration: underline;">16</span>092 Williamson H… Williamson Head            158.     -<span style="color: #BB0000;">69.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>   <span style="text-decoration: underline;">1</span>240          <span style="text-decoration: underline;">16</span>083 Williams Lake Williams Lake               78.2    -<span style="color: #BB0000;">68.5</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>   <span style="text-decoration: underline;">1</span>428          <span style="text-decoration: underline;">16</span>096 Mount Willia… Mount Williams              50.8    -<span style="color: #BB0000;">66.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>   <span style="text-decoration: underline;">1</span>825          <span style="text-decoration: underline;">16</span>084 Williams Nun… Williams Nunatak           111.     -<span style="color: #BB0000;">66.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>   <span style="text-decoration: underline;">2</span>189          <span style="text-decoration: underline;">16</span>097 Point Willia… Point Williams              67.6    -<span style="color: #BB0000;">67.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>   <span style="text-decoration: underline;">2</span>430          <span style="text-decoration: underline;">16</span>088 Williams Roc… Williams Rocks              62.8    -<span style="color: #BB0000;">67.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">125</span>297           <span style="text-decoration: underline;">4</span>839 Fort William  Fort William               -<span style="color: #BB0000;">59.7</span>    -<span style="color: #BB0000;">62.4</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 29 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<p>Compound names can be slightly trickier. This search will return no
+matches, because the actual place name is ‘William Scoresby
+Archipelago’:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William Archipelago"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 0 x 14
-## # … with 14 variables: gaz_id &lt;dbl&gt;, scar_common_id &lt;dbl&gt;, place_name &lt;chr&gt;,
-## #   place_name_transliterated &lt;chr&gt;, longitude &lt;dbl&gt;, latitude &lt;dbl&gt;,
-## #   altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;, date_named &lt;dttm&gt;,
-## #   narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;,
-## #   gazetteer &lt;chr&gt;</code></pre>
-<p>To get around this, we can split the search terms so that each is matched separately (only names matching both “William” and “Archipelago” will be returned):</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William Archipelago"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 0 × 14</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 14 variables: gaz_id &lt;dbl&gt;, scar_common_id &lt;dbl&gt;, place_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   place_name_transliterated &lt;chr&gt;, longitude &lt;dbl&gt;, latitude &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;, date_named &lt;dttm&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<p>To get around this, we can split the search terms so that each is
+matched separately (only names matching both “William” and “Archipelago”
+will be returned):</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"William"</span>, <span class="st">"Archipelago"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 14
-##   gaz_id scar_common_id place_name  place_name_tran… longitude latitude altitude
-##    &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1      8          16073 William Sc… William Scoresb…      59.8    -67.3       NA
-## 2 133723          16073 William Sc… William Scoresb…      59.8    -67.3       NA
-## # … with 7 more variables: feature_type_name &lt;chr&gt;, date_named &lt;dttm&gt;,
-## #   narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;,
-## #   gazetteer &lt;chr&gt;</code></pre>
-<p>Or a simple text query but additionally constrained by feature type:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"William"</span>, <span class="st">"Archipelago"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 14</span></span></span>
+<span><span class="co">##   gaz_id scar_common_id place_name     place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>      8          <span style="text-decoration: underline;">16</span>073 William Score… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> <span style="text-decoration: underline;">133</span>723          <span style="text-decoration: underline;">16</span>073 William Score… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<p>Or a simple text query but additionally constrained by feature
+type:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William"</span>, feature_type <span class="op">=</span> <span class="st">"Archipelago"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 14
-##   gaz_id scar_common_id place_name  place_name_tran… longitude latitude altitude
-##    &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1      8          16073 William Sc… William Scoresb…      59.8    -67.3       NA
-## 2 133723          16073 William Sc… William Scoresb…      59.8    -67.3       NA
-## # … with 7 more variables: feature_type_name &lt;chr&gt;, date_named &lt;dttm&gt;,
-## #   narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;,
-## #   gazetteer &lt;chr&gt;</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William"</span>, feature_type <span class="op">=</span> <span class="st">"Archipelago"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 14</span></span></span>
+<span><span class="co">##   gaz_id scar_common_id place_name     place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>      8          <span style="text-decoration: underline;">16</span>073 William Score… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> <span style="text-decoration: underline;">133</span>723          <span style="text-decoration: underline;">16</span>073 William Score… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
 <p>Or we can use a regular expression:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William .* Archipelago"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 14
-##   gaz_id scar_common_id place_name  place_name_tran… longitude latitude altitude
-##    &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1      8          16073 William Sc… William Scoresb…      59.8    -67.3       NA
-## 2 133723          16073 William Sc… William Scoresb…      59.8    -67.3       NA
-## # … with 7 more variables: feature_type_name &lt;chr&gt;, date_named &lt;dttm&gt;,
-## #   narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;,
-## #   gazetteer &lt;chr&gt;</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"William .* Archipelago"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 14</span></span></span>
+<span><span class="co">##   gaz_id scar_common_id place_name     place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>      8          <span style="text-decoration: underline;">16</span>073 William Score… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> <span style="text-decoration: underline;">133</span>723          <span style="text-decoration: underline;">16</span>073 William Score… William Scoresby Arch…      59.8    -<span style="color: #BB0000;">67.3</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
 </div>
 </div>
-<div id="regular-expressions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#regular-expressions" class="anchor"></a>Regular expressions</h3>
-<p>Regular expressions also allow more complex searches. For example, names matching “West” or “East”:</p>
+<div class="section level3">
+<h3 id="regular-expressions">Regular expressions<a class="anchor" aria-label="anchor" href="#regular-expressions"></a>
+</h3>
+<p>Regular expressions also allow more complex searches. For example,
+names matching “West” or “East”:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"West|East"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 138 x 14
-##    gaz_id scar_common_id place_name place_name_tran… longitude latitude altitude
-##     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1     12          15899 West Arm   West Arm              62.9    -67.6       18
-##  2     13           4025 East Arm   East Arm              62.9    -67.6        8
-##  3    556          14345 Sylwester… Sylwester Glaci…     160.     -84.2       NA
-##  4    738          15908 West Ice … West Ice Shelf        85      -67         NA
-##  5    870           4028 East Budd… East Budd Island      62.8    -67.6       12
-##  6    895          15904 West Budd… West Budd Island      62.8    -67.6       13
-##  7    976           4041 Easther I… Easther Island        76.2    -69.4       65
-##  8   1169           4032 East Lake  East Lake            143.     -67.0       27
-##  9   1337           4030 East Eger… East Egerton         158.     -80.8       NA
-## 10   1848          15923 Westhaven… Westhaven Nunat…     154.     -79.8       NA
-## # … with 128 more rows, and 7 more variables: feature_type_name &lt;chr&gt;,
-## #   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
-## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"West|East"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 142 × 14</span></span></span>
+<span><span class="co">##    gaz_id scar_common_id place_name    place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>     12          <span style="text-decoration: underline;">15</span>899 West Arm      West Arm                    62.9    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>     13           <span style="text-decoration: underline;">4</span>025 East Arm      East Arm                    62.9    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    556          <span style="text-decoration: underline;">14</span>345 Sylwester Gl… Sylwester Glacier          160.     -<span style="color: #BB0000;">84.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    738          <span style="text-decoration: underline;">15</span>908 West Ice She… West Ice Shelf              85      -<span style="color: #BB0000;">67</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    870           <span style="text-decoration: underline;">4</span>028 East Budd Is… East Budd Island            62.8    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    895          <span style="text-decoration: underline;">15</span>904 West Budd Is… West Budd Island            62.8    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>    976           <span style="text-decoration: underline;">4</span>041 Easther Isla… Easther Island              76.2    -<span style="color: #BB0000;">69.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>   <span style="text-decoration: underline;">1</span>169           <span style="text-decoration: underline;">4</span>032 East Lake     East Lake                  143.     -<span style="color: #BB0000;">67.0</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>   <span style="text-decoration: underline;">1</span>337           <span style="text-decoration: underline;">4</span>030 East Egerton  East Egerton               158.     -<span style="color: #BB0000;">80.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>   <span style="text-decoration: underline;">1</span>848          <span style="text-decoration: underline;">15</span>923 Westhaven Nu… Westhaven Nunatak          154.     -<span style="color: #BB0000;">79.8</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 132 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
 <p>Names <strong>starting</strong> with “West” or “East”:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"^(West|East)"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 92 x 14
-##    gaz_id scar_common_id place_name place_name_tran… longitude latitude altitude
-##     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1     12          15899 West Arm   West Arm              62.9    -67.6     18  
-##  2     13           4025 East Arm   East Arm              62.9    -67.6      8  
-##  3    738          15908 West Ice … West Ice Shelf        85      -67       NA  
-##  4    870           4028 East Budd… East Budd Island      62.8    -67.6     12  
-##  5    895          15904 West Budd… West Budd Island      62.8    -67.6     13  
-##  6    976           4041 Easther I… Easther Island        76.2    -69.4     65  
-##  7   1169           4032 East Lake  East Lake            143.     -67.0     27  
-##  8   1337           4030 East Eger… East Egerton         158.     -80.8     NA  
-##  9   1848          15923 Westhaven… Westhaven Nunat…     154.     -79.8     NA  
-## 10   2195          15927 Westwood … Westwood Point        77.9    -68.6      8.5
-## # … with 82 more rows, and 7 more variables: feature_type_name &lt;chr&gt;,
-## #   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
-## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
-<p>Names with “West” or “East” appearing as complete words in the name (“\b” matches a word boundary; see <code><a href="https://rdrr.io/r/base/regex.html">help("regex")</a></code>):</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"^(West|East)"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 96 × 14</span></span></span>
+<span><span class="co">##    gaz_id scar_common_id place_name    place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>     12          <span style="text-decoration: underline;">15</span>899 West Arm      West Arm                    62.9    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>     13           <span style="text-decoration: underline;">4</span>025 East Arm      East Arm                    62.9    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    738          <span style="text-decoration: underline;">15</span>908 West Ice She… West Ice Shelf              85      -<span style="color: #BB0000;">67</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    870           <span style="text-decoration: underline;">4</span>028 East Budd Is… East Budd Island            62.8    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    895          <span style="text-decoration: underline;">15</span>904 West Budd Is… West Budd Island            62.8    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>    976           <span style="text-decoration: underline;">4</span>041 Easther Isla… Easther Island              76.2    -<span style="color: #BB0000;">69.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>   <span style="text-decoration: underline;">1</span>169           <span style="text-decoration: underline;">4</span>032 East Lake     East Lake                  143.     -<span style="color: #BB0000;">67.0</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>   <span style="text-decoration: underline;">1</span>337           <span style="text-decoration: underline;">4</span>030 East Egerton  East Egerton               158.     -<span style="color: #BB0000;">80.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>   <span style="text-decoration: underline;">1</span>848          <span style="text-decoration: underline;">15</span>923 Westhaven Nu… Westhaven Nunatak          154.     -<span style="color: #BB0000;">79.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>   <span style="text-decoration: underline;">2</span>195          <span style="text-decoration: underline;">15</span>927 Westwood Poi… Westwood Point              77.9    -<span style="color: #BB0000;">68.6</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 86 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<p>Names with “West” or “East” appearing as complete words in the name
+(“\b” matches a word boundary; see <code><a href="https://rdrr.io/r/base/regex.html" class="external-link">help("regex")</a></code>):</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"\\b(West|East)\\b"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 93 x 14
-##    gaz_id scar_common_id place_name place_name_tran… longitude latitude altitude
-##     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1     12          15899 West Arm   West Arm              62.9    -67.6       18
-##  2     13           4025 East Arm   East Arm              62.9    -67.6        8
-##  3    738          15908 West Ice … West Ice Shelf        85      -67         NA
-##  4    870           4028 East Budd… East Budd Island      62.8    -67.6       12
-##  5    895          15904 West Budd… West Budd Island      62.8    -67.6       13
-##  6   1169           4032 East Lake  East Lake            143.     -67.0       27
-##  7   1337           4030 East Eger… East Egerton         158.     -80.8       NA
-##  8   2489          15915 West Stack West Stack            58.1    -67.0       NA
-##  9   2490           4038 East Stack East Stack            58.3    -67.1       NA
-## 10 105006           1690 Bowles We… Bowles West Peak     -60.2    -62.6       NA
-## # … with 83 more rows, and 7 more variables: feature_type_name &lt;chr&gt;,
-## #   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
-## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
-<div id="spatial-searching" class="section level4">
-<h4 class="hasAnchor">
-<a href="#spatial-searching" class="anchor"></a>Spatial searching</h4>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"\\b(West|East)\\b"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 97 × 14</span></span></span>
+<span><span class="co">##    gaz_id scar_common_id place_name    place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>     12          <span style="text-decoration: underline;">15</span>899 West Arm      West Arm                    62.9    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>     13           <span style="text-decoration: underline;">4</span>025 East Arm      East Arm                    62.9    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>    738          <span style="text-decoration: underline;">15</span>908 West Ice She… West Ice Shelf              85      -<span style="color: #BB0000;">67</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>    870           <span style="text-decoration: underline;">4</span>028 East Budd Is… East Budd Island            62.8    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>    895          <span style="text-decoration: underline;">15</span>904 West Budd Is… West Budd Island            62.8    -<span style="color: #BB0000;">67.6</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>   <span style="text-decoration: underline;">1</span>169           <span style="text-decoration: underline;">4</span>032 East Lake     East Lake                  143.     -<span style="color: #BB0000;">67.0</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>   <span style="text-decoration: underline;">1</span>337           <span style="text-decoration: underline;">4</span>030 East Egerton  East Egerton               158.     -<span style="color: #BB0000;">80.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>   <span style="text-decoration: underline;">2</span>489          <span style="text-decoration: underline;">15</span>915 West Stack    West Stack                  58.1    -<span style="color: #BB0000;">67.0</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>   <span style="text-decoration: underline;">2</span>490           <span style="text-decoration: underline;">4</span>038 East Stack    East Stack                  58.3    -<span style="color: #BB0000;">67.1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> <span style="text-decoration: underline;">105</span>006           <span style="text-decoration: underline;">1</span>690 Bowles West … Bowles West Peak           -<span style="color: #BB0000;">60.2</span>    -<span style="color: #BB0000;">62.6</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 87 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<div class="section level4">
+<h4 id="spatial-searching">Spatial searching<a class="anchor" aria-label="anchor" href="#spatial-searching"></a>
+</h4>
 <p>We can filter by spatial extent:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">120</span>, <span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 751 x 14
-##    gaz_id scar_common_id place_name place_name_tran… longitude latitude altitude
-##     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1      7           6373 Highjump … Highjump Archip…      101.    -66.0       NA
-##  2     15           8581 Loewe Mas… Loewe Massif Au…      112.    -68.4       NA
-##  3     17           8210 Law Dome … Law Dome Summit       113.    -66.7     1395
-##  4     28          11156 Petersen … Petersen Bank         111.    -65.8       NA
-##  5     31           8143 Larsen Ba… Larsen Bank           111.    -66.3        0
-##  6     41           8700 Luchistaj… Luchistaja Bay        101.    -66.1       NA
-##  7     42           8881 Majachnaj… Majachnaja Bay        101.    -66.2       NA
-##  8     44           8339 Leonova B… Leonova Bay           101.    -66.2       NA
-##  9     45          15468 Vetvistaj… Vetvistaja Bay        101.    -66.1       NA
-## 10     46          10722 Ostrovnaj… Ostrovnaja Bay        101.    -66.2       NA
-## # … with 741 more rows, and 7 more variables: feature_type_name &lt;chr&gt;,
-## #   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
-## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
-<p>The extent can also be passed as Spatial or Raster object, in which case its extent will be used:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">120</span>, <span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 752 × 14</span></span></span>
+<span><span class="co">##    gaz_id scar_common_id place_name    place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>      7           <span style="text-decoration: underline;">6</span>373 Highjump Arc… Highjump Archipelago        101.    -<span style="color: #BB0000;">66.0</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>     15           <span style="text-decoration: underline;">8</span>581 Loewe Massif… Loewe Massif Automati…      112.    -<span style="color: #BB0000;">68.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>     17           <span style="text-decoration: underline;">8</span>210 Law Dome Sum… Law Dome Summit             113.    -<span style="color: #BB0000;">66.7</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>     28          <span style="text-decoration: underline;">11</span>156 Petersen Bank Petersen Bank               111.    -<span style="color: #BB0000;">65.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>     31           <span style="text-decoration: underline;">8</span>143 Larsen Bank   Larsen Bank                 111.    -<span style="color: #BB0000;">66.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>     41           <span style="text-decoration: underline;">8</span>700 Luchistaja B… Luchistaja Bay              101.    -<span style="color: #BB0000;">66.1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>     42           <span style="text-decoration: underline;">8</span>881 Majachnaja B… Majachnaja Bay              101.    -<span style="color: #BB0000;">66.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>     44           <span style="text-decoration: underline;">8</span>339 Leonova Bay   Leonova Bay                 101.    -<span style="color: #BB0000;">66.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>     45          <span style="text-decoration: underline;">15</span>468 Vetvistaja B… Vetvistaja Bay              101.    -<span style="color: #BB0000;">66.1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>     46          <span style="text-decoration: underline;">10</span>722 Ostrovnaja B… Ostrovnaja Bay              101.    -<span style="color: #BB0000;">66.2</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 742 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<p>The extent can also be passed as Spatial or Raster object, in which
+case its extent will be used:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_sp</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPoints.html">SpatialPoints</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">120</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, extent <span class="op">=</span> <span class="va">my_sp</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 751 x 14
-##    gaz_id scar_common_id place_name place_name_tran… longitude latitude altitude
-##     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-##  1      7           6373 Highjump … Highjump Archip…      101.    -66.0       NA
-##  2     15           8581 Loewe Mas… Loewe Massif Au…      112.    -68.4       NA
-##  3     17           8210 Law Dome … Law Dome Summit       113.    -66.7     1395
-##  4     28          11156 Petersen … Petersen Bank         111.    -65.8       NA
-##  5     31           8143 Larsen Ba… Larsen Bank           111.    -66.3        0
-##  6     41           8700 Luchistaj… Luchistaja Bay        101.    -66.1       NA
-##  7     42           8881 Majachnaj… Majachnaja Bay        101.    -66.2       NA
-##  8     44           8339 Leonova B… Leonova Bay           101.    -66.2       NA
-##  9     45          15468 Vetvistaj… Vetvistaja Bay        101.    -66.1       NA
-## 10     46          10722 Ostrovnaj… Ostrovnaja Bay        101.    -66.2       NA
-## # … with 741 more rows, and 7 more variables: feature_type_name &lt;chr&gt;,
-## #   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,
-## #   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</code></pre>
-<p>Searching by proximity to a given point, for example islands within 20km of 100 °E, 66 °S:</p>
+<code class="sourceCode R"><span><span class="va">my_sp</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://edzer.github.io/sp/reference/SpatialPoints.html" class="external-link">SpatialPoints</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">120</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, extent <span class="op">=</span> <span class="va">my_sp</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 752 × 14</span></span></span>
+<span><span class="co">##    gaz_id scar_common_id place_name    place_name_translite…¹ longitude latitude</span></span>
+<span><span class="co">##     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>      7           <span style="text-decoration: underline;">6</span>373 Highjump Arc… Highjump Archipelago        101.    -<span style="color: #BB0000;">66.0</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>     15           <span style="text-decoration: underline;">8</span>581 Loewe Massif… Loewe Massif Automati…      112.    -<span style="color: #BB0000;">68.4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>     17           <span style="text-decoration: underline;">8</span>210 Law Dome Sum… Law Dome Summit             113.    -<span style="color: #BB0000;">66.7</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>     28          <span style="text-decoration: underline;">11</span>156 Petersen Bank Petersen Bank               111.    -<span style="color: #BB0000;">65.8</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>     31           <span style="text-decoration: underline;">8</span>143 Larsen Bank   Larsen Bank                 111.    -<span style="color: #BB0000;">66.3</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>     41           <span style="text-decoration: underline;">8</span>700 Luchistaja B… Luchistaja Bay              101.    -<span style="color: #BB0000;">66.1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>     42           <span style="text-decoration: underline;">8</span>881 Majachnaja B… Majachnaja Bay              101.    -<span style="color: #BB0000;">66.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>     44           <span style="text-decoration: underline;">8</span>339 Leonova Bay   Leonova Bay                 101.    -<span style="color: #BB0000;">66.2</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>     45          <span style="text-decoration: underline;">15</span>468 Vetvistaja B… Vetvistaja Bay              101.    -<span style="color: #BB0000;">66.1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>     46          <span style="text-decoration: underline;">10</span>722 Ostrovnaja B… Ostrovnaja Bay              101.    -<span style="color: #BB0000;">66.2</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 742 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
+<p>Searching by proximity to a given point, for example islands within
+20km of 100 °E, 66 °S:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_near.html">an_near</a></span><span class="op">(</span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span>, loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 3 x 14
-##   gaz_id scar_common_id place_name  place_name_tran… longitude latitude altitude
-##    &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
-## 1   1027           4856 Foster Isl… Foster Island         100.    -66.1       NA
-## 2 120508           4856 Severnyj h… Severnyj holm         100.    -66.1       NA
-## 3 125310           4856 Foster Isl… Foster Island         100.    -66.1       NA
-## # … with 7 more variables: feature_type_name &lt;chr&gt;, date_named &lt;dttm&gt;,
-## #   narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;, relic &lt;lgl&gt;,
-## #   gazetteer &lt;chr&gt;</code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_near.html">an_near</a></span><span class="op">(</span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span>, loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 14</span></span></span>
+<span><span class="co">##   gaz_id scar_common_id place_name    place_name_transliter…¹ longitude latitude</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>   <span style="text-decoration: underline;">1</span>027           <span style="text-decoration: underline;">4</span>856 Foster Island Foster Island                100.    -<span style="color: #BB0000;">66.1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> <span style="text-decoration: underline;">120</span>508           <span style="text-decoration: underline;">4</span>856 Severnyj holm Severnyj holm                100.    -<span style="color: #BB0000;">66.1</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> <span style="text-decoration: underline;">125</span>310           <span style="text-decoration: underline;">4</span>856 Foster Island Foster Island                100.    -<span style="color: #BB0000;">66.1</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​place_name_transliterated</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 8 more variables: altitude &lt;dbl&gt;, feature_type_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   date_named &lt;dttm&gt;, narrative &lt;chr&gt;, named_for &lt;chr&gt;, origin &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   relic &lt;lgl&gt;, gazetteer &lt;chr&gt;</span></span></span></code></pre>
 </div>
 </div>
-<div id="resolving-multiple-names" class="section level3">
-<h3 class="hasAnchor">
-<a href="#resolving-multiple-names" class="anchor"></a>Resolving multiple names</h3>
-<p>As noted above, the CGA is a composite gazetteer and so there may be multiple names associated with a given feature.</p>
-<p>Find all names associated with feature 1589 (Booth Island) and show the country of origin of each name:</p>
+<div class="section level3">
+<h3 id="resolving-multiple-names">Resolving multiple names<a class="anchor" aria-label="anchor" href="#resolving-multiple-names"></a>
+</h3>
+<p>As noted above, the CGA is a composite gazetteer and so there may be
+multiple names associated with a given feature.</p>
+<p>Find all names associated with feature 1589 (Booth Island) and show
+the country of origin of each name:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_ids <span class="op">=</span> <span class="fl">1589</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"origin"</span><span class="op">)</span><span class="op">]</span></code></pre></div>
-<pre><code>## # A tibble: 7 x 2
-##   place_name   origin                  
-##   &lt;chr&gt;        &lt;chr&gt;                   
-## 1 Booth, isla  Argentina               
-## 2 Wandel, Ile  Belgium                 
-## 3 Booth, Isla  Chile                   
-## 4 Boothinsel   Germany                 
-## 5 Booth Island United Kingdom          
-## 6 Booth Island Russia                  
-## 7 Booth Island United States of America</code></pre>
-<p>The <code>an_preferred</code> function can help with finding one name per feature. It takes an <code>origin</code> parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified  naming authorities where possible.</p>
-<p>We start with 38918 names in the full CGA, corresponding to 20035 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_ids <span class="op">=</span> <span class="fl">1589</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"origin"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 7 × 2</span></span></span>
+<span><span class="co">##   place_name   origin                  </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Booth, isla  Argentina               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Wandel, Ile  Belgium                 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Booth, Isla  Chile                   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Boothinsel   Germany                 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Booth Island United Kingdom          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Booth Island Russia                  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> Booth Island United States of America</span></span></code></pre>
+<p>The <code>an_preferred</code> function can help with finding one name
+per feature. It takes an <code>origin</code> parameter that specifies
+one or more preferred naming authorities (countries or organisations).
+For features that have multiple names (e.g. have been named by multiple
+countries) a single name will be chosen, preferring names from the
+specified naming authorities where possible.</p>
+<p>We start with 39162 names in the full CGA, corresponding to 20134
+distinct features. Choose one name per feature, preferring the Polish
+name where there is one, and the German name as a second preference:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_preferred.html">an_preferred</a></span><span class="op">(</span><span class="va">g</span>, origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Poland"</span>, <span class="st">"Germany"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Now we have 20035 names in our data frame, corresponding to the same 20035 distinct features.</p>
-<p>Features that have not been named by either of our preferred countries will have a name chosen from another country, with those countries in random order of preference.</p>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_preferred.html">an_preferred</a></span><span class="op">(</span><span class="va">g</span>, origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Poland"</span>, <span class="st">"Germany"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Now we have 20134 names in our data frame, corresponding to the same
+20134 distinct features.</p>
+<p>Features that have not been named by either of our preferred
+countries will have a name chosen from another country, with those
+countries in random order of preference.</p>
 </div>
-<div id="using-the-pipe-operator" class="section level3">
-<h3 class="hasAnchor">
-<a href="#using-the-pipe-operator" class="anchor"></a>Using the pipe operator</h3>
-<p>All of the above functionality can be achieved in a piped workflow, if that’s your preference, e.g.:</p>
+<div class="section level3">
+<h3 id="using-the-pipe-operator">Using the pipe operator<a class="anchor" aria-label="anchor" href="#using-the-pipe-operator"></a>
+</h3>
+<p>All of the above functionality can be achieved in a piped workflow,
+if that’s your preference, e.g.:</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nms</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span>feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/an_near.html">an_near</a></span><span class="op">(</span>loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-<span class="va">nms</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span><span class="op">]</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 3
-##   place_name    longitude latitude
-##   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;
-## 1 Foster Island      100.    -66.1</code></pre>
+<code class="sourceCode R"><span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span>feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/an_near.html">an_near</a></span><span class="op">(</span>loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="va">nms</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
+<span><span class="co">##   place_name    longitude latitude</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Foster Island      100.    -<span style="color: #BB0000;">66.1</span></span></span></code></pre>
 </div>
-<div id="working-with-sp" class="section level3">
-<h3 class="hasAnchor">
-<a href="#working-with-sp" class="anchor"></a>Working with sp</h3>
-<p>If you prefer to work with Spatial objects, the gazetteer data can be converted to a SpatialPointsDataFrame when loaded:</p>
+<div class="section level3">
+<h3 id="working-with-sp">Working with sp<a class="anchor" aria-label="anchor" href="#working-with-sp"></a>
+</h3>
+<p>If you prefer to work with Spatial objects, the gazetteer data can be
+converted to a SpatialPointsDataFrame when loaded:</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gsp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"session"</span>, sp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gsp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"session"</span>, sp <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>And the above functions work in the same way, for example:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_sp</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/SpatialPoints.html">SpatialPoints</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">120</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">gsp</span>, extent <span class="op">=</span> <span class="va">my_sp</span><span class="op">)</span></code></pre></div>
-<pre><code>## class       : SpatialPointsDataFrame 
-## features    : 751 
-## extent      : 100, 120, -69, -65  (xmin, xmax, ymin, ymax)
-## crs         : +proj=longlat +datum=WGS84 +no_defs 
-## variables   : 12
-## names       : gaz_id, scar_common_id,       place_name, place_name_transliterated, altitude, feature_type_name, date_named,                                                                                                                                                                        narrative,                                                                                                                                                                                                                                                                                                                                                                                                                                                                   named_for,                   origin, relic, gazetteer 
-## min values  :      7,             54,    Adams Glacier,             Adams Glacier,        0,       Archipelago, -725846400,                                                                                                                                      "Bunger Hills.  Charted by the SAE in 1956.,                                                                                                                                                                                                                                                               A distinct feature that provides access through the ASPA without trampling vegetation.  Moss biologists describe Casey as the Daintree of Antarctica to educate people about the importance of the vegetation,                Australia,     0,       CGA 
-## max values  : 139194,          20125, Zimmerman Island,          Zimmerman Island,     1395,       Watercourse, 1575849600, Valley near Polish Antarctic A. B. Dobrowolski Station, with a small lake, Burger Hills area. Named in honour of Professor Stefan Manczarski (1899-1979) - see Manczarski Point., Winning name recommended by Dr Andie Smithies, Convenor, Advisory Committee on Names Competition in September 2004.This was a public competition for the naming of a new runway in August 2004. The reason given by Joe Weiley (12 years), of Broken Head NSW, student at St Finbars School in Byron Bay and the winner of the competition was:  "It would have to be named after Sir Hubert Wilkins, the amazing Australian adventurer and pioneer of Antarctic aviation!", United States of America,     0,       CGA</code></pre>
+<code class="sourceCode R"><span><span class="va">my_sp</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://edzer.github.io/sp/reference/SpatialPoints.html" class="external-link">SpatialPoints</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">120</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">gsp</span>, extent <span class="op">=</span> <span class="va">my_sp</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## class       : SpatialPointsDataFrame </span></span>
+<span><span class="co">## features    : 752 </span></span>
+<span><span class="co">## extent      : 100, 120, -69, -65  (xmin, xmax, ymin, ymax)</span></span>
+<span><span class="co">## crs         : +proj=longlat +datum=WGS84 +no_defs </span></span>
+<span><span class="co">## variables   : 12</span></span>
+<span><span class="co">## names       : gaz_id, scar_common_id,       place_name, place_name_transliterated, altitude, feature_type_name, date_named,                                                                                                                                                                        narrative,                                                                                                                                                                                                                                                                                                                                                                                                                                                                   named_for,                   origin, relic, gazetteer </span></span>
+<span><span class="co">## min values  :      7,             54,    Adams Glacier,             Adams Glacier,        0,       Archipelago, -725846400,                                                                                                                                      "Bunger Hills.  Charted by the SAE in 1956.,                                                                                                                                                                                                                                                               A distinct feature that provides access through the ASPA without trampling vegetation.  Moss biologists describe Casey as the Daintree of Antarctica to educate people about the importance of the vegetation,                Australia,     0,       CGA </span></span>
+<span><span class="co">## max values  : 140427,          20125, Zimmerman Island,          Zimmerman Island,     1395,       Watercourse, 1575849600, Valley near Polish Antarctic A. B. Dobrowolski Station, with a small lake, Burger Hills area. Named in honour of Professor Stefan Manczarski (1899-1979) - see Manczarski Point., Winning name recommended by Dr Andie Smithies, Convenor, Advisory Committee on Names Competition in September 2004.This was a public competition for the naming of a new runway in August 2004. The reason given by Joe Weiley (12 years), of Broken Head NSW, student at St Finbars School in Byron Bay and the winner of the competition was:  "It would have to be named after Sir Hubert Wilkins, the amazing Australian adventurer and pioneer of Antarctic aviation!", United States of America,     0,       CGA</span></span></code></pre>
 </div>
-<div id="selecting-names-for-plotting" class="section level3">
-<h3 class="hasAnchor">
-<a href="#selecting-names-for-plotting" class="anchor"></a>Selecting names for plotting</h3>
-<p>Let’s say we are preparing a figure of the greater Prydz Bay region (60-90 °E, 65-70 °S), to be shown at 80mm x 80mm in size (this is approximately a 1:10M scale map). Let’s plot all of the place names in this region:</p>
+<div class="section level3">
+<h3 id="selecting-names-for-plotting">Selecting names for plotting<a class="anchor" aria-label="anchor" href="#selecting-names-for-plotting"></a>
+</h3>
+<p>Let’s say we are preparing a figure of the greater Prydz Bay region
+(60-90 °E, 65-70 °S), to be shown at 80mm x 80mm in size (this is
+approximately a 1:10M scale map). Let’s plot all of the place names in
+this region:</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_longitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span>
-<span class="va">my_latitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span>
-
-<span class="va">this_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">my_longitude</span>, <span class="va">my_latitude</span><span class="op">)</span><span class="op">)</span>
-
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"rworldmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Skipping map figure - install the rworldmap package to see it."</span><span class="op">)</span>
-<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-  <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/AndySouth/rworldmap/">rworldmap</a></span><span class="op">)</span>
-  <span class="va">map</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rworldmap/man/getMap.html">getMap</a></span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">map</span>, xlim <span class="op">=</span> <span class="va">my_longitude</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="va">my_latitude</span>, col <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span>
-  <span class="co">## allow extra xlim space for labels</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="st">"green"</span>, cex <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-  <span class="co">## alternate the positions of labels to reduce overlap</span>
-  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">pos</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pos</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">]</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, labels <span class="op">=</span> <span class="va">this_names</span><span class="op">$</span><span class="va">place_name</span>, pos <span class="op">=</span> <span class="va">pos</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p><img src="antanym_files/figure-html/map0-1.png" width="648" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="va">my_longitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">60</span>, <span class="fl">90</span><span class="op">)</span></span>
+<span><span class="va">my_latitude</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">70</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">this_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">my_longitude</span>, <span class="va">my_latitude</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"rworldmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Skipping map figure - install the rworldmap package to see it."</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/AndySouth/rworldmap/" class="external-link">rworldmap</a></span><span class="op">)</span></span>
+<span>  <span class="va">map</span> <span class="op">&lt;-</span> <span class="fu">getMap</span><span class="op">(</span>resolution <span class="op">=</span> <span class="st">"low"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">map</span>, xlim <span class="op">=</span> <span class="va">my_longitude</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="va">my_latitude</span>, col <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span></span>
+<span>  <span class="co">## allow extra xlim space for labels</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="st">"green"</span>, cex <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="co">## alternate the positions of labels to reduce overlap</span></span>
+<span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">pos</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pos</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, labels <span class="op">=</span> <span class="va">this_names</span><span class="op">$</span><span class="va">place_name</span>, pos <span class="op">=</span> <span class="va">pos</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <p>Oooooo-kay. That’s not ideal.</p>
-<p>Antanym includes an experimental function that will suggest which features might be best to add names to on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps. We can ask for suggested names to show on our example map:</p>
+<p>Antanym includes an experimental function that will suggest which
+features might be best to add names to on a given map. These suggestions
+are based on maps prepared by expert cartographers, and the features
+that were explicitly named on those maps. We can ask for suggested names
+to show on our example map:</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">suggested</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_suggest.html">an_suggest</a></span><span class="op">(</span><span class="va">g</span>, map_extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">my_longitude</span>, <span class="va">my_latitude</span><span class="op">)</span>, map_dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">80</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">suggested</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_suggest.html">an_suggest</a></span><span class="op">(</span><span class="va">g</span>, map_extent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">my_longitude</span>, <span class="va">my_latitude</span><span class="op">)</span>, map_dimensions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">80</span>, <span class="fl">80</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Plot the top ten suggested names purely by score:</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">this_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">suggested</span>, <span class="fl">10</span><span class="op">)</span>
-
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"rworldmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Skipping map figure - install the rworldmap package to see it."</span><span class="op">)</span>
-<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">map</span>, xlim <span class="op">=</span> <span class="va">my_longitude</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="va">my_latitude</span>, col <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="st">"green"</span>, cex <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">pos</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pos</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">]</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, labels <span class="op">=</span> <span class="va">this_names</span><span class="op">$</span><span class="va">place_name</span>, pos <span class="op">=</span> <span class="va">pos</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p><img src="antanym_files/figure-html/map1-1.png" width="648" style="display: block; margin: auto;"></p>
-<p>Or the ten best suggested names considering both score and spatial coverage:</p>
+<code class="sourceCode R"><span><span class="va">this_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">suggested</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"rworldmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Skipping map figure - install the rworldmap package to see it."</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">map</span>, xlim <span class="op">=</span> <span class="va">my_longitude</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="va">my_latitude</span>, col <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="st">"green"</span>, cex <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">pos</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pos</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, labels <span class="op">=</span> <span class="va">this_names</span><span class="op">$</span><span class="va">place_name</span>, pos <span class="op">=</span> <span class="va">pos</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Or the ten best suggested names considering both score and spatial
+coverage:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">this_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_thin.html">an_thin</a></span><span class="op">(</span><span class="va">suggested</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-
-<span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html">requireNamespace</a></span><span class="op">(</span><span class="st">"rworldmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="st">"Skipping map figure - install the rworldmap package to see it."</span><span class="op">)</span>
-<span class="op">}</span> <span class="kw">else</span> <span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">map</span>, xlim <span class="op">=</span> <span class="va">my_longitude</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="va">my_latitude</span>, col <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="st">"green"</span>, cex <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span>
-  <span class="va">pos</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pos</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">]</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/text.html">text</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, labels <span class="op">=</span> <span class="va">this_names</span><span class="op">$</span><span class="va">place_name</span>, pos <span class="op">=</span> <span class="va">pos</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
-<p><img src="antanym_files/figure-html/map2-1.png" width="648" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="va">this_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_thin.html">an_thin</a></span><span class="op">(</span><span class="va">suggested</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"rworldmap"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"Skipping map figure - install the rworldmap package to see it."</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">map</span>, xlim <span class="op">=</span> <span class="va">my_longitude</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">7</span>, <span class="fl">4</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="va">my_latitude</span>, col <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="st">"green"</span>, cex <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">/</span><span class="fl">4</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">pos</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">pos</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">)</span><span class="op">]</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text</a></span><span class="op">(</span><span class="va">this_names</span><span class="op">$</span><span class="va">longitude</span>, <span class="va">this_names</span><span class="op">$</span><span class="va">latitude</span>, labels <span class="op">=</span> <span class="va">this_names</span><span class="op">$</span><span class="va">place_name</span>, pos <span class="op">=</span> <span class="va">pos</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 </div>
-<div id="other-map-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-map-examples" class="anchor"></a>Other map examples</h2>
-<p>A <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html">leaflet app</a> using Mercator projection and clustered markers for place names.</p>
-<p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="README-leaflet.png" width="40%"></a></p>
-<p>And a similar example using a <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html">polar stereographic projection</a>.</p>
-<p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="README-leafletps.png" width="40%"></a></p>
-<p>See the <a href="https://github.com/AustralianAntarcticDataCentre/antanym-demo">antanym-demo</a> repository for the source code of these examples.</p>
+<div class="section level2">
+<h2 id="other-map-examples">Other map examples<a class="anchor" aria-label="anchor" href="#other-map-examples"></a>
+</h2>
+<p>A <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html" class="external-link">leaflet
+app</a> using Mercator projection and clustered markers for place
+names.</p>
+<p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html" class="external-link"><img src="README-leaflet.png" width="40%"></a></p>
+<p>And a similar example using a <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html" class="external-link">polar
+stereographic projection</a>.</p>
+<p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html" class="external-link"><img src="README-leafletps.png" width="40%"></a></p>
+<p>See the <a href="https://github.com/AustralianAntarcticDataCentre/antanym-demo" class="external-link">antanym-demo</a>
+repository for the source code of these examples.</p>
 </div>
-<div id="future-directions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#future-directions" class="anchor"></a>Future directions</h2>
-<p>Antanym currently only provides information from the SCAR CGA. This does not cover other features that may be of interest to Antarctic researchers, such as those on subantarctic islands or features that have informal names not registered in the CGA. Antanym may be expanded to cover extra gazetteers containing such information, at a later date.</p>
+<div class="section level2">
+<h2 id="future-directions">Future directions<a class="anchor" aria-label="anchor" href="#future-directions"></a>
+</h2>
+<p>Antanym currently only provides information from the SCAR CGA. This
+does not cover other features that may be of interest to Antarctic
+researchers, such as those on subantarctic islands or features that have
+informal names not registered in the CGA. Antanym may be expanded to
+cover extra gazetteers containing such information, at a later date.</p>
 </div>
-<div id="other-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-packages" class="anchor"></a>Other packages</h2>
-<p>The <a href="https://cran.r-project.org/package=geonames">geonames package</a> also provides access to geographic place names, including from the SCAR Composite Gazetteer. If you need <em>global</em> place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn’t easily used while offline.</p>
-</div>
+<div class="section level2">
+<h2 id="other-packages">Other packages<a class="anchor" aria-label="anchor" href="#other-packages"></a>
+</h2>
+<p>The <a href="https://cran.r-project.org/package=geonames" class="external-link">geonames
+package</a> also provides access to geographic place names, including
+from the SCAR Composite Gazetteer. If you need <em>global</em> place
+name coverage, geonames may be a better option. However, the composite
+nature of the CGA is not particularly well suited to geonames, and at
+the time of writing the geonames database did not include the most
+current version of the CGA. The geonames package requires a login for
+some functionality, and because it makes calls to api.geonames.org it
+isn’t easily used while offline.</p>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
+      </div>
 
 </div>
 
 
 
       <footer><div class="copyright">
-  <p>Developed by Ben Raymond, Michael Sumner.</p>
+  <p></p>
+<p>Developed by Ben Raymond, Michael Sumner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
       </footer>
 </div>
 
-  
+
+
+
 
 
   </body>

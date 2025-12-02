@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # antanym
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/ropensci/antanym/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/antanym/actions)
+[![R-CMD-check](https://github.com/ropensci/antanym/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ropensci/antanym/actions/workflows/R-CMD-check.yaml)
 [![Codecov test coverage](https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/antanym?branch=master)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 [![](https://badges.ropensci.org/198_status.svg)](https://github.com/ropensci/onboarding/issues/198)
@@ -109,26 +109,15 @@ See the package vignette and the `an_suggest` function for more information.
 
 ## Recent changes
 
-### antanym 0.4.0
+See `NEWS.md`.
 
-General revisions following rOpenSci review. Note several breaking changes:
-
-  - `an_read` now takes a `cache` parameter instead of `cache_directory` (and now can have special values "session" and "persistent")
-  - `an_filter` and `an_suggest` now take an `origin` parameter that replaces the previous `origin_country` and `cga_source` parameters
-  - the default data structure (returned by `an_read(..., simplified = TRUE)` no longer contains the "country_name" or "cga_source_gazetteer columns, but if needed these are available via `an_read(..., simplified = FALSE)`
-
-
-## Other map examples
+## Map example
 
 A [leaflet app](https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html) using Mercator projection and clustered markers for place names.
 
 <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="vignettes/README-leaflet.png" width="40%" /></a>
 
-And a similar example using a [polar stereographic projection](https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html).
-
-<a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="vignettes/README-leafletps.png" width="40%" /></a>
-
-See the [antanym-demo](https://github.com/AustralianAntarcticDataCentre/antanym-demo) repository for the source code of these examples.
+See the [antanym-demo](https://github.com/AustralianAntarcticDataCentre/antanym-demo) repository for the source code.
 
 
 ## Other packages

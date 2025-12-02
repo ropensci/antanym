@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Antarctic Geographic Place Names • antanym</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">antanym</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/antanym.html">Get started</a>
 </li>
@@ -55,9 +51,9 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ropensci/antanym/">
+  <a href="https://github.com/ropensci/antanym/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
-     
+
   </a>
 </li>
       </ul>
@@ -68,206 +64,199 @@
 </div>
 <!--/.navbar -->
 
-      
+
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="antanym" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#antanym" class="anchor"></a>antanym</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="antanym">antanym<a class="anchor" aria-label="anchor" href="#antanym"></a>
+</h1></div>
 <!-- badges: start -->
 
-<div id="overview" class="section level2">
-<h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a>
+</h2>
 <p>This R package provides easy access to Antarctic geographic place name information, and tools for working with those names.</p>
 <p>The authoritative source of place names in Antarctica is the Composite Gazetteer of Antarctica (CGA), which is produced by the Scientific Committee on Antarctic Research (SCAR). The CGA consists of approximately 37,000 names corresponding to 19,000 distinct features. It covers features south of 60 °S, including terrestrial and undersea or under-ice.</p>
 <p>There is no single naming authority responsible for place names in Antarctica because it does not fall under the sovereignty of any one nation. In general, individual countries have administrative bodies that are responsible for their national policy on, and authorisation and use of, Antarctic names. The CGA is a compilation of place names that have been submitted by representatives of national names committees from 22 countries.</p>
 <p>The composite nature of the CGA means that there are often multiple names associated with a given feature. Consider using the <code><a href="reference/an_preferred.html">an_preferred()</a></code> function for resolving a single name per feature.</p>
-<p>For more information, see the <a href="http://data.aad.gov.au/aadc/gaz/scar/">CGA home page</a>. The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR <a href="http://www.scar.org/data-products/scagi">Standing Committee on Antarctic Geographic Information (SCAGI)</a> coordinates the project. This R package is a product of the SCAR <a href="http://www.scar.org/ssg/life-sciences/eg-abi">Expert Group on Antarctic Biodiversity Informatics</a> and SCAGI.</p>
-<div id="citing" class="section level3">
-<h3 class="hasAnchor">
-<a href="#citing" class="anchor"></a>Citing</h3>
+<p>For more information, see the <a href="http://data.aad.gov.au/aadc/gaz/scar/" class="external-link">CGA home page</a>. The CGA was begun in 1992. Since 2008, Italy and Australia have jointly managed the CGA, the former taking care of the editing, the latter maintaining the database and website. The SCAR <a href="http://www.scar.org/data-products/scagi" class="external-link">Standing Committee on Antarctic Geographic Information (SCAGI)</a> coordinates the project. This R package is a product of the SCAR <a href="http://www.scar.org/ssg/life-sciences/eg-abi" class="external-link">Expert Group on Antarctic Biodiversity Informatics</a> and SCAGI.</p>
+<div class="section level3">
+<h3 id="citing">Citing<a class="anchor" aria-label="anchor" href="#citing"></a>
+</h3>
 <p>The SCAR Composite Gazetteer of Antarctica is made available under a CC-BY license. If you use it, please cite it:</p>
 <blockquote>
-<p>Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (<a href="http://gcmd.nasa.gov/records/SCAR_Gazetteer.html" class="uri">http://gcmd.nasa.gov/records/SCAR_Gazetteer.html</a>)</p>
+<p>Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. GCMD Metadata (<a href="http://gcmd.nasa.gov/records/SCAR_Gazetteer.html" class="external-link uri">http://gcmd.nasa.gov/records/SCAR_Gazetteer.html</a>)</p>
 </blockquote>
 </div>
 </div>
-<div id="installing" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installing" class="anchor"></a>Installing</h2>
+<div class="section level2">
+<h2 id="installing">Installing<a class="anchor" aria-label="anchor" href="#installing"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"ropensci/antanym"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ropensci/antanym"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="example-usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-usage" class="anchor"></a>Example usage</h2>
+<div class="section level2">
+<h2 id="example-usage">Example usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
+</h2>
 <p>Start by fetching the names data from the host server. Here we use a temporary cache so that we can re-load it later in the session without needing to re-download it:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/antanym">antanym</a></span><span class="op">)</span>
-<span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"session"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/antanym" class="external-link">antanym</a></span><span class="op">)</span></span>
+<span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/an_read.html">an_read</a></span><span class="op">(</span>cache <span class="op">=</span> <span class="st">"session"</span><span class="op">)</span></span></code></pre></div>
 <p>How many names do we have in total?</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>
-<span class="co">#&gt; [1] 37661</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 39162</span></span></code></pre></div>
 <p>Corresponding to how many distinct features?</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">g</span><span class="op">$</span><span class="va">scar_common_id</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 19601</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">g</span><span class="op">$</span><span class="va">scar_common_id</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 20134</span></span></code></pre></div>
 <p>Find names starting with “Slom”:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"^Slom"</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span><span class="op">]</span>
-<span class="co">#&gt; # A tibble: 3 x 3</span>
-<span class="co">#&gt;   place_name     longitude latitude</span>
-<span class="co">#&gt;   &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Sloman Glacier     -68.6    -67.7</span>
-<span class="co">#&gt; 2 Sloman Glacier     -68.6    -67.7</span>
-<span class="co">#&gt; 3 Slomer Cove        -59.4    -63.8</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, query <span class="op">=</span> <span class="st">"^Slom"</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span><span class="co">#&gt;   place_name     longitude latitude</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Sloman Glacier     -68.6    -67.7</span></span>
+<span><span class="co">#&gt; 2 Sloman Glacier     -68.6    -67.7</span></span>
+<span><span class="co">#&gt; 3 Slomer Cove        -59.4    -63.8</span></span></code></pre></div>
 <p>Find islands within 20km of 100 °E, 66 °S:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/an_near.html">an_near</a></span><span class="op">(</span><span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span>, loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-
-<span class="co">## or equivalently, using the pipe operator</span>
-<span class="va">nms</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span>feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="reference/an_near.html">an_near</a></span><span class="op">(</span>loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span>
-
-<span class="va">nms</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span><span class="op">]</span>
-<span class="co">#&gt; # A tibble: 3 x 3</span>
-<span class="co">#&gt;   place_name    longitude latitude</span>
-<span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 Foster Island       100    -66.1</span>
-<span class="co">#&gt; 2 Severnyj holm       100    -66.1</span>
-<span class="co">#&gt; 3 Foster Island       100    -66.1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/an_near.html">an_near</a></span><span class="op">(</span><span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span>, loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">## or equivalently, using the pipe operator</span></span>
+<span><span class="va">nms</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span>feature_type <span class="op">=</span> <span class="st">"Island"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/an_near.html">an_near</a></span><span class="op">(</span>loc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="op">-</span><span class="fl">66</span><span class="op">)</span>, max_distance <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">nms</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"longitude"</span>, <span class="st">"latitude"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 3</span></span>
+<span><span class="co">#&gt;   place_name    longitude latitude</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 Foster Island      100.    -66.1</span></span>
+<span><span class="co">#&gt; 2 Severnyj holm      100.    -66.1</span></span>
+<span><span class="co">#&gt; 3 Foster Island      100.    -66.1</span></span></code></pre></div>
 </div>
-<div id="resolving-multiple-names-per-feature" class="section level2">
-<h2 class="hasAnchor">
-<a href="#resolving-multiple-names-per-feature" class="anchor"></a>Resolving multiple names per feature</h2>
+<div class="section level2">
+<h2 id="resolving-multiple-names-per-feature">Resolving multiple names per feature<a class="anchor" aria-label="anchor" href="#resolving-multiple-names-per-feature"></a>
+</h2>
 <p>As noted above, the CGA is a composite gazetteer and so there are often multiple names associated with a given feature. For example, we can see all names associated with feature 1589 (Booth Island) and the country of origin of each name:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_ids <span class="op">=</span> <span class="fl">1589</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"origin"</span><span class="op">)</span><span class="op">]</span>
-<span class="co">#&gt; # A tibble: 7 x 2</span>
-<span class="co">#&gt;   place_name   origin                  </span>
-<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                   </span>
-<span class="co">#&gt; 1 Booth, isla  Argentina               </span>
-<span class="co">#&gt; 2 Wandel, Ile  Belgium                 </span>
-<span class="co">#&gt; 3 Booth, Isla  Chile                   </span>
-<span class="co">#&gt; 4 Boothinsel   Germany                 </span>
-<span class="co">#&gt; 5 Booth Island United Kingdom          </span>
-<span class="co">#&gt; 6 Booth Island Russia                  </span>
-<span class="co">#&gt; 7 Booth Island United States of America</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/an_filter.html">an_filter</a></span><span class="op">(</span><span class="va">g</span>, feature_ids <span class="op">=</span> <span class="fl">1589</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"place_name"</span>, <span class="st">"origin"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co">#&gt; # A tibble: 7 × 2</span></span>
+<span><span class="co">#&gt;   place_name   origin                  </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt;                   </span></span>
+<span><span class="co">#&gt; 1 Booth, isla  Argentina               </span></span>
+<span><span class="co">#&gt; 2 Wandel, Ile  Belgium                 </span></span>
+<span><span class="co">#&gt; 3 Booth, Isla  Chile                   </span></span>
+<span><span class="co">#&gt; 4 Boothinsel   Germany                 </span></span>
+<span><span class="co">#&gt; 5 Booth Island United Kingdom          </span></span>
+<span><span class="co">#&gt; 6 Booth Island Russia                  </span></span>
+<span><span class="co">#&gt; 7 Booth Island United States of America</span></span></code></pre></div>
 <p>The <code>an_preferred</code> function can help with finding one name per feature. It takes an <code>origin</code> parameter that specifies one or more preferred naming authorities (countries or organisations). For features that have multiple names (e.g. have been named by multiple countries) a single name will be chosen, preferring names from the specified naming authorities where possible.</p>
-<p>We start with 37661 names in the full CGA, corresponding to 19601 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:</p>
+<p>We start with 39162 names in the full CGA, corresponding to 20134 distinct features. Choose one name per feature, preferring the Polish name where there is one, and the German name as a second preference:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/an_preferred.html">an_preferred</a></span><span class="op">(</span><span class="va">g</span>, origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Poland"</span>, <span class="st">"Germany"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Now we have 19601 names in our data frame, corresponding to the same 19601 distinct features.</p>
+<code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/an_preferred.html">an_preferred</a></span><span class="op">(</span><span class="va">g</span>, origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Poland"</span>, <span class="st">"Germany"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Now we have 20134 names in our data frame, corresponding to the same 20134 distinct features.</p>
 </div>
-<div id="name-suggestions" class="section level2">
-<h2 class="hasAnchor">
-<a href="#name-suggestions" class="anchor"></a>Name suggestions</h2>
+<div class="section level2">
+<h2 id="name-suggestions">Name suggestions<a class="anchor" aria-label="anchor" href="#name-suggestions"></a>
+</h2>
 <p>Antanym includes an experimental function that will suggest which features might be best to to name on a given map. These suggestions are based on maps prepared by expert cartographers, and the features that were explicitly named on those maps.</p>
 <p>See the package vignette and the <code>an_suggest</code> function for more information.</p>
 </div>
-<div id="recent-changes" class="section level2">
-<h2 class="hasAnchor">
-<a href="#recent-changes" class="anchor"></a>Recent changes</h2>
-<div id="antanym-040" class="section level3">
-<h3 class="hasAnchor">
-<a href="#antanym-040" class="anchor"></a>antanym 0.4.0</h3>
-<p>General revisions following rOpenSci review. Note several breaking changes:</p>
-<ul>
-<li>
-<code>an_read</code> now takes a <code>cache</code> parameter instead of <code>cache_directory</code> (and now can have special values “session” and “persistent”)</li>
-<li>
-<code>an_filter</code> and <code>an_suggest</code> now take an <code>origin</code> parameter that replaces the previous <code>origin_country</code> and <code>cga_source</code> parameters</li>
-<li>the default data structure (returned by <code><a href="reference/an_read.html">an_read(..., simplified = TRUE)</a></code> no longer contains the “country_name” or "cga_source_gazetteer columns, but if needed these are available via <code><a href="reference/an_read.html">an_read(..., simplified = FALSE)</a></code>
-</li>
-</ul>
+<div class="section level2">
+<h2 id="recent-changes">Recent changes<a class="anchor" aria-label="anchor" href="#recent-changes"></a>
+</h2>
+<p>See <code>NEWS.md</code>.</p>
 </div>
+<div class="section level2">
+<h2 id="map-example">Map example<a class="anchor" aria-label="anchor" href="#map-example"></a>
+</h2>
+<p>A <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html" class="external-link">leaflet app</a> using Mercator projection and clustered markers for place names.</p>
+<p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html" class="external-link"><img src="articles/README-leaflet.png" width="40%"></a></p>
+<p>See the <a href="https://github.com/AustralianAntarcticDataCentre/antanym-demo" class="external-link">antanym-demo</a> repository for the source code.</p>
 </div>
-<div id="other-map-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-map-examples" class="anchor"></a>Other map examples</h2>
-<p>A <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html">leaflet app</a> using Mercator projection and clustered markers for place names.</p>
-<p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leaflet.html"><img src="articles/README-leaflet.png" width="40%"></a></p>
-<p>And a similar example using a <a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html">polar stereographic projection</a>.</p>
-<p><a href="https://australianantarcticdatacentre.github.io/antanym-demo/leafletps.html"><img src="articles/README-leafletps.png" width="40%"></a></p>
-<p>See the <a href="https://github.com/AustralianAntarcticDataCentre/antanym-demo">antanym-demo</a> repository for the source code of these examples.</p>
-</div>
-<div id="other-packages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-packages" class="anchor"></a>Other packages</h2>
-<p>The <a href="https://cran.r-project.org/package=geonames">geonames package</a> also provides access to geographic place names, including from the SCAR Composite Gazetteer. If you need <em>global</em> place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn’t easily used while offline.</p>
-<p><a href="https://ropensci.org"><img src="https://ropensci.org/public_images/scar_footer.png" alt="ropensci_footer"></a></p>
+<div class="section level2">
+<h2 id="other-packages">Other packages<a class="anchor" aria-label="anchor" href="#other-packages"></a>
+</h2>
+<p>The <a href="https://cran.r-project.org/package=geonames" class="external-link">geonames package</a> also provides access to geographic place names, including from the SCAR Composite Gazetteer. If you need <em>global</em> place name coverage, geonames may be a better option. However, the composite nature of the CGA is not particularly well suited to geonames, and at the time of writing the geonames database did not include the most current version of the CGA. The geonames package requires a login for some functionality, and because it makes calls to api.geonames.org it isn’t easily used while offline.</p>
+<p><a href="https://ropensci.org" class="external-link"><img src="https://ropensci.org/public_images/scar_footer.png" alt="ropensci_footer"></a></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/ropensci/antanym/">https://​github.com/​ropensci/​antanym/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/ropensci/antanym/issues">https://​github.com/​ropensci/​antanym/​issues</a>
-</li>
+<li><a href="https://github.com/ropensci/antanym/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/ropensci/antanym/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
+<a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a>
 </li>
 </ul>
 </div>
+
 <div class="community">
-<h2>Community</h2>
+<h2 data-toc-skip>Community</h2>
 <ul class="list-unstyled">
 <li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
+
 <div class="citation">
-<h2>Citation</h2>
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing antanym</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Ben Raymond <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Michael Sumner <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html#citation">Citing antanym</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/ropensci/antanym/actions"><img src="https://github.com/ropensci/antanym/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/ropensci/antanym?branch=master"><img src="https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
-<li><a href="https://github.com/ropensci/onboarding/issues/198"><img src="https://badges.ropensci.org/198_status.svg"></a></li>
-<li><a href="http://cran.r-project.org/web/packages/antanym"><img src="http://www.r-pkg.org/badges/version/antanym" alt="CRAN_Status_Badge"></a></li>
+<li>Ben Raymond <br><small class="roles"> Author, maintainer </small>   </li>
+<li>Michael Sumner <br><small class="roles"> Author </small>   </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/ropensci/antanym/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/ropensci/antanym/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/ropensci/antanym?branch=master" class="external-link"><img src="https://codecov.io/gh/ropensci/antanym/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="http://www.repostatus.org/#active" class="external-link"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
+<li><a href="https://github.com/ropensci/onboarding/issues/198" class="external-link"><img src="https://badges.ropensci.org/198_status.svg"></a></li>
+<li><a href="http://cran.r-project.org/web/packages/antanym" class="external-link"><img src="http://www.r-pkg.org/badges/version/antanym" alt="CRAN_Status_Badge"></a></li>
+</ul>
 </div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Ben Raymond, Michael Sumner.</p>
+  <p></p>
+<p>Developed by Ben Raymond, Michael Sumner.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
       </footer>
 </div>
 
-  
+
+
+
 
 
   </body>
