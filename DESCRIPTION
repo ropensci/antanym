@@ -35,8 +35,6 @@ Suggests:
   testthat (>= 2.0.0),
   knitr,
   leaflet,
-  rgdal,
-  rgeos,
   rmarkdown,
   rworldmap
 RoxygenNote: 7.1.1

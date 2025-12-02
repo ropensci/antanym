@@ -39,9 +39,6 @@ test_that("sp versions of functions match non-sp for lon-lat data", {
 })
 
 test_that("sp versions of functions match non-sp for projected data", {
-    ## spTransform requires rgdal, but the rest of antanym doesn't, so it's only a suggested packagex
-    skip_if_not_installed("rgdal")
-
     projll <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
     stersouth <-  "+proj=stere +lat_0=-90 +lat_ts=-71 +lon_0=0 +k=1 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs"
     gxy <- spTransform(gsp, CRS(stersouth))
@@ -67,8 +64,6 @@ test_that("sp versions of functions match non-sp for projected data", {
 })
 
 test_that("an_near works with projected/unprojected data", {
-    skip_if_not_installed("rgdal")
-
     ## an_near should give the same answers regardless of whether the gaz object is a standard data.frame or an sp object, or if it is projected, and same for the target location
 
     projll <- "+proj=longlat +datum=WGS84 +ellps=WGS84"
