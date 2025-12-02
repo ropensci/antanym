@@ -1,23 +1,20 @@
 {
-  "@context": [
-    "http://purl.org/codemeta/2.0",
-    "http://schema.org"
-  ],
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "antanym",
-  "description": "Antarctic geographic names from the SCAR Composite Gazetteer of Antarctica, and functions for working with those place names.",
-  "name": "antanym: Antarctic geographic place names",
+  "description": "Antarctic geographic names from the Composite Gazetteer of Antarctica, and functions for working with those place names.",
+  "name": "antanym: Antarctic Geographic Place Names",
+  "relatedLink": "https://docs.ropensci.org/antanym",
   "codeRepository": "https://github.com/ropensci/antanym",
   "issueTracker": "https://github.com/ropensci/antanym/issues",
   "license": "https://spdx.org/licenses/MIT",
-  "version": "0.2.6",
+  "version": "0.5.0",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
-    "version": "3.4.1",
     "url": "https://r-project.org"
   },
-  "runtimePlatform": "R version 3.4.1 (2017-06-30)",
+  "runtimePlatform": "R version 4.5.2 (2025-10-31)",
   "author": [
     {
       "@type": "Person",
@@ -35,8 +32,13 @@
   "contributor": [
     {
       "@type": "Person",
-      "givenName": "Ursula",
-      "familyName": "Harris"
+      "givenName": "John",
+      "familyName": "Baumgartner"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Lorenzo",
+      "familyName": "Busetto"
     },
     {
       "@type": "Person",
@@ -45,16 +47,23 @@
     },
     {
       "@type": "Person",
+      "givenName": "Ursula",
+      "familyName": "Harris"
+    },
+    {
+      "@type": "Person",
       "givenName": "Fraser",
       "familyName": "Morgan"
     }
   ],
-  "maintainer": {
-    "@type": "Person",
-    "givenName": "Ben",
-    "familyName": "Raymond",
-    "email": "ben.raymond@aad.gov.au"
-  },
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Ben",
+      "familyName": "Raymond",
+      "email": "ben.raymond@aad.gov.au"
+    }
+  ],
   "softwareSuggestions": [
     {
       "@type": "SoftwareApplication",
@@ -63,9 +72,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
     },
     {
       "@type": "SoftwareApplication",
@@ -74,20 +84,23 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=dplyr"
     },
     {
       "@type": "SoftwareApplication",
       "identifier": "testthat",
       "name": "testthat",
+      "version": ">= 2.0.0",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
     },
     {
       "@type": "SoftwareApplication",
@@ -96,9 +109,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
     },
     {
       "@type": "SoftwareApplication",
@@ -107,20 +121,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
-    },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "rgdal",
-      "name": "rgdal",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=leaflet"
     },
     {
       "@type": "SoftwareApplication",
@@ -129,9 +133,10 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
     },
     {
       "@type": "SoftwareApplication",
@@ -140,153 +145,166 @@
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rworldmap"
     }
   ],
-  "softwareRequirements": [
-    {
+  "softwareRequirements": {
+    "1": {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.3.0"
+    },
+    "2": {
       "@type": "SoftwareApplication",
       "identifier": "assertthat",
       "name": "assertthat",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=assertthat"
     },
-    {
+    "3": {
       "@type": "SoftwareApplication",
       "identifier": "C50",
       "name": "C50",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=C50"
     },
-    {
+    "4": {
       "@type": "SoftwareApplication",
       "identifier": "geosphere",
       "name": "geosphere",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=geosphere"
     },
-    {
+    "5": {
       "@type": "SoftwareApplication",
       "identifier": "httr",
       "name": "httr",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=httr"
     },
-    {
+    "6": {
       "@type": "SoftwareApplication",
       "identifier": "magrittr",
       "name": "magrittr",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
     },
-    {
+    "7": {
+      "@type": "SoftwareApplication",
+      "identifier": "rappdirs",
+      "name": "rappdirs",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rappdirs"
+    },
+    "8": {
       "@type": "SoftwareApplication",
       "identifier": "raster",
       "name": "raster",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=raster"
     },
-    {
+    "9": {
       "@type": "SoftwareApplication",
       "identifier": "readr",
       "name": "readr",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=readr"
     },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "rlang",
-      "name": "rlang",
-      "provider": {
-        "@id": "https://cran.r-project.org",
-        "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
-        "url": "https://cran.r-project.org"
-      }
-    },
-    {
+    "10": {
       "@type": "SoftwareApplication",
       "identifier": "sp",
       "name": "sp",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=sp"
     },
-    {
+    "11": {
       "@type": "SoftwareApplication",
       "identifier": "stringi",
       "name": "stringi",
       "provider": {
         "@id": "https://cran.r-project.org",
         "@type": "Organization",
-        "name": "Central R Archive Network (CRAN)",
+        "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
-      }
+      },
+      "sameAs": "https://CRAN.R-project.org/package=stringi"
     },
-    {
-      "@type": "SoftwareApplication",
-      "identifier": "R",
-      "name": "R",
-      "version": "3.3.0"
-    }
-  ],
+    "SystemRequirements": null
+  },
   "applicationCategory": "Antarctic/SouthernOcean",
-  "isPartOf": "https://scar.org",
-  "keywords": ["Antarctic", "SouthernOcean", "placenames", "gazetteer"],
-  "contIntegration": "https://travis-ci.org/ropensci/antanym",
-  "readme": "https://github.com/ropensci/antanym/blob/master/README.md",
-  "fileSize": "1769.203KB",
+  "isPartOf": ["https://ropensci.org", "https://scar.org"],
+  "keywords": ["Antarctic", "SouthernOcean", "placenames", "gazetteer", "peer-reviewed", "r", "r-package", "rstats"],
+  "fileSize": "2012.371KB",
   "citation": [
     {
       "@type": "SoftwareSourceCode",
-      "datePublished": "2016",
+      "datePublished": "1992, updated 2025",
       "author": [
         {
-          "@type": "Person",
-          "givenName": "Ben",
-          "familyName": "Raymond"
-        },
-        {
-          "@type": "Person",
-          "givenName": "Michael",
-          "familyName": "Sumner"
+          "@type": "Organization",
+          "name": "Secretariat SCAR"
         }
       ],
-      "name": "antanym: An R package for Antarctic geographic placenames",
-      "url": "https://github.com/ropensci/antanym"
+      "name": "Composite Gazetteer of Antarctica, Scientific Committee on Antarctic Research. Data obtained via the antanym R package: https://github.com/ropensci/antanym",
+      "url": "http://gcmd.nasa.gov/records/SCAR_Gazetteer.html"
     }
-  ]
+  ],
+  "releaseNotes": "https://github.com/ropensci/antanym/blob/main/NEWS.md",
+  "readme": "https://github.com/ropensci/antanym/blob/master/README.md",
+  "contIntegration": ["https://github.com/ropensci/antanym/actions", "https://codecov.io/gh/ropensci/antanym?branch=master"],
+  "developmentStatus": "http://www.repostatus.org/#active",
+  "review": {
+    "@type": "Review",
+    "url": "https://github.com/ropensci/software-review/issues/198",
+    "provider": "https://ropensci.org"
+  }
 }
