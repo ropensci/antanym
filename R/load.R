@@ -168,7 +168,8 @@ an_read <- function(gazetteers = "all", sp = FALSE, cache, refresh_cache = FALSE
 
     ## add "origin" column (country or organisation name)
     g$origin <- g$country_name
-    g$origin[g$origin == "Unknown"] <- g$cga_source_gazetteer[g$origin == "Unknown"]
+    idx <- which(is.na(g$origin) | g$origin == "Unknown")
+    g$origin[idx] <- g$cga_source_gazetteer[idx]
 
     g <- g[is.na(g$cga_source_gazetteer) | g$cga_source_gazetteer != "INFORMAL", ] ## informal names shouldn't be part of the CGA
     g <- g[, gaz_cols_to_show(g, simplified = simplified)]
