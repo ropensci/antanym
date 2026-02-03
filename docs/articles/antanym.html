@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">antanym</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.5.1</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@
                         <h4 data-toc-skip class="author">Ben Raymond,
 Michael Sumner</h4>
             
-            <h4 data-toc-skip class="date">2025-12-03</h4>
+            <h4 data-toc-skip class="date">2026-02-03</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ropensci/antanym/blob/HEAD/vignettes/antanym.Rmd" class="external-link"><code>vignettes/antanym.Rmd</code></a></small>
       <div class="hidden name"><code>antanym.Rmd</code></div>
@@ -154,11 +154,11 @@ return a <code>SpatialPointsDataFrame</code>:</p>
 <p>How many names do we have in total?</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 39162</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 39164</span></span></code></pre>
 <p>Corresponding to how many distinct features?</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">g</span><span class="op">$</span><span class="va">scar_common_id</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] 20134</span></span></code></pre>
+<pre><code><span><span class="co">## [1] 20136</span></span></code></pre>
 <p>We can get a list of the feature types in the data:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/an_feature_types.html">an_feature_types</a></span><span class="op">(</span><span class="va">g</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
@@ -546,13 +546,13 @@ one or more preferred naming authorities (countries or organisations).
 For features that have multiple names (e.g. have been named by multiple
 countries) a single name will be chosen, preferring names from the
 specified naming authorities where possible.</p>
-<p>We start with 39162 names in the full CGA, corresponding to 20134
+<p>We start with 39164 names in the full CGA, corresponding to 20136
 distinct features. Choose one name per feature, preferring the Polish
 name where there is one, and the German name as a second preference:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/an_preferred.html">an_preferred</a></span><span class="op">(</span><span class="va">g</span>, origin <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Poland"</span>, <span class="st">"Germany"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Now we have 20134 names in our data frame, corresponding to the same
-20134 distinct features.</p>
+<p>Now we have 20136 names in our data frame, corresponding to the same
+20136 distinct features.</p>
 <p>Features that have not been named by either of our preferred
 countries will have a name chosen from another country, with those
 countries in random order of preference.</p>
